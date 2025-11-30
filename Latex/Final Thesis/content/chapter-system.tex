@@ -1,7 +1,7 @@
-\chapter{RIP Tests Generator}
+\chapter{LLMs Metrics Catalog for Software Engineering}
 \label{chapter3}
 
-\section{Solución propuesta}
+\section{Busqueda marco teorico query}
 Como fue mencionado anteriormente, uno de los principales problemas a la hora de generar casos de prueba, es poder tener en cuenta los diferentes cambios de contexto y los tipos de entidades encontrados en la aplicación. Por esto, la generación de tests de esta herramienta está basada en los diferentes modelos encontrados con la herramienta  \textbf{RIP}\cite{LinanAutomatedApps}. Concretamente se tienen definidos tres modelos: GUI, contexto y dominio, los cuales se basan en lo propuesto en CEL\cite{Linares-Vasquez2017ContinuousTesting}.
 
 El modelo GUI es extraído mediante la técnica GUI ripping, en donde se realiza una exploración de la interfaz de la aplicación, generando un diagrama de estados que representan las actividades y eventos de transición entre ellas. Para el modelo de dominio, se realiza un análisis de los componentes encontrados en los XML's de la aplicación, para así describir los datos que pueden ser introducidos o producidos. Finalmente, mediante el diagrama de contexto se conocen las condiciones externas que podrían afectar el correcto funcionamiento de la aplicación. Información como sensores,  uso de batería, o conectividad es recolectada en este modelo.
@@ -10,7 +10,7 @@ Una vez se tiene la información sobre los diversos modelos, se propone crear \t
 
 
 
-\section{Arquitectura de la solución}
+\section{Lectura y extracción de metricas de los papers}
 
 \textbf{RIP Tests Generator} genera tests después de que \textbf{RIP} termina la ejecución, lo que permite el desacoplamiento de las dos herramientas. En este caso, \textbf{RIP} \cite{LinanAutomatedApps} puede mejorar o cambiar sus algoritmos de exploración dinámica sobre aplicaciones móviles, manteniendo la compatibilidad con \textbf{RIP Tests Generator}. La figura \ref{procesoTests} presenta el resumen del proceso de generación de tests a partir de los archivos obtenidos mediante la ejecución de RIP.
 
@@ -33,7 +33,7 @@ Para la generación de pruebas se definieron los siguientes eventos, basados en 
 
 
 
-\section{Requisitos técnicos para la generación automática de pruebas}
+\section{Organización metricas excel}
 Con el fin de que el desarrollador no tenga ningún inconveniente usando la herramienta, se definieron los siguientes requisitos técnicos:
 \begin{enumerate}
 	\item Al estar integrada con \textbf{RIP}\cite{LinanAutomatedApps}, se debe tener instalado ADB y correr el software en dispositivos rooteados o emuladores.
@@ -52,7 +52,7 @@ Con el fin de que el desarrollador no tenga ningún inconveniente usando la herr
 \end{figure} 
 
 
-\section{Generación automática de una prueba}
+\section{Uso de pandas para clasificar metricas por frecuencia}
 Para generar una prueba se hace uso del archivo tree.json \textbf{RIP}, el cual contiene un grafo donde las actividades corresponden a los nodos y los links a los eventos que disparan una transición entre dos estados. Cada nodo contiene la información del modelo de dominio con el tipo de datos que se encuentran. Además, se tienen los diferentes indicadores de contexto en cada estado, donde se pueden ver datos como batería, conectividad de internet, etc.
 
 Dicho archivo es el que se utiliza como insumo para generar los casos de prueba mediante RIP Tests Generator. Gracias a la librería JavaPoet \cite{JavaPoet} se genera un archivo .java que contiene el código fuente de la prueba. Para esto, se tiene en cuenta la información obtenida del grafo generado por RIP y se hace una traducción de cada acción a ser ejecutada en la prueba.
@@ -88,6 +88,15 @@ Un ejemplo de la prueba obtenida como resultado puede ser evidenciado en la figu
 	\caption{Prueba generada}
 	\label{pruebaresultado}
 \end{figure} 
+
+\section{Organizacion a mano de metricas en clusters de similitud}
+
+
+\section{Redacción y creación pagina docusaurus}
+
+
+\section{Busqueda de fuentes adicionales por metrica}
+
 
 
 

@@ -1,28 +1,33 @@
 % !TEX root = ../thesis-example.tex
 %
-\chapter{Introducción}
+\chapter{Introduction}
 \label{sec:intro}
 
-\section{Motivación}
+\section{Motivation}
 
-Las aplicaciones móviles se han convertido en una gran parte de nuestras vidas. De acuerdo a Statista \cite{MobileStatista}, el número de aplicaciones disponibles en Google Play Store para el primer cuarto de 2018 fue de 3.8 millones. En 2017 fueron descargadas 178.1 billones de aplicaciones en el mundo. A medida que crece este mercado, también lo hace la necesidad de mejorar cada etapa del proceso de desarrollo para entregar un producto de calidad de manera eficiente. Una de estas es la etapa de pruebas. Mediante esta los desarrolladores pueden asegurar la calidad del software y por consiguiente la satisfacción del cliente.
+Software engineering is undergoing a profound transformation driven by the rapid advancement of Large Language Models (LLMs). These models now participate in tasks traditionally reserved for human developers: generating code, identifying defects, synthesizing documentation, analysing requirements, and assisting in design decisions. Their integration into development environments is expanding at unprecedented speed, offering new opportunities for productivity and automation. Yet, with this rapid progress comes an equally significant challenge: understanding and reliably measuring the quality of their outputs.
 
-En el desarrollo de aplicaciones móviles, es especialmente crítico asegurar que el producto está libre de errores. Hay una gran variedad de alternativas presentadas a los usuarios, y esta facilidad de adquisición hace para ellos más fácil tomar la decisión de cambiar entre ellas. Es por esto que un error en la aplicación puede traducirse en una gran pérdida de clientes.
+Evaluation has always played a central role in software engineering. Whether validating correctness, assessing maintainability, or ensuring that systems meet functional and non-functional requirements, robust measurement is essential for decision-making and quality assurance. However, the rise of generative models introduces complexities that traditional software metrics were never designed to address. LLM-generated outputs can be syntactically correct but semantically flawed, they may appear coherent yet contain subtle logical errors, they may solve a task in unexpected but valid ways, or they may generate misleading, biased, or unsafe content. Standard metrics struggle to capture these nuances.
 
-Las pruebas en aplicaciones móviles se enfrentan a una variedad de retos, uno de estos es la des-fragmentación de plataformas móviles. Esto se refiere al hecho de que hay un gran número de combinaciones de dispositivos con sus sistemas operativos. Por lo tanto, la tarea de realizar pruebas en una aplicación móvil se hace aún más complicada. No solo tiene el tester que asegurar el correcto funcionamiento de la aplicación en un SO (Android, iOS), sino que también se deben tener en cuenta las diferentes modificaciones que son realizadas por cada OEM (Manufacturador original del equipo). Dado que este problema tiene mayor impacto para el caso de Android, el proyecto se basará en dicho sistema operativo.
-Por otro lado, las aplicaciones móviles, en comparación con las de escritorio, están sujetas a muchas más variables que pueden influenciar su correcto funcionamiento. Los recursos disponibles en un dispositivo móvil son mucho más limitados que los que se encuentran en un computador. Además, se deben tener en cuenta sensores, batería, otras aplicaciones corriendo en el dispositivo, etc.
+At the same time, software engineering tasks are uniquely demanding for LLMs. Unlike general natural language, code is brittle, execution-dependent, and governed by strict semantics. Evaluating the behaviour, correctness, and usefulness of generated content requires a level of rigor that goes far beyond surface similarity or pattern matching. As a result, there is a growing need for evaluation frameworks specifically grounded in software artifacts and development workflows.
 
-Por consiguiente, al tener una gran variedad de retos en este campo, proponemos abordar el problema mediante el uso de multi-modelos para generar estas pruebas. Basados en la extracción de modelos propuesta en Automated Extraction of Augmented Models for Android Apps (RIP tool) \cite{LinanAutomatedApps} y CEL \cite{Linares-Vasquez2017ContinuousTesting}, proponemos una herramienta para generar tests de manera automática que tiene en cuenta los tres modelos (contexto, dominio y GUI). Al tener en consideración la información proporcionada por estos modelos, se generarán tests más fieles a la realidad, asegurando mayor cobertura en casos de prueba.
+Despite substantial efforts across the industry, evaluation practices remain fragmented. Different studies rely on different benchmarks, inconsistent definitions, incompatible metrics, or incomplete reporting. Some evaluations focus solely on functional correctness, while others emphasize textual similarity, robustness, or human preference. These discrepancies make it difficult to compare systems, reproduce results, or understand what current LLMs are truly capable of. Furthermore, the increasing complexity of software-oriented LLMs, handling long-context interactions, multi-step reasoning, or tool-assisted execution, demands a new generation of metrics that are both interpretable and comprehensive.
 
-\section{Objetivos}
+Therefore, there is a critical need to systematically analyse, organize, and interpret the metrics used to evaluate LLMs in software engineering. A clear, structured understanding of what each metric measures, when it is appropriate, and how it contributes to reliable assessment is essential for advancing the field. Such work provides the foundation for rigorous benchmarking, improves scientific reproducibility, and supports the safe deployment of LLM-based systems in real-world development contexts.
 
-\begin{itemize}
-	\item Generar casos de prueba de 'esquina' basados en las probables causas de error encontradas con los modelos.
-	\item Generar casos de pruebas basados en los cambios contextuales de la aplicación (conectividad, batería, etc).
-	\item Proveer al usuario con una visualización de la ejecución de las pruebas a través de una aplicación web.
-\end{itemize}
+This project is motivated by the need to fill that gap: to create a coherent, validated framework that helps researchers and organizations evaluate LLMs with clarity, consistency, and confidence. By studying the landscape of existing metrics and how they relate to software engineering tasks, this work aims to contribute to the development of trustworthy and scientifically grounded evaluation practices for the next generation of AI-driven software systems.
 
-\section{Resultados esperados}
-Al finalizar el proyecto, será posible para el tester generar varios casos de prueba de manera automatizada, considerando los posibles factores que pueden influenciar la aplicación móvil. Esto reducirá el costo de tener que probar la aplicación de manera manual o programando los casos de prueba.
-\section{Resultados alcanzados}
-Se construyó una herramienta que permite al desarrollador generar casos de prueba que se pueden reproducir con el framework Espresso. Estos casos tienen en cuenta el modelo GUI extraído por RIP junto con el modelo de dominio y los cambios contextuales producidos en la aplicación. Se decidió usar Espresso debido a que es la herramienta oficial propuesta por Google, además de estar ampliamente documentado para su fácil modificación por parte del desarrollador/usuario.
+\section{Objectives}
+
+\begin{enumerate}
+	\item Identify the most relevant metrics used in the evaluation of Large Language Models (LLMs), encompassing both widely adopted measures and those that remain underexplored.
+	\item Analyse the advantages, limitations, and conditions of applicability of each metric within the context of software engineering.
+	\item Examine how these metrics are employed across software engineering research publications and empirical studies.
+	\item Develop a standardized documentation framework that enables software engineers to apply evaluation metrics in an objective, consistent, and reproducible manner.
+
+\end{enumerate}
+
+\section{Expected results}
+At the end of the project, a clear and organized analysis of the metrics used to evaluate LLMs in software engineering is expected to be delivered, together with a standardized documentation framework that supports objective and reproducible metric selection. The results should help establish a more coherent evaluation landscape, enabling consistent comparison of models and clearer understanding of each metric's purpose and limitations.
+\section{Achieved results}
+This project provides a structured classification of LLM evaluation metrics in software engineering and clarifies their applicability, strengths, and limitations. It also introduces a standardized documentation framework that supports reproducible and transparent metric usage. These contributions strengthen current evaluation practices and offer practical guidance for future research and applied SE contexts.
