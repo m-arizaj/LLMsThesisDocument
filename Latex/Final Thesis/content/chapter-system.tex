@@ -1,7 +1,16 @@
 \chapter{LLMs Metrics Catalog for Software Engineering}
 \label{chapter3}
 
-\section{Busqueda marco teorico query}
+\section{Data Collection Method}
+
+To build a robust and trustworthy metric catalog, it is crucial to establish where and how the information is extracted. Therefore, we conducted a systematic literature search aimed at identifying primary studies that evaluate Large Language Models in the context of Software Engineering and Machine Learning. The sources used in this work were the following:
+\begin{enumerate}
+	\item 
+	\item El desarrollador debe tener acceso al código fuente de la aplicación, ya que los archivos de prueba generados solo pueden ser ejecutados si son empaquetados junto al código fuente.
+	\item Es necesario htreeacer los cambios pertinentes en el build.gradle del proyecto para importar las dependencias utilizadas en los casos de prueba. Un ejemplo de esto es encontrado en la figura \ref{dependencies}.
+	
+
+\end{enumerate} 
 Como fue mencionado anteriormente, uno de los principales problemas a la hora de generar casos de prueba, es poder tener en cuenta los diferentes cambios de contexto y los tipos de entidades encontrados en la aplicación. Por esto, la generación de tests de esta herramienta está basada en los diferentes modelos encontrados con la herramienta  \textbf{RIP}\cite{LinanAutomatedApps}. Concretamente se tienen definidos tres modelos: GUI, contexto y dominio, los cuales se basan en lo propuesto en CEL\cite{Linares-Vasquez2017ContinuousTesting}.
 
 El modelo GUI es extraído mediante la técnica GUI ripping, en donde se realiza una exploración de la interfaz de la aplicación, generando un diagrama de estados que representan las actividades y eventos de transición entre ellas. Para el modelo de dominio, se realiza un análisis de los componentes encontrados en los XML's de la aplicación, para así describir los datos que pueden ser introducidos o producidos. Finalmente, mediante el diagrama de contexto se conocen las condiciones externas que podrían afectar el correcto funcionamiento de la aplicación. Información como sensores,  uso de batería, o conectividad es recolectada en este modelo.
@@ -10,7 +19,7 @@ Una vez se tiene la información sobre los diversos modelos, se propone crear \t
 
 
 
-\section{Lectura y extracción de metricas de los papers}
+\section{Reading and extracting metrics from papers}
 
 \textbf{RIP Tests Generator} genera tests después de que \textbf{RIP} termina la ejecución, lo que permite el desacoplamiento de las dos herramientas. En este caso, \textbf{RIP} \cite{LinanAutomatedApps} puede mejorar o cambiar sus algoritmos de exploración dinámica sobre aplicaciones móviles, manteniendo la compatibilidad con \textbf{RIP Tests Generator}. La figura \ref{procesoTests} presenta el resumen del proceso de generación de tests a partir de los archivos obtenidos mediante la ejecución de RIP.
 
@@ -33,8 +42,13 @@ Para la generación de pruebas se definieron los siguientes eventos, basados en 
 
 
 
-\section{Organización metricas excel}
-Con el fin de que el desarrollador no tenga ningún inconveniente usando la herramienta, se definieron los siguientes requisitos técnicos:
+\section{Organizing metrics in Excel}
+
+
+
+
+
+
 \begin{enumerate}
 	\item Al estar integrada con \textbf{RIP}\cite{LinanAutomatedApps}, se debe tener instalado ADB y correr el software en dispositivos rooteados o emuladores.
 	\item El desarrollador debe tener acceso al código fuente de la aplicación, ya que los archivos de prueba generados solo pueden ser ejecutados si son empaquetados junto al código fuente.
@@ -52,56 +66,51 @@ Con el fin de que el desarrollador no tenga ningún inconveniente usando la herr
 \end{figure} 
 
 
-\section{Uso de pandas para clasificar metricas por frecuencia}
-Para generar una prueba se hace uso del archivo tree.json \textbf{RIP}, el cual contiene un grafo donde las actividades corresponden a los nodos y los links a los eventos que disparan una transición entre dos estados. Cada nodo contiene la información del modelo de dominio con el tipo de datos que se encuentran. Además, se tienen los diferentes indicadores de contexto en cada estado, donde se pueden ver datos como batería, conectividad de internet, etc.
+\section{Data Normalization and Frequency Analysis}
 
-Dicho archivo es el que se utiliza como insumo para generar los casos de prueba mediante RIP Tests Generator. Gracias a la librería JavaPoet \cite{JavaPoet} se genera un archivo .java que contiene el código fuente de la prueba. Para esto, se tiene en cuenta la información obtenida del grafo generado por RIP y se hace una traducción de cada acción a ser ejecutada en la prueba.
+After the extraction phase, the initial dataset showed some problems due to how the different metrics were named accross papers (e.g., formatting differences, capitalization, accents). To enhance data integrity and avoid duplications, a normalization process was implemented using the Python programming language and Pandas as the library to transform the data.
 
-Mediante el modelo GUI se pueden generar los eventos de transición. Por ejemplo, si la acción que produjo un cambio de estado es un tap en el botón con id 'buttonJugar', entonces esto será traducido como un \textit{onView(withId(R.id.buttonJugar)).perform(click());}. Para generar esto, se tiene un método auxiliar que retorna la línea de código correspondiente. Al analizar el grafo, según el tipo de acción encontrada se genera una línea de código diferente. Este proceso se puede evidenciar en el ejemplo de la figura \ref{gentest}.
+We did the following steps:
 
-Respecto a la implementación de la generación de código con JavaPoet se debe mencionar que las librerías correctamente declaradas son importadas de manera automática en el archivo generado. Además, el paquete donde debe ser ubicado el archivo fuente se inserta de manera correcta. Finalmente, después de cada acción, se toma una captura de pantalla que será posteriormente extraída del dispositivo para generar el reporte de visualización web.
-
-El algoritmo propuesto para la generación de la prueba es el siguiente:
 
 \begin{enumerate}
-	\item Tomar la secuencia de eventos generada por RIP y guardarlos en una lista.
-	\item Realizar la acción de tomar una captura de pantalla antes de cada transición.
-	\item Según cada evento generar la línea de código correspondiente en el lenguaje espresso.
-	\item Si se tiene un cambio de contexto en el nodo, realizar la traducción correspondiente.
-	\item Con la ayuda de JavaPoet, generar los campos usados por Espresso. Como lo son la ActivityTestRule, para indicar en que actividad iniciar la aplicación, y los permisos de escritura y lectura para las capturas de pantalla.
-	\item Finalmente, para la correcta ejecución de la prueba, se genera un archivo ejecutable que se encarga de empaquetar el apk, correr las pruebas encontradas en el paquete test, y extraer las capturas de pantalla del dispositivo.
+	\item Text Normalization: Metric names were stripped (spaces were eliminated) and lowercased. Also, special characters like accents were standarized (for example from Métrica to metrica) using the unicode library. This process to have the different variants of a metric name treated like a single entity.
+	\item Frequency Calculation: After the normalization process, we performed a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
+	\item Ranking and Filtering: The metrics were sorted in a descending order of frequency. This ranking showed the current state-of-the-art evaluation landscape and helped to create the future structure of the subsequent taxonomy.
 \end{enumerate}
-Un ejemplo de la prueba obtenida como resultado puede ser evidenciado en la figura \ref{pruebaresultado}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{img/GeneracionPrueba.png}
-	\vspace{-0.5cm}
-	\caption{Proceso de traducción y generación de prueba}
-	\label{gentest}
-\end{figure} 
+\section{Taxonomy Construction and Metric Classification}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{img/pruebaResultado.jpg}
-	\vspace{-0.5cm}
-	\caption{Prueba generada}
-	\label{pruebaresultado}
-\end{figure} 
+Given that the existing literature includes a huge variety of disparate metrics without a common standard, we developed a classification taxonomy to logically organize our findings. The grouping followed a bottom-up inductive approach, where metrics were categorized based on their specific characteristics and shared properties. The steps taken were the following:
 
-\section{Organizacion a mano de metricas en clusters de similitud}
+\begin{enumerate}
+	\item Metrics Analysis: We took every metric and analyzed it to understand its main focus (e.g., does it measure syntactic overlap, functional correctness, or human preference?).
+	\item Similarity Clustering: Metrics that share these same characteristics were grouped together. For instance, metrics that rely on human judgment were grouped separately from those relying on automated execution.
+	\item Category Definition: Final labels were assigned to each group of metrics to represent the specific dimension of quality being assessed.
+\end{enumerate}
 
+\section{Implementation of the Web-Based Metric Catalog}
 
-\section{Redacción y creación pagina docusaurus}
+To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment.
+
+The structure of the web platform is simple and easy to understand; it was designed to function as a comprehensive knowledge base, similar to a wiki. It has a left sidebar that contains the metrics grouped by their corresponding taxonomy as defined in the previous section. This structure makes it simple for users to quickly access a certain group or a specific metric according to their needs.
+
+The homepage gives an introduction to the importance of having a unify framework of metrics to evaluate LLMs in the Software Engineering community, highlighting the importance of standardized evaluation.
+
+Furthermore, every page follows a standardized metadata schema that contains a definition, how the metric is measured, use cases, limitations, and references. This schema is prevalent on every page, nonetheless, some pages have variants. For example, in the case of BLEU, we have different types of this metric (BLEU, CodeBLEU, CrystalBLEU, Smoothed BLEU), so the page has a comparative summary to emphasize the key differences between them. Also, some pages have additional information like benchmarks, domains, and advantages.
 
 
-\section{Busqueda de fuentes adicionales por metrica}
+\section{Enrichment and Validation via Primary Sources}
 
+During the previous steps, we initially identified metrics in the context of Software Engineering papers. However, relying only on secondary sources can be a risk, since definitions are often adapted to the specific needs of the author. So, to make sure this catalog has the most accurate definitions, an additional validation step was performed.
 
+This process was applied to widely used metrics (e.g., BLEU, CodeBERTScore) or cases where the definition in the secondary source was incomplete or ambiguous. For these cases, we traced the citations back to the seminal work (the original paper where the metric was first proposed or defined).
 
+This enrichment allowed us to:
 
+\begin{enumerate}
+	\item Verify information: We compared the information contained in the papers to identify if it was the same or was changed for a specific purpose.
+	\item Enrich Definitions and Metadata: Consulting these primary sources allows us to be more precise with the theoretical foundations, specific usages, advantages, etc., that are often omitted in secondary sources.
+	\item Enhanced Reliability: Provide users with canonical and precise definitions so they can read them directly on the webpage or consult the original citation to verify the information.
+\end{enumerate}
 
-
-
-
-	
