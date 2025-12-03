@@ -1,69 +1,79 @@
 \chapter{LLMs Metrics Catalog for Software Engineering}
 \label{chapter3}
 
-\section{Data Collection Method}
+\section{Search Strategy and Theoretical Framework}
 
-To build a robust and trustworthy metric catalog, it is crucial to establish where and how the information is extracted. Therefore, we conducted a systematic literature search aimed at identifying primary studies that evaluate Large Language Models in the context of Software Engineering and Machine Learning. The sources used in this work were the following:
-\begin{enumerate}
-	\item 
-	\item El desarrollador debe tener acceso al código fuente de la aplicación, ya que los archivos de prueba generados solo pueden ser ejecutados si son empaquetados junto al código fuente.
-	\item Es necesario htreeacer los cambios pertinentes en el build.gradle del proyecto para importar las dependencias utilizadas en los casos de prueba. Un ejemplo de esto es encontrado en la figura \ref{dependencies}.
-	
+The first stage of the project consisted of a systematic search for literature addressing evaluation metrics for Large Language Models (LLMs) within the domains of Software Engineering (SE) and Machine Learning (ML). Two core search queries were designed, each targeting a different body of literature. The first query focused specifically on software engineering research, while the second targeted the broader machine learning literature. The primary objective of these queries was to identify relevant publications from 2019 onwards, coinciding with the period in which LLMs began to gain significant traction within both academia and industry.  
 
-\end{enumerate} 
-Como fue mencionado anteriormente, uno de los principales problemas a la hora de generar casos de prueba, es poder tener en cuenta los diferentes cambios de contexto y los tipos de entidades encontrados en la aplicación. Por esto, la generación de tests de esta herramienta está basada en los diferentes modelos encontrados con la herramienta  \textbf{RIP}\cite{LinanAutomatedApps}. Concretamente se tienen definidos tres modelos: GUI, contexto y dominio, los cuales se basan en lo propuesto en CEL\cite{Linares-Vasquez2017ContinuousTesting}.
+The queries were intentionally constructed to include a wide set of synonyms and keyword variations related to \textit{LLMs}, \textit{metrics}, \textit{machine learning}, and \textit{software engineering}, ensuring comprehensive coverage across research communities. The search expressions were centered and formatted as follows:
 
-El modelo GUI es extraído mediante la técnica GUI ripping, en donde se realiza una exploración de la interfaz de la aplicación, generando un diagrama de estados que representan las actividades y eventos de transición entre ellas. Para el modelo de dominio, se realiza un análisis de los componentes encontrados en los XML's de la aplicación, para así describir los datos que pueden ser introducidos o producidos. Finalmente, mediante el diagrama de contexto se conocen las condiciones externas que podrían afectar el correcto funcionamiento de la aplicación. Información como sensores,  uso de batería, o conectividad es recolectada en este modelo.
+\begin{center}
+\texttt{("large language model" OR LLM OR "language model" OR "foundation model")}\\
+\texttt{AND ("evaluation metric" OR "performance metric" OR "benchmark" OR "evaluation framework" OR "assessment")}\\
+\texttt{AND ("software engineering" OR "software development" OR "program synthesis" OR "code generation" OR "software quality" OR "SE")}\\
+\texttt{since:2019}
+\end{center}
 
-Una vez se tiene la información sobre los diversos modelos, se propone crear \textbf{RIP Tests Generator}, una herramienta que genere de manera automática los archivos de prueba usando Espresso. Este es el framework sugerido por Google con el fin de escribir pruebas de para aplicaciones Android.
+\begin{center}
+\texttt{("large language model" OR LLM OR "language model" OR "generative AI" OR "foundation model")}\\
+\texttt{AND ("evaluation metric" OR "performance metric" OR "benchmark" OR "evaluation framework" OR "assessment")}\\
+\texttt{AND ("machine learning" OR "deep learning" OR "neural network" OR "ML model" OR "predictive model")}\\
+\texttt{since:2019}
+\end{center}
 
+These queries were executed across multiple academic repositories and digital libraries, including arXiv, SpringerLink, IEEE Xplore, ScienceDirect, ACM Digital Library, MIT Press Direct, and other relevant indexing platforms. Because each database implements its own query syntax and filtering interface, minor adjustments were applied as needed. However, the conceptual structure of the queries was preserved across all sources to ensure consistency in the search scope.
 
+After retrieving the initial sets of results, each paper underwent a relevance screening process. This involved keyword-based filtering and rapid skimming of abstracts, introductions, and methodology sections to verify that the article contained substantive content related to LLM evaluation metrics. Only papers that explicitly discussed metrics, evaluation frameworks, benchmark designs, or methodological considerations for assessing LLM performance were retained for full analysis.
 
-\section{Reading and extracting metrics from papers}
+Through this search and filtering process, a total of 68 primary sources were selected as foundational to the construction of the LLMs Metrics Catalog. These references are publicly documented and accessible on the project website at:
 
-\textbf{RIP Tests Generator} genera tests después de que \textbf{RIP} termina la ejecución, lo que permite el desacoplamiento de las dos herramientas. En este caso, \textbf{RIP} \cite{LinanAutomatedApps} puede mejorar o cambiar sus algoritmos de exploración dinámica sobre aplicaciones móviles, manteniendo la compatibilidad con \textbf{RIP Tests Generator}. La figura \ref{procesoTests} presenta el resumen del proceso de generación de tests a partir de los archivos obtenidos mediante la ejecución de RIP.
+\begin{center}
+\url{https://m-arizaj.github.io/LLMs-metrics-catalog/references}
+\end{center}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{img/procesoTests.pdf}
-	\vspace{-0.5cm}
-	\caption{Proceso de generación automática de tests}
-	\label{procesoTests}
-\end{figure} 
+This curated set of sources forms the theoretical backbone of the catalog and provides comprehensive coverage of both software engineering--oriented evaluation practices and general-purpose LLM assessment methodologies.
 
-Test Generator es un componente acoplado con RIP que es ejecutado cuando se termina la exploración de la aplicación. Para esto, se creó la clase TestCaseBuilder.java que toma los datos proporcionados en el archivo tree.json y traduce los eventos a comandos de espresso.
+\section{Paper Review and Metric Extraction}
 
+Once the relevant literature was identified, a detailed extraction process was carried out to collect all metric-related information reported in the selected publications. For this purpose, a dedicated Excel-based dataset was constructed, consisting of two main sheets that supported the organization, normalization, and subsequent analysis of the extracted data.
 
-Para la generación de pruebas se definieron los siguientes eventos, basados en los generados por RIP:
+The first sheet acted as a paper index and contained one entry per publication. Each row included the paper's unique identifier, its type, full name, and DOI link. This sheet served as the reference backbone for all subsequent processing. Table~\ref{tab:paperinfo} provides a simplified example of the structure used:
 
-\textbf{TAP} : Cuando se tiene esta acción se traduce a un evento de hacer click en el botón o campo con el id proporcionado. Para implementar esta acción en espresso, se utiliza el comando \textit{onView(withId(id)).perform(click())}.
+\begin{table}[H]
+\centering
+\caption{Example structure of the paper index sheet.}
+\label{tab:paperinfo}
+\begin{tabularx}{\textwidth}{ l l X X }
+\hline
+\textbf{ID} & \textbf{Type} & \textbf{Name} & \textbf{DOI} \\
+\hline
+1 & ML & Overview of the Comprehensive Evaluation of LLMs & 
+\url{https://doi.org/10.1109/SWC62898.2024.00231} \\
+\hline
+\end{tabularx}
+\end{table}
 
-\textbf{INPUT} :  Al detectar un evento de campo de texto, con ayuda del modelo de dominio se detecta el tipo de dato a ingresar. Para esto se tiene la posibilidad de crear texto de manera aleatoria en un rango de caracteres normal o con una gran cantidad de estos con el fin de probar los limites de estos campos. Esta acción es implementada mediante el comando \textit{onView(withId(id)).perform(replaceText("randomtext"),closeSoftKeyboard());}
+The second sheet contained the granular metric-level dataset. Unlike the first sheet, which stored one record per paper, this sheet stored \emph{one record per metric mentioned in a paper}. Each row represented a single occurrence of a metric, including the following fields: paper ID, publication year, domain, benchmark or dataset usage (when applicable), metric name, and the category assigned during the classification process. This structure allowed multiple entries for the same paper whenever multiple metrics were discussed. A conceptual example is shown in Table~\ref{tab:metricssheet}:
 
+\begin{table}[H]
+\centering
+\caption{Example structure of the metric extraction sheet.}
+\label{tab:metricssheet}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{ l l l l l l }
+\hline
+\textbf{Paper ID} & \textbf{Year} & \textbf{Domain} & \textbf{Benchmark/Dataset} & \textbf{Metric} & \textbf{Category} \\
+\hline
+1 & 2024 & LLM Evaluation / NLP & GEM, GLGE & BLEU & Intelligence (NLG) \\
+2 & 2024 & NLP & PubMed, BioMedSumm & BLEU & Token-Similarity (TS) \\
+\hline
+\end{tabular}
+}
+\end{table}
 
+To populate the dataset, a careful reading of each paper was performed, with emphasis on sections explicitly describing evaluation metrics, benchmarks, experimental setups, or assessment methodologies. Whenever a metric appeared in any part of the paper, whether as part of an experiment, a comparison baseline, an ablation, or a discussion, it was recorded in the metric sheet following the structure above. This process was repeated independently for each of the 68 selected papers, ensuring that all mentioned metrics were captured with consistent formatting and metadata.
 
-\section{Organizing metrics in Excel}
-
-
-
-
-
-
-\begin{enumerate}
-	\item Al estar integrada con \textbf{RIP}\cite{LinanAutomatedApps}, se debe tener instalado ADB y correr el software en dispositivos rooteados o emuladores.
-	\item El desarrollador debe tener acceso al código fuente de la aplicación, ya que los archivos de prueba generados solo pueden ser ejecutados si son empaquetados junto al código fuente.
-	\item Es necesario htreeacer los cambios pertinentes en el build.gradle del proyecto para importar las dependencias utilizadas en los casos de prueba. Un ejemplo de esto es encontrado en la figura \ref{dependencies}.
-	
-
-\end{enumerate} 
-
-	\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{img/dependencies.png}
-	\vspace{-0.5cm}
-	\caption{Ejemplo de archivo build.gradle con las dependencias necesarias para la ejecución de las pruebas}
-	\label{dependencies}
-\end{figure} 
+This systematic extraction pipeline enabled the construction of a granular and analyzable dataset, which later served as the foundation for the categorization, clustering, and comparative analysis of LLM evaluation metrics.
 
 
 \section{Data Normalization and Frequency Analysis}
