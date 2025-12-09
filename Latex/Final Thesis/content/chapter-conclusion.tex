@@ -1,39 +1,31 @@
 % !TEX root = ../thesis-example.tex
 %
-\chapter{Conclusiones}
+\chapter{Conclusion}
 \label{chapter5}
 
-Durante el desarrollo del proyecto se lograron la mayoría de los objetivos propuestos, y se construyó un generador automático de pruebas funcional. A continuación se presentan las conclusiones del proceso y el trabajo futuro.
+This project successfully achieved the objectives outlined at the beginning of the study. The work conducted enabled the identification, analysis, and organization of a wide range of evaluation metrics used in the assessment of Large Language Models, particularly within the context of software engineering. The following sections present the fulfilled objectives, project limitations, and potential directions for future work.
+\section{Fulfilled objectives}
 
-\section{Objetivos cumplidos}
+Overall, the project fulfilled the proposed objectives successfully. A comprehensive review of the literature allowed the identification of the most relevant and frequently used evaluation metrics for LLMs, covering both established measures and emerging ones that remain underexplored. Furthermore, the project examined how these metrics appear across software engineering publications and empirical studies, offering clarity on their role in the field.
 
-Gracias a la implementación de esta herramienta se obtuvo un producto inicial que genera pruebas basado en los modelos producidos por RIP. Durante el proceso se adquirieron conocimientos sobre exploración de aplicaciones móviles y generación de código java. Además, se logró el objetivo principal, integrar multi-modelos en la generación de pruebas. Se tuvieron en cuenta los 3 modelos, contexto, dominio y GUI, lo cual es el factor que diferencia la solución de otras ya existentes.
+While the original objective included analysing the conditions of applicability of each metric, this aspect was not consistently addressed for every metric. Instead, the documentation followed a flexible structure that, although built around a common pattern, was adapted to the specific characteristics and insights relevant to each metric. This methodological choice ensured clarity and relevance, even if it prevented the application of a fully uniform template.
 
-
-\section{Limitaciones del desarrollo}
-\begin{itemize}
-	\item Como se mencionó anteriormente, la generación de pruebas está enfocada exclusivamente en aplicaciones Android. Esto porque es el sistema operativo donde se presentan mayores problemas de desfragmentación y ofrece la facilidad de explorar las aplicaciones mediante herramientas como ADB.
-	
-	\item Debido al alcance del proyecto, el desarrollador debe tener el código fuente de la aplicación para poder ejecutar la prueba
-	
-	\item La extracción del modelo de dominio está basada en los componentes básicos de Android, por lo tanto, los que sean personalizados o de otras librerías no serán reconocidos en dicho modelo.
-	
-	\item El desarrollador debe tener derechos de superusuario sobre el dispositivo o correr las pruebas en un emulador para realizar algunas acciones.
-	
-	
-\end{itemize}
+Despite this, the overall goals of identifying metrics, analysing their advantages and limitations, understanding how they are used within software engineering, and developing a standardized documentation framework were effectively accomplished.
 
 
-\section{Trabajo futuro}
+\section{Limitations}
 
-El proyecto presenta varias oportunidades de mejora como lo son:
+Although the project provides extensive information on a large set of LLM evaluation metrics, several limitations must be acknowledged. First, the metrics identified and documented were not empirically tested as part of this work. As a result, the study does not evaluate how closely real-world metric performance aligns with what is reported in the literature. Practical experimentation would have allowed a deeper understanding of metric reliability, robustness, and potential discrepancies between theory and practice.
 
-\begin{itemize}
-	\item Ejecución de la prueba sin tener acceso al código fuente.
-	\item Extender los componentes que son detectados en los diferentes modelos.
-	\item Tener una interfaz para el uso de la herramienta.
-	\item Permitir al usuario ingresar valores personalizados para campos que lo requieran como los de usuario y contraseña.
-	
-	
-\end{itemize}
+Second, the time constraints of the project limited the depth of exploration possible for a domain as rapidly evolving as LLM evaluation. The landscape of large scale AI models changes daily, with new benchmarks, models, vulnerabilities, and research insights emerging continuously. While the literature review was broad and rigorous, it is possible that additional relevant sources, especially very recent ones, were not included.
 
+Finally, the study depended on the availability and consistency of information within academic papers. Some metrics lacked detailed explanations, standard definitions, or clear usage contexts, which introduced challenges during the extraction and classification process.
+
+
+\section{Future Work}
+
+Several directions emerge as valuable opportunities for extending this work. A natural next step is the empirical validation of the documented metrics. Implementing, testing, and comparing these metrics across a common set of LLMs would help determine their practical usefulness, reliability, and limitations beyond theoretical descriptions.
+
+Another promising direction involves further developing the analysis of qualitative and efficiency oriented evaluation metrics. Although the project did address aspects such as environmental impact, resource usage, and other uncommon metrics, these topics were explored only at a high level. In practice, real-world user experience depends heavily on factors like latency, computational efficiency, stability, and consistency, dimensions that traditional quantitative metrics do not always capture in depth. Conducting more comprehensive research on metrics related to user experience, model robustness, and long-term reliability would offer a more complete and realistic perspective on LLM evaluation.
+
+Finally, future work could explore the integration of LLM evaluation frameworks specifically tailored for software engineering tasks, where requirements differ significantly from general purpose NLP settings. This includes evaluation criteria related to code correctness, maintainability, debugging assistance, and developer experience.
