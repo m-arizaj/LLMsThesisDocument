@@ -155,7 +155,11 @@ Based on the 128 defined clusters, we established a taxonomy consisting of 13 ca
 
 \section{Implementation of the Web-Based Metric Catalog}
 
-To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. This final product can be find in the following link: https://m-arizaj.github.io/LLMs-metrics-catalog/.
+To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. This final product can be find in the following link:
+
+\begin{center}
+\url{https://m-arizaj.github.io/LLMs-metrics-catalog/}
+\end{center}
 
 The structure of the web platform is simple and easy to understand; it was designed to function as a comprehensive knowledge base, similar to a wiki. It has a left sidebar that contains the metrics grouped by their corresponding taxonomy as defined in the previous section. This structure makes it simple for users to quickly access a certain group or a specific metric according to their needs.
 
@@ -164,25 +168,14 @@ The homepage gives an introduction to the importance of having a unify framework
 Furthermore, every page follows a standardized metadata schema that contains a definition, how the metric is measured, use cases, limitations, and references. This schema is prevalent on every page, nonetheless, some pages have variants. For example, in the case of BLEU, we have different types of this metric (BLEU, CodeBLEU, CrystalBLEU, Smoothed BLEU), so the page has a comparative summary to emphasize the key differences between them. Also, some pages have additional information like benchmarks, domains, and advantages. Additionally, the webpage features a search bar to easily find content by metric or keyword.
 
 \begin{figure}[H]
-	\textbf{Figure 1}
+	\centering
+	\includegraphics[width=1\textwidth]{img/pagin.png}
+	\vspace{-0.5cm}
+	\caption{Interface of the LLMs Metrics Catalog built with Docusaurus}
+	\label{procesoTests}
+\end{figure} 
 
-
-    \textit{Interface of the LLMs Metrics Catalog built with Docusaurus.} 
-
-    
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/pagin.png}
-    
-        
-    \vspace{0.2cm}
-    \begin{flushleft}
-    \footnotesize
-    \textbf{Note.} Adapted from a screenshot of the project's website (Ariza et al., 2025). 
-    \end{flushleft}
-    
-    \label{fig:web-catalog} 
-\end{figure}
-
+All the documentation, source files, and development process for the platform are openly available in the project repository. The codebase, including the Markdown files, page components, taxonomy structure, and contribution instructions, can be accessed at: https://github.com/m-arizaj/LLMs-metrics-catalog. This ensures full transparency of the project and enables others to extend or improve the catalog for future research.
 
 \section{Enrichment and Validation via Primary Sources}
 
