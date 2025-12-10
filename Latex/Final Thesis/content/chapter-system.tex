@@ -84,32 +84,68 @@ We did the following steps:
 
 
 \begin{enumerate}
-	\item Text Normalization: Metric names were stripped (spaces were eliminated) and lowercased. Also, special characters like accents were standarized (for example from Métrica to metrica) using the unicode library. This process to have the different variants of a metric name treated like a single entity.
-	\item Frequency Calculation: After the normalization process, we performed a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
+	\item Column Name Normalization: Unlike the handwritten data values, the column headers representing the metric names were systematically normalized. This involved stripping whitespace, converting all text to lowercase, and removing special characters (such as accents) using the Unicode library. This ensured that different labels for the same metric were treated as a single entity.
+	\item Frequency Calculation: After the normalization process, we use Pandas to performed a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
 	\item Ranking and Filtering: The metrics were sorted in a descending order of frequency. This ranking showed the current state-of-the-art evaluation landscape and helped to create the future structure of the subsequent taxonomy.
 \end{enumerate}
+
+\subsection{Top Metrics Landscape}
+
+The Table \ref{tab:top10metrics} presents the top 10 most frequently cited metrics in the analyzed literature.
+
+\begin{table}[h]
+    \centering
+    \caption{Top 10 Most Frequent Evaluation Metrics}
+    \label{tab:top10metrics}
+    \begin{tabular}{lcc}
+        \hline
+        \textbf{Rank} & \textbf{Metric Name} & \textbf{Frequency} \\ \hline
+        1 & BLEU & 40 \\ 
+        2 & Accuracy & 29 \\
+        3 & Pass@k & 27 \\
+        4 & CodeBLEU & 25 \\
+        5 & F1-score & 19 \\
+        6 & Exact Match & 14 \\
+        7 & Rouge-L & 13 \\
+        8 & Recall & 13 \\
+        9 & Pass@1 & 12 \\
+        10 & Precision & 12 \\ \hline
+    \end{tabular}
+\end{table}
+
+Almost all the metrics that appeared in the top 10 share a common purpose. They focuses on direct comparisons between model outputs and reference solutions, emphasizing correctness and matching behavior. This is an important remark to understand not only which metrics are the most used, but also the specific purpose behind their adoption.
 
 \section{Taxonomy Construction and Metric Classification}
 
 Given that the existing literature includes a huge variety of disparate metrics without a common standard, we developed a classification taxonomy to logically organize our findings. The grouping followed a bottom-up inductive approach, where metrics were categorized based on their specific characteristics and shared properties. The steps taken were the following:
 
 \begin{enumerate}
-	\item Metrics Analysis: We took every metric and analyzed it to understand its main focus, for example syntactic overlap, functional correctness, or human preference?.
-	\item Similarity Clustering: Metrics that share these same characteristics were grouped together. For instance, metrics that rely on human judgment were grouped separately from those relying on automated execution.
+	\item Metrics analysis: We take each metric and analyze it to understand its area of focus, for example, syntactic overlap, functional correctness, or human preference.
+	\item Similarity grouping: Metrics that share these same characteristics were grouped together. For instance, metrics that rely on human judgment were grouped separately from those relying on automated execution.
 	\item Category Definition: Final labels were assigned to each group of metrics to represent the specific dimension of quality being assessed.
 \end{enumerate}
 
-We tried to use machine learning models such as Naive Bayes and KNN with TF-IDF vectorizer to make the clusters but the results very disperse (About 300 clusters). This is why Table 1 was created, this table allowed us to reduce the number of clusters from 300 to 128 clusters, a significant reduction in dispersion. The clusters were the following:
+\subsection{Clustering Methodology}
+
+Before the threee steps mentioned before, we tried to use machine learning models such as Naive Bayes and KNN with TF-IDF vectorizer to make the clusters but the results very disperse (About 300 clusters) with weak semmantic connections. To address this dispersion and reduce redundancy, we implemented a refinement process defined by two hierarchical levels:
+
+Metric Clusters (N=128): We define a "cluster" as a specific evaluation method that join all its naming variants and specific implementations. For instance, pass@1, pass@10, and pass@k were grouped into a single cluster labeled Pass@k. This process allowed us to reduce the initial 300 level of dispersion into 128 distinct metric clusters.
+
+Taxonomy Categories (N=13): These represent high-level quality dimensions. Each category groups multiple Metric Clusters that share similar characteristics or goals. To make an example, all clusters relying on test cases are grouped under Functional Evaluation.
+\subsection{The 13 Quality Categories}
+
+Based on the 128 defined clusters, we established a taxonomy consisting of 13 categories as follows:
 
 \begin{enumerate}
-	\item Core Accuracy \& Overlap Metrics: Classic metrics, mostly used in natural language processing (NLP). They focus on measuring how close the text generated by the LLM is to a human reference based on word superposition or n-grams. For example: BLUE, ROUGE, Exact Math.
-	\item Statistical \& Correlation Metrics: Grouping of metrics that use statistical methods to determine the linear relation or dependencies between the model and the reference. It doesn't measure "Quality" in itself, but how well the model's distribution or ranking aligns with the expected data.
-	\item Code Quality \& Structural Metrics: This cluster is essential for software engineering. It evaluates if the code is generated with good practices, is readable, maintainable, and structurally valid.
-	\item Human \& Subjective Evaluation: This cluster groups evaluations that are done by humans. It includes surveys, Likert scales, and side-by-side comparisons where experts determine utility or quality.
+	\item Core Accuracy \& Overlap Metrics: Classic metrics, mostly used in natural language processing (NLP). In this category metrics focus on measuring how close the text that is generated by the LLM is to a human reference based on word superposition or n-grams. For example: BLEU, ROUGE, Exact Match.
+	\item Statistical \& Correlation Metrics: Grouping of metrics that use statistical methods to determine the linear relation or dependencies between the model and the reference. It do not only measure "Quality" in itself, but how well the model's distribution or ranking aligns with the expected data.
+	\item Code Quality \& Structural Metrics: This group is essential for software engineering. It evaluates if the code is generated with good practices, is readable, maintainable, and structurally valid.
+	\item Functional \& Test-based Evaluation: This group measures if the code is functional enough to pass various test cases. Each cluster in this category have their own set of test cases or quantitative counts (such as iterations) to prove if the code succeeds or fails.
+	\item Human \& Subjective Evaluation: This section groups evaluations that are done by humans. It includes surveys, Likert scales, and side-by-side comparisons where experts determine utility or quality.
 	\item Generative \& Distribution Metrics: It evaluates the probability of the model to generating tokens. It is useful to detect if the model is guessing or is confident in the answer.
-	\item Logical Reasoning \& Verification: It focuses on the capability of the LLM to do a logical reasonig or formal deductions. It is really useful in SE in task that require complex requirements or business logic.
+	\item Logical Reasoning \& Verification: It focuses on the capability of the LLM to do a logical Reasoning or formal deductions. It is really useful in SE in task that require complex requirements or business logic.
 	\item Robustness, Security \& Reliability: It evaluates if the code is safe, checking if it has vulnerabilities or if it is resilient with malicious inputs. Additionaly, measures the stability of the answers to changes in the prompt.
-	\item Efficiency \& Resource Usage: It measures the cost of using the model. It can refer to computational cost, latency or memory usage.
+	\item Efficiency \& Resource Usage: It measures the cost of using the model. It can refer to computational cost, latency or memory usage. This group is key when optimization is required for the success of the project.
 	\item Architectural \& System-level Metrics: It evaluates not only the fragment of code but the impact on the architecture, dependencies and coupling.
 	\item Creativity, Diversity \& Novelty: Measures if the models always displays the same answer or if it has the ability to create different approaches for the same prompt.
 	\item Ranking, Reward \& Optimization: Evaluates the capacity of the model to rank answers from best to worst or metrics derived from reward models that make predictions of the quality if the code without executing it.
@@ -130,22 +166,18 @@ Furthermore, every page follows a standardized metadata schema that contains a d
 \begin{figure}[H]
 	\textbf{Figure 1}
 
-    \textit{Interface of the LLMs Metrics Catalog built with Docusaurus.} % Título en cursiva
-
+    \textit{Interface of the LLMs Metrics Catalog built with Docusaurus.} 
     \centering
     \includegraphics[width=0.9\textwidth]{img/pagin.png}
     
-    % --- INICIO DEL FORMATO APA ---
         
-    % Nota/Fuente al pie (importante para APA)
     \vspace{0.2cm}
     \begin{flushleft}
     \footnotesize
     \textbf{Note.} Adapted from a screenshot of the project's website (Ariza et al., 2025). 
     \end{flushleft}
-    % --- FIN DEL FORMATO APA ---
     
-    \label{fig:web-catalog} % Mantén el label para citar en el texto (\ref{...})
+    \label{fig:web-catalog} 
 \end{figure}
 
 
