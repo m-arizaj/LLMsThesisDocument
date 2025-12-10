@@ -84,7 +84,7 @@ We did the following steps:
 
 
 \begin{enumerate}
-	\item Column Name Normalization: Unlike the handwritten data values, the column headers representing the metric names were systematically normalized. This involved stripping whitespace, converting all text to lowercase, and removing special characters (such as accents) using the Unicode library. This ensured that different labels for the same metric were treated as a single entity.
+	\item Metric Normalization: The metric names were systematically normalized. This involved stripping whitespace, converting all text to lowercase, and removing special characters (such as accents) using the Unicode library. This ensured that different labels for the same metric were treated as a single entity.
 	\item Frequency Calculation: After the normalization process, we use Pandas to performe a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
 	\item Ranking and Filtering: The metrics were sorted in a descending order of frequency. This ranking showed the current state-of-the-art evaluation landscape and helped to create the future structure of the subsequent taxonomy.
 \end{enumerate}
