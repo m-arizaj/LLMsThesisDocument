@@ -78,14 +78,14 @@ This systematic extraction pipeline enabled the construction of a granular and a
 
 \section{Data Normalization and Frequency Analysis}
 
-After the extraction phase, the initial dataset showed some problems due to how the different metrics were named accross papers for example: formatting differences, capitalization, accents. To enhance data integrity and avoid duplications, a normalization process was implemented using the Python programming language and Pandas as the library to transform the data.
+After the extraction phase, the initial dataset showed some problems due to how the different metrics were named across papers for example: formatting differences, capitalization, accents. To enhance data integrity and avoid duplications, a normalization process was implemented using the Python programming language and Pandas as the library to transform the data.
 
 We did the following steps:
 
 
 \begin{enumerate}
 	\item Column Name Normalization: Unlike the handwritten data values, the column headers representing the metric names were systematically normalized. This involved stripping whitespace, converting all text to lowercase, and removing special characters (such as accents) using the Unicode library. This ensured that different labels for the same metric were treated as a single entity.
-	\item Frequency Calculation: After the normalization process, we use Pandas to performed a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
+	\item Frequency Calculation: After the normalization process, we use Pandas to performe a frequency calculation that consisted of counting the times a metric appeared in the literature. This analysis helped us identify the most prevalent metrics in the community.
 	\item Ranking and Filtering: The metrics were sorted in a descending order of frequency. This ranking showed the current state-of-the-art evaluation landscape and helped to create the future structure of the subsequent taxonomy.
 \end{enumerate}
 
@@ -113,7 +113,7 @@ The Table \ref{tab:top10metrics} presents the top 10 most frequently cited metri
     \end{tabular}
 \end{table}
 
-Almost all the metrics that appeared in the top 10 share a common purpose. They focuses on direct comparisons between model outputs and reference solutions, emphasizing correctness and matching behavior. This is an important remark to understand not only which metrics are the most used, but also the specific purpose behind their adoption.
+Most of the metrics that appeared in the top 10 share a common purpose. They focuses on direct comparisons between model outputs and reference solutions, emphasizing correctness and matching behavior. This is an important remark to understand not only which metrics are the most used, but also the specific purpose behind their adoption.
 
 \section{Taxonomy Construction and Metric Classification}
 
@@ -127,11 +127,13 @@ Given that the existing literature includes a huge variety of disparate metrics 
 
 \subsection{Clustering Methodology}
 
-Before the three steps mentioned before, we tried to use machine learning models such as Naive Bayes and KNN with TF-IDF vectorizer to make the clusters but the results very disperse (About 300 clusters) with weak semmantic connections. To address this dispersion and reduce redundancy, we implemented a refinement process defined by two hierarchical levels:
+To manage the high volume of raw metrics found in the literature, we initially explored an automated approach to group them. We implemented machine learning models such as Naive Bayes and KNN with a TF-IDF vectorizer to generate preliminary groupings. However, the results were highly dispersed (yielding about 300 groups) with weak semantic connections.
 
-Metric Clusters (N=128): We define a "cluster" as a specific evaluation method that join all its naming variants and specific implementations. For instance, pass@1, pass@10, and pass@k were grouped into a single cluster labeled Pass@k. This process allowed us to reduce the initial 300 into 128 distinct metric clusters.
+To address this dispersion and reduce redundancy, we moved to a structured manual refinement process defined by two hierarchical levels:
 
-Taxonomy Categories (N=13): These represent high-level quality dimensions. Each category groups multiple Metric Clusters that share similar characteristics or goals. To make an example, all clusters relying on test cases are grouped under Functional Evaluation.
+Metric Clusters (N=128): We define a "cluster" as a specific evaluation method that joins all its naming variants and specific implementations. For example, pass@1, pass@10, and pass@k were grouped into a single cluster named Pass@k. This process allowed us to reduce the initial 300 into 128 distinct metric clusters.
+
+Taxonomy Categories (N=13): These represent high-level quality dimensions. Each category groups multiple Metric Clusters that share similar characteristics or goals. To make an example, all clusters relying on computational efficiency are grouped under Efficiency \& Resource Usage.
 \subsection{The 13 Quality Categories}
 
 Based on the 128 defined clusters, we established a taxonomy consisting of 13 categories as follows:
@@ -146,16 +148,17 @@ Based on the 128 defined clusters, we established a taxonomy consisting of 13 ca
 	\item Logical Reasoning \& Verification: It focuses on the capability of the LLM to do a logical reasoning or formal deductions. It is really useful in SE in task that require complex requirements or business logic.
     \item Robustness, Security \& Reliability: It focuses on safety and consistency, checking for vulnerabilities and resilience against malicious inputs. Additionally, it measures the stability of the answers to changes in the prompt.	
     \item Efficiency \& Resource Usage: It measures the cost of using the model. It can refer to computational cost, latency or memory usage. This group is key when optimization is required for the success of the project.
-    \item Architectural \& System-level Metrics: It evaluates not only the fragment of code but focuses primarily on a high level of abstraction. This group investigates system-wide characteristics, architectural behavior, dependencies, and coupling.	
+    \item Architectural \& System-level Metrics: This category evaluates not only code fragments but focuses primarily on a high level of abstraction. This group investigates system-wide characteristics, architectural behavior, dependencies, and coupling.	
     \item Creativity, Diversity \& Novelty: Measures if the models always displays the same answer or if it has the ability to create different approaches for the same prompt.
 	\item Ranking, Reward \& Optimization: Evaluates the capacity of the model to rank answers from best to worst or metrics derived from reward models that make predictions of the quality if the code without executing it.
 	\item Semantic, Coherence \& Hallucination: Measures not only the exact meaning of the words generated by the LLM, but also whether the text makes sense, is factual or is free from hallucinations.
 \end{enumerate}
 
+This taxonomy gives us a systematic organization and an effective filtering mechanism. It is important to specify that a metric can share characteristics from two or more different groups of categories, but each metric was assigned to a single primary category to maintain simplicity and structural clarity.
 
 \section{Implementation of the Web-Based Metric Catalog}
 
-To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. This final product can be find in the following link:
+To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. This final product can be found in the following link:
 
 \begin{center}
 \url{https://m-arizaj.github.io/LLMs-metrics-catalog/}
