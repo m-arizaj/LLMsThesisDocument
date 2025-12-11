@@ -1,0 +1,49 @@
+\subsection{Distinguishability ($d$)}
+
+\subsubsection*{Introduction}
+Distinguishability ($d$) is a meta-metric (a metric for evaluating other metrics) introduced by Eghbali and Pradel (2022) to evaluate how well a code similarity metric, such as BLEU or CodeBERTScore, can differentiate between code snippets that are semantically similar and those that are semantically different.
+
+The goal is to quantify whether a metric assigns higher scores to code pairs that come from the same ``semantic cluster'' (i.e., they solve the same problem) compared to code pairs from different clusters.
+
+\subsubsection*{Definition}
+Distinguishability is calculated as the ratio of the average similarity of code pairs \textit{within the same cluster} ($\text{Pairs}_{\text{intra}}$) to the average similarity of code pairs \textit{from different clusters} ($\text{Pairs}_{\text{inter}}$).
+
+Mathematically, it is expressed as:
+
+\begin{equation}
+    d = \frac{\sum_{y_i, y_j \in \text{Pairs}_{\text{intra}}} f(y_i, y_j)}{\sum_{y_i, y_j \in \text{Pairs}_{\text{inter}}} f(y_i, y_j)}
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $f(y_i, y_j)$: The similarity function being evaluated (e.g., CodeBERTScore).
+    \item $\text{Pairs}_{\text{intra}}$: The set of code pairs $(y_i, y_j)$ where $y_i$ and $y_j$ are in the same semantic cluster $C_k$.
+    \item $\text{Pairs}_{\text{inter}}$: The set of code pairs $(y_i, y_j)$ where $y_i$ and $y_j$ belong to different semantic clusters.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose of this metric is \textbf{Semantic Cluster Separation}. Intuitively, a value of $d > 1$ is desired, which means the similarity metric $f$ assigns higher scores to code snippets that are functionally similar (intra-cluster) than to those that are functionally different (inter-cluster).
+
+\subsubsection*{Applications}
+\begin{itemize}
+    \item The original paper uses this metric to evaluate CodeBERTScore and CrystalBLEU on a dataset mined from ShareCode, an online coding competition platform.
+    \item In this context, ``semantically equivalent code snippets'' are defined as those from the same coding problem that all pass the unit tests provided by the platform.
+\end{itemize}
+
+\subsubsection*{Limitations}
+Recent research (e.g., Zhou et al., 2023) presents a significant critique of the distinguishability metric, arguing that it is ``not a reliable meta-metric'' due to the following reasons:
+
+\begin{itemize}
+    \item \textbf{Manipulability}: The metric relies on absolute similarity scores rather than how the metric ranks solutions.
+    \item \textbf{Vulnerability to Hacking}: Authors demonstrated they can ``hack'' the metric by creating a variant called $\text{CodeBERTScore}^k$. By increasing the exponent $k$, the distinguishability value increases almost exponentially (reaching values up to 120,000), even though the base metric's ranking ability remains unchanged.
+    \item \textbf{Conclusion}: The critique suggests that the reliable way to compare metrics is by their \textit{ranking} of different examples, ``rather than the exact scores.''
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @inproceedings{eghbali2022crystalbleu,
+%   title={Crystalbleu: precisely and efficiently measuring the similarity of code},
+%   author={Eghbali, A. and Pradel, M.},
+%   booktitle={37th IEEE/ACM International Conference on Automated Software Engineering},
+%   year={2022},
+%   doi={10.1145/3551349.3556903}
+% }

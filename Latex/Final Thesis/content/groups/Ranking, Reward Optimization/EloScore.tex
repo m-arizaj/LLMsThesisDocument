@@ -1,0 +1,41 @@
+\subsection{ELO Score}
+
+\subsubsection*{Introduction}
+The ELO Score (or Elo rating) is a human evaluation metric used to assess the performance of Large Language Models (LLMs), particularly in comparative chatbot benchmarks. This method was adopted by the \textit{Chatbot Arena} platform as a way to ``reduce the cost of human evaluation'' while still capturing human preferences.
+
+Instead of absolute scoring, this method relies on crowdsourced, pairwise comparisons where users vote for the ``better'' response from two anonymous models. The ELO score is then used to rank the models on a leaderboard.
+
+\subsubsection*{Definition}
+The ELO Score is a method for calculating the relative skill levels of players (in this case, LLMs) in competitor-versus-competitor matchups. In the context of \textit{Chatbot Arena}, users pose questions to two anonymous models simultaneously and vote for the better response.
+
+The ranking process follows these principles:
+\begin{itemize}
+    \item All models initially start with the same ELO score.
+    \item With each ``matchup,'' the ELO score of the favored (winning) LLM increases, while the score of the other model decreases.
+    \item Over time, as more comparisons are accumulated, the ``relative abilities of LLMs can be discerned through their respective Elo scores.''
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of the ELO score is to serve as the core metric for \textbf{Human Evaluation} in a crowdsourced, competitive environment. It provides a scalable and reliable way to rank models based on aggregated human preferences.
+
+\subsubsection*{Applications}
+\begin{itemize}
+    \item It is the main evaluation metric for \textit{Chatbot Arena}.
+    \item It is used to evaluate an LLM's \textbf{Intelligence} and \textbf{Human Preference}.
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Scalable and Incremental}: The ``Elo scoring mechanism facilitates the establishment of rank orderings without necessitating a comprehensive comparison of all LLMs across all queries, streamlining the evaluation process.''
+    \item \textbf{Cost-Efficient}: It was proposed as a way ``to reduce the cost of human evaluation'' compared to traditional, expert-led manual assessments.
+    \item \textbf{Reliable}: Although human evaluation can be inconsistent, it is ``generally considered more credible'' than automated metrics. The Chatbot Arena aggregates these human preferences to create a stable ranking.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{zheng2023judging,
+%   title={Judging LLM-as-a-judge with MT-Bench and Chatbot Arena},
+%   author={Zheng, L. and Chiang, W.-L. and Sheng, Y. and Zhuang, S. and Wu, Z. and Zhuang, Y. and Lin, Z. and Li, Z. and Li, D. and Xing, E. P. and others},
+%   journal={arXiv preprint arXiv:2306.05685},
+%   year={2023},
+%   doi={10.48550/arXiv.2306.05685}
+% }
