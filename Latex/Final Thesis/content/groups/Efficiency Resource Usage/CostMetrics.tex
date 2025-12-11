@@ -1,0 +1,95 @@
+\subsection{Cost Metrics}
+
+\subsubsection*{Introduction}
+In the evaluation of Large Language Models (LLMs) for software engineering tasks, ``cost'' is a crucial metric category that goes beyond simple functional correctness. It is not a single metric, but a set of efficiency metrics that quantify the resources consumed during code development, execution, or repair.
+
+These costs are generally divided into \textit{time cost} (how long the process takes) and \textit{resource cost} (financial or computational). Specific metrics like \textbf{Monetary Cost}, \textbf{Development Cost}, and \textbf{Total Cost} are used to measure the financial and efficiency implications of using LLMs in domains like automatic program repair (APR), code evolution, and autonomous agents.
+
+\subsubsection*{Definition}
+Cost metrics are defined variously depending on the specific resource being optimized. We categorize them into three primary definitions found in the literature:
+
+\begin{itemize}
+    \item \textbf{Monetary Cost}: Defined as the ``monetary expenses associated with token consumption, based on OpenAI's pricing.'' It is considered a primary cost factor for assessing pipelines.
+    \item \textbf{Development Cost}: Identified as an ``efficiency metric'' in the context of autonomous agents (e.g., ChatDev). It quantifies the resources associated with the software development lifecycle simulation.
+    \item \textbf{Total Cost}: A run-time cost metric used in evolutionary algorithms (like LLM\_GP). It is comprehensive, defined by the summation of multiple cost facets:
+\end{itemize}
+
+\begin{equation}
+    \text{Cost}_{\text{total}} = C_{\text{time}} + C_{\text{monetary}} + C_{\text{indirect}}
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $C_{\text{time}}$: The duration associated with sending prompts and waiting for API responses.
+    \item $C_{\text{monetary}}$: The direct financial expense of API calls.
+    \item $C_{\text{indirect}}$: The hidden but significant cost of the LLM's pre-training.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose of these metrics is to assess the efficiency and feasibility of LLM-based solutions:
+\begin{itemize}
+    \item \textbf{Monetary Cost}: To assess the financial implications of utilizing an LLM pipeline for specific tasks (e.g., comparing GPT-3.5-Turbo vs. GPT-4).
+    \item \textbf{Development Cost}: To assess the efficiency of LLM-based autonomous agents simulating software engineering roles.
+    \item \textbf{Total Cost}: To measure the computational and financial cost of executing evolutionary operators (initialization, crossover, mutation) in code evolution tasks.
+\end{itemize}
+
+\subsubsection*{Applications}
+Cost metrics are applied across various domains of software engineering:
+\begin{itemize}
+    \item \textbf{Automatic Program Repair (APR)}: Measuring the cost of repairing declarative specifications (e.g., Alloy) for both fixed and unfixed attempts.
+    \item \textbf{Autonomous Agents}: Comparing agent setups (e.g., single-agent vs. dual-agent), where dual-agent setups often exhibit marginally higher costs.
+    \item \textbf{Code Evolution}: Evaluating evolutionary algorithm variants (e.g., LLM\_GP vs. LLM\_GP\_Mu\_XO) in Symbolic Regression tasks and tracking cost changes across API versions (e.g., F23 vs. S24).
+\end{itemize}
+
+\subsubsection*{Comparative Summary}
+Below is a comparison of the distinct cost metrics identified:
+
+\begin{center}
+\begin{tabular}{|l|p{4cm}|p{4cm}|}
+\hline
+\textbf{Metric} & \textbf{Application Domain} & \textbf{Measured Components} \\
+\hline
+Monetary Cost & Specification Repair (Alloy) & API token consumption (Financial) \\
+\hline
+Development Cost & Autonomous Agents (Survey) & Cost associated with development (Efficiency) \\
+\hline
+Total Cost & Code Evolution (LLM\_GP) & API wait time, API cost, and pre-training cost \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas al archivo .bib
+
+% @article{alhanahnah2025empirical,
+%   title={An empirical evaluation of pre-trained large language models for repairing declarative formal specifications},
+%   author={Alhanahnah, M. and Hasan, M. R. and Xu, L. and Khurshid, S.},
+%   journal={Empirical Software Engineering},
+%   volume={30},
+%   number={149},
+%   year={2025},
+%   publisher={Springer},
+%   doi={10.1007/s10664-025-10687-1}
+% }
+
+% @article{hemberg2024evolving,
+%   title={Evolving code with a large language model},
+%   author={Hemberg, E. and Moskal, S. and O’Reilly, U.-M.},
+%   journal={Genetic Programming and Evolvable Machines},
+%   volume={25},
+%   number={21},
+%   year={2024},
+%   publisher={Springer},
+%   doi={10.1007/s10710-024-09494-2}
+% }
+
+% @article{wang2024survey,
+%   title={A survey on large language model based autonomous agents},
+%   author={Wang, L. and Ma, C. and Feng, X. and others},
+%   journal={Frontiers of Computer Science},
+%   volume={18},
+%   number={6},
+%   pages={186345},
+%   year={2024},
+%   publisher={Springer},
+%   doi={10.1007/s11704-024-40231-1}
+% }
