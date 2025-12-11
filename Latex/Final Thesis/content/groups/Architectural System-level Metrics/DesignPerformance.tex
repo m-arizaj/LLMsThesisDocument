@@ -1,0 +1,36 @@
+\subsection{Design Performance}
+
+\subsubsection*{Introduction}
+Design Performance is not a single metric, but rather a category of evaluation metrics used to measure the efficiency and implementation quality of code generated for Hardware Description Languages (HDL), such as Verilog.
+
+Unlike traditional software metrics that focus on functional correctness (like Pass@k) or textual similarity (like BLEU), Design Performance evaluates how well the HDL code translates into a physical circuit. It focuses on non-functional constraints that are critical in hardware design, such as speed, power consumption, and resource utilization. This category of metrics is a core component of the VerilogEval benchmark \cite{liu2023verilogeval}, which assesses the capabilities of LLMs in practical hardware design tasks.
+
+\subsubsection*{Definition}
+Design Performance refers to a set of metrics that evaluate the quality of the synthesized hardware from the model-generated HDL code. These metrics are obtained after the code is processed by synthesis and simulation tools. The key components are:
+
+\begin{itemize}
+    \item \textbf{Timing}: Measures the speed performance of the circuit, such as maximum clock frequency or propagation delays. It is a crucial metric in hardware design.
+    \item \textbf{Power}: Evaluates the power consumption of the synthesized circuit.
+    \item \textbf{Area}: Measures the amount of physical resources (like logic gates, lookup tables, etc.) the design occupies on the chip.
+\end{itemize}
+
+An ``excellent design performance'' reflects high efficiency and good resource utilization.
+
+\subsubsection*{Purpose}
+The main purpose of these metrics is to go beyond simple syntactic or functional correctness. While metrics like the \textit{synthesis success rate} verify basic correctness, Design Performance evaluates the \textbf{efficiency and quality} of a functionally correct solution. It assesses whether the generated code is practical and efficient for real-world hardware applications.
+
+\subsubsection*{Applications}
+\begin{itemize}
+    \item It is used prominently in the VerilogEval benchmark for Verilog code generation and verification.
+    \item Evaluation of LLMs on hardware design tasks, including combinational logic circuits, sequential logic circuits, and state machine design.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Difficulty for Models}: Research notes that while deep learning-based models perform well in synthesis and simulation (correctness), they ``need improvement in design performance''.
+    \item \textbf{Highly Specialized}: These metrics are specific to the hardware design (HDL) domain and are not applicable to general-purpose software evaluation.
+    \item \textbf{Tool-Dependent}: Calculation requires the use of specialized hardware synthesis and simulation tools, making it more complex and computationally expensive than text-based metrics.
+\end{itemize}
+
+% Añadir esta entrada a tu archivo .bib
+% Liu, M., Pinckney, N., Khailany, B., & Ren, H. (2023). VerilogEval: Evaluating large language models for Verilog code generation. arXiv. https://doi.org/10.48550/arXiv.2309.07544

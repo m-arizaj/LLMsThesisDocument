@@ -81,6 +81,9 @@
 \usepackage{tabularx}
 \usepackage{float}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
 \lstset{
 	language=xml,
 	tabsize=2,
@@ -155,6 +158,21 @@
 	{\small$\blacktriangleright$\textit{#2}$\blacktriangleleft$}}
 \newcommand\MARIO[1]{\textcolor{red}{\nb{MARIO}{#1}}}
 \newcommand\SANTIAGO[1]{\textcolor{orange}{\nb{SANTIAGO}{#1}}}
+
+% Agrega esto en tu preámbulo (antes de \begin{document})
+
+\usepackage{titlesec} % Asegúrate de que esto ya esté o agrégalo
+
+% Definir el formato visual del título
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries} % Estilo: Fuente normal, tamaño normal, negrita
+  {\thesubsubsection}{1em}{}        % Numeración y espacio
+
+% Definir el espaciado (arriba y abajo del título)
+\titlespacing*{\subsubsection}
+  {0pt}                             % Sangría a la izquierda
+  {1.5ex plus 1ex minus .2ex}      % Espacio antes del título
+  {1.5ex plus .2ex}                 % Espacio después del título
 % **************************************************
 % Document CONTENT
 % **************************************************
