@@ -1,0 +1,52 @@
+\subsection{Faithfulness (Design Fidelity)}
+
+\subsubsection*{Definition}
+Faithfulness is an evaluation metric used within the \textbf{DevEval} benchmark to measure ``Design Fidelity.'' It is not a single score but a principle of evaluation, specifically assessing the extent to which a Large Language Model (LLM) adheres to specified instructions when generating software design artifacts.
+
+The core idea is to measure how accurately and strictly the model's output (e.g., UML diagrams, architecture design) aligns with the given \textbf{Product Requirement Document (PRD)}, ensuring all functionalities are met ``without making any hallucinations and additions.'' This metric is typically assessed using an ``LLM-as-a-judge'' approach.
+
+\subsubsection*{Evaluation Methods}
+Faithfulness is evaluated differently across the sub-tasks of software design:
+
+\begin{itemize}
+    \item \textbf{For UML Class Diagrams}: The metric evaluates if the generated conceptual classes, their relationships (inheritance, aggregation, composition), cardinalities, and class names ``accurately represent the essentials outlined in the PRD.''
+    \item \textbf{For UML Sequence Diagrams}: The evaluation checks how ``accurately and comprehensively'' the diagram reflects the system's intended behavior as specified in the PRD. This includes capturing system events and ensuring the design is coherent with the class diagrams.
+    \item \textbf{For Architecture Design}: The metric verifies that the file tree structure is in ``strict accordance with the given PRD and UML class diagrams,'' ensuring a consistent development process.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose of the Faithfulness metric is to quantify a model's ability to \textbf{strictly follow detailed, document-level requirements} and translate them into accurate, corresponding design artifacts. This measures a critical component of design fidelity beyond just generating plausible-sounding designs.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Software Design
+    \item General LLM Evaluation
+\end{itemize}
+
+\subsubsection*{Benchmarks}
+\begin{itemize}
+    \item \textbf{DevEval} (specifically the ``Software Design'' task)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Real-World Relevance}: Measures a crucial software engineering skill: adherence to specifications.
+    \item \textbf{Hallucination Control}: Directly targets and penalizes model hallucinations or unrequested feature additions.
+    \item \textbf{Scope Expansion}: Moves evaluation beyond simple code generation to the critical upstream phase of design planning.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Dependency on Judges}: The metric relies on an ``LLM-as-a-judge'' for evaluation, which may introduce its own biases or inconsistencies.
+    \item \textbf{Subjectivity}: It is largely a subjective assessment of alignment rather than a strictly quantitative, replicable numerical score.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{li2024prompting,
+%   title={Prompting large language models to tackle the full software development lifecycle: A case study},
+%   author={Li, B. and Wu, W. and Tang, Z. and Shi, S.},
+%   journal={arXiv preprint arXiv:2403.08604},
+%   year={2024},
+%   doi={10.48550/arXiv.2403.08604}
+% }

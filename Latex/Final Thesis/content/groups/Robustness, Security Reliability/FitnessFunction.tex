@@ -1,0 +1,57 @@
+\subsection{Fitness Function Value}
+
+\subsubsection*{Definition}
+A \textbf{Fitness Function Value} is the score assigned to a candidate solution in an Evolutionary Algorithm (EA), such as Genetic Programming (GP) or LLM\_GP. It is a ``problem-dependent fitness measure'' that quantifies the quality or ``Functional Performance'' of a solution (e.g., a piece of generated code).
+
+This value is calculated by an \textit{evaluation operator}, which ``iteratively test[s] each solution and calculate[s] its fitness.'' This fitness score is then used by the \textit{selection operator} to choose which solutions will ``parent'' the next generation.
+
+\subsubsection*{Formula (General Idea)}
+The calculation is described as a two-step process defined within the algorithm's operators:
+
+\begin{enumerate}
+    \item \textbf{Evaluation ($e$)}: A solution ($p$) is executed in an environment ($E$) to get an output ($y$).
+    \begin{equation}
+        y = e(p, E)
+    \end{equation}
+    
+    \item \textbf{Fitness Measure ($\phi$)}: The fitness function measures the quality of that output ($y$) to produce the final fitness value ($f$).
+    \begin{equation}
+        f = \phi(y, E)
+    \end{equation}
+\end{enumerate}
+
+In traditional GP, this value is strictly numeric. In LLM\_GP, the fitness could be ``numeric or expressed with natural language.''
+
+\subsubsection*{Purpose}
+The purpose of the fitness function is to ``assess the quality of the response/output'' from a candidate solution. This score provides the basis for \textbf{selection} in the evolutionary process, allowing the algorithm to differentiate between high- and low-performing solutions.
+
+\subsubsection*{Domains \& Benchmarks}
+\begin{itemize}
+    \item \textbf{Domains}: Software Engineering, Code Evolution, Genetic Programming (GP), Program Synthesis, Automatic Programming.
+    \item \textbf{Benchmarks}: LLM\_GP (Symbolic Regression), General GP benchmarks.
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Core to Evolution}: It is the fundamental mechanism that drives selection and guides the algorithm toward a better solution.
+    \item \textbf{Central Comparison Point}: In traditional GP, fitness evaluations are the ``cost-dominating operator,'' making them a clear basis for comparing algorithm efficiency.
+    \item \textbf{Flexible in LLM\_GP}: The concept of fitness can be expanded beyond a single numeric score to include quality assessments expressed in natural language.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{LLM In-Capability}: Using an LLM to \textit{calculate} the fitness value (i.e., a $\phi_{\text{LLM}}$ operator) is often not practical for problems requiring computation, as LLMs are ``notorious for not being able to compute mathematically.''
+    \item \textbf{Standard Implementation}: Consequently, in many practical LLM\_GP variants, the fitness measure is one of the few operators that does \textit{not} use an LLM; instead, the code is executed externally and a traditional fitness score is calculated.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{hemberg2024evolving,
+%   title={Evolving code with a large language model},
+%   author={Hemberg, E. and Moskal, S. and O’Reilly, U.-M.},
+%   journal={Genetic Programming and Evolvable Machines},
+%   volume={25},
+%   number={21},
+%   year={2024},
+%   publisher={Springer},
+%   doi={10.1007/s10710-024-09494-2}
+% }

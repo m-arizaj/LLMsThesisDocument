@@ -1,0 +1,89 @@
+\subsection{Energy \& Resource Metrics}
+
+\subsubsection*{Introduction}
+This group of metrics evaluates the \textit{Efficiency} and \textit{Sustainability} of Large Language Models (LLMs). As LLMs grow in scale, their ``large parameter scale... necessitates substantial computational resources,'' leading to significant overhead. These metrics are not focused on task correctness, but rather on quantifying the computational, time, and energy costs required for training and inference.
+
+This category includes broad dimensions like \textbf{Resource Consumption}, specific benchmark metrics like \textbf{Energy Consumption} (Mercury), and holistic categories like \textbf{Efficiency} from the HELM benchmark.
+
+\subsubsection*{Definition}
+This domain is categorized into three distinct definitions based on the scope of evaluation:
+
+\begin{itemize}
+    \item \textbf{Resource Consumption (General)}: A comprehensive evaluation dimension assessing the high demands of LLMs. It is broken down into:
+    \begin{itemize}
+        \item \textit{Computational Power}: Demands for computing power and storage.
+        \item \textit{Time}: Duration of training and parameter tuning.
+        \item \textit{Energy}: Electricity costs for operation and cooling systems.
+    \end{itemize}
+    
+    \item \textbf{Efficiency (HELM Benchmark)}: One of the seven top-level metrics in the \textit{Holistic Evaluation of Language Models} (HELM) benchmark. It defines efficiency through practical proxies for computational cost.
+    
+    \item \textbf{Energy Consumption (Mercury Benchmark)}: A specific metric designed to assess the efficiency of the \textit{code generated} by LLMs, rather than the model itself.
+\end{itemize}
+
+\subsubsection*{Purpose}
+\begin{itemize}
+    \item \textbf{Resource Consumption}: To ``optimize model efficiency, reduce resource consumption, and improve application efficiency'' by identifying bottlenecks.
+    \item \textbf{Efficiency (HELM)}: To provide a ``holistic evaluation'' of model efficiency alongside accuracy.
+    \item \textbf{Energy Consumption (Mercury)}: To provide a direct, quantitative measure of the sustainability of the software solutions produced by the LLM.
+\end{itemize}
+
+\subsubsection*{Applications}
+\begin{itemize}
+    \item \textbf{Resource Consumption}: Used as a high-level dimension for the comprehensive evaluation of resource overheads in training and inference.
+    \item \textbf{Efficiency (HELM)}: Measured using sub-metrics: \textit{Training Time} (on proxy tasks), \textit{Inference Time}, and \textit{Number of Parameters}.
+    \item \textbf{Energy Consumption (Mercury)}: Measured by running LLM-generated code against preset test cases in a fixed hardware environment and recording execution time, memory usage, and energy consumption.
+\end{itemize}
+
+\subsubsection*{Comparative Summary}
+Below is a comparison of the scope and focus of these efficiency metrics:
+
+\begin{center}
+\begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4.5cm}|}
+\hline
+\textbf{Metric} & \textbf{Domain} & \textbf{Scope} & \textbf{Measured Components} \\
+\hline
+Resource Consumption & General LLM Eval & Model (Training \& Inference) & Power, Time, and Energy (General dimension) \\
+\hline
+Efficiency (HELM) & General LLM Eval & Model (Training \& Inference) & Training Time, Inference Time, \# of Parameters \\
+\hline
+Energy Consumption & Code Generation (Mercury) & Generated Code (Runtime) & Energy consumed by the output code during execution \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas al archivo .bib
+
+% @inproceedings{lin2024overview,
+%   title={Overview of the comprehensive evaluation of large language models},
+%   author={Lin, L. and Zhu, D. and Shang, J.},
+%   booktitle={2024 IEEE Smart World Congress (SWC)},
+%   pages={1504--1512},
+%   year={2024},
+%   organization={IEEE},
+%   doi={10.1109/SWC62898.2024.00231}
+% }
+
+% @article{liang2022holistic,
+%   title={Holistic evaluation of language models},
+%   author={Liang, P. and Bommasani, R. and Lee, T. and Tsipras, D. and Soylu, D. and Yasunaga, M. and others},
+%   journal={arXiv preprint arXiv:2211.09110},
+%   year={2022},
+%   doi={10.48550/arXiv.2211.09110}
+% }
+
+% @article{chen2024survey,
+%   title={A survey on evaluating large language models in code generation tasks},
+%   author={Chen, L. and Guo, Q. and Jia, H. and Zeng, Z. and Wang, X. and Xu, Y. and Zhang, S.},
+%   journal={arXiv preprint arXiv:2408.16498},
+%   year={2024},
+%   doi={10.48550/arXiv.2408.16498}
+% }
+
+% @article{chang2023survey,
+%   title={A survey on evaluation of large language models},
+%   author={Chang, Y. and Wang, X. and Wang, J. and Wu, Y. and Yang, L. and others},
+%   journal={arXiv preprint arXiv:2307.03109},
+%   year={2023},
+%   doi={10.48550/arXiv.2307.03109}
+% }

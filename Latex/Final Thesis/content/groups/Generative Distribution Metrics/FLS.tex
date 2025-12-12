@@ -1,0 +1,65 @@
+\subsection{FLS (Feature Likelihood Score)}
+
+\subsubsection*{Introduction}
+FLS (Feature Likelihood Score) is a density estimation metric designed to evaluate the generalization performance of generative models. Introduced by Jiralerspong et al. (2023), its primary goal is to approximate a likelihood evaluation, even for models where a likelihood value is not readily available.
+
+The method works by fitting a Kernel Density Estimate (KDE) to the feature representations (e.g., from an Inception-V3 encoder) of the \textit{generated} samples. The bandwidth for this KDE is optimized to maximize the log-likelihood of the \textit{training} data. The final FLS score is then derived from the log-likelihood of the \textit{test} data under this fitted KDE.
+
+FLS is used as a metric for ranking the overall quality of models, but it also produces a diagnostic sub-metric, \textbf{FLS-POG}, specifically designed to measure memorization.
+
+\subsubsection*{1. FLS (Feature Likelihood Score)}
+
+\textbf{Definition} \\
+FLS is a density estimation method that requires access to training, test, and generated samples. It fits a Kernel Density Estimate (KDE) to the encoded features of the generated samples. The KDE's bandwidths are chosen by maximizing the log-likelihood of the training data. The final FLS score is an affine transformation of the log-likelihood of the test data under this KDE.
+
+\textbf{Purpose} \\
+To provide a ``Ranking / Overall Quality'' score for generative models by approximating the likelihood of real test data under the model's generated distribution.
+
+\textbf{Benchmarks} \\
+Commonly used on: CIFAR10, ImageNet1k, FFHQ, LSUN-Bedroom.
+
+\textbf{Limitations}
+\begin{itemize}
+    \item FLS is not strongly correlated with human evaluations of image realism, particularly on complex datasets.
+    \item The metric can be sensitive to the choice of encoder used for feature extraction.
+\end{itemize}
+
+\subsubsection*{2. FLS-POG (Percentage of Overfit Gaussians)}
+
+\textbf{Definition} \\
+FLS-POG is a metric derived from the FLS calculation, designed specifically to measure \textbf{memorization}. It is defined as the ``percentage of generated samples that had a higher log-likelihood under the training set than the test set.'' A high FLS-POG score suggests that the generated samples are more ``typical'' of the training set than the test set, indicating overfitting.
+
+\textbf{Purpose} \\
+To automatically detect memorization in generative models, claiming to isolate it from other phenomena like mode collapse.
+
+\textbf{Limitations}
+\begin{itemize}
+    \item FLS-POG has been shown to be an \textbf{unreliable metric} for memorization.
+    \item It correlates poorly with the actual, measured percentage of memorized samples.
+    \item In controlled experiments, it was found to be the \textit{weakest detector of memorization} compared to other metrics like AuthPct and CT.
+    \item It also fails to flag mode shrinkage correctly.
+\end{itemize}
+
+\subsubsection*{Comparative Summary}
+Below is a comparison of the main score and its diagnostic variant:
+
+\begin{center}
+\begin{tabular}{|p{2cm}|p{1.5cm}|p{3.5cm}|p{5cm}|}
+\hline
+\textbf{Metric} & \textbf{Based on} & \textbf{Goal} & \textbf{Key Feature(s)} \\
+\hline
+FLS & KDE & Rank models based on density estimation. & Fits a KDE to generated data; evaluates log-likelihood on test data. \\
+\hline
+FLS-POG & FLS & Detect memorization / overfitting. & Compares train vs. test log-likelihood for each generated sample. \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir esta entrada a tu archivo .bib
+% @article{jiralerspong2023feature,
+%   title={Feature likelihood score: Evaluating generalization of generative models using samples},
+%   author={Jiralerspong, M. and Bose, A. J. and Gidel, G.},
+%   journal={arXiv preprint arXiv:2302.04440},
+%   year={2023},
+%   doi={10.48550/arXiv.2302.04440}
+% }

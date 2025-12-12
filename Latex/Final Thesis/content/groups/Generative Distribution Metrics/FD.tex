@@ -1,0 +1,106 @@
+\subsection{Fréchet Distance (FD)}
+
+\subsubsection*{Introduction}
+The \textbf{Fréchet Distance (FD)} is one of the most widely used metrics for evaluating the quality of generative models, particularly in the generation of images. It is designed to measure the similarity between the distribution of generated samples and the distribution of real samples.
+
+The metric follows a two-step process:
+\begin{enumerate}
+    \item \textbf{Feature Extraction}: Samples from both the real and generated datasets are passed through a feature extractor (an ``encoder'') to get lower-dimensional representations.
+    \item \textbf{Distance Calculation}: The Fréchet distance (also known as the Wasserstein-2 distance) is calculated between two multivariate Gaussian distributions that are fitted to the mean and covariance of these extracted features.
+\end{enumerate}
+
+This metric is most commonly known as \textbf{FID (Fréchet Inception Distance)}, which specifically refers to using the Inception-V3 network as the feature extractor. While FID is a standard, distinct variants like \textbf{FD$\infty$} and \textbf{sFID} have been developed to address specific limitations.
+
+\subsubsection*{1. Standard Fréchet Distance (FD / FID)}
+
+\textbf{Definition} \\
+The standard Fréchet Distance computes the Wasserstein-2 distance between two Gaussians fitted to the sample mean ($\mu$) and covariance ($\Sigma$) of the real ($r$) and generated ($g$) feature representations. When the Inception-V3 encoder is used, this is referred to as \textbf{FID}.
+
+\begin{equation}
+    \text{FD} = ||\mu_r - \mu_g||_2^2 + \text{Tr}\left(\Sigma_r + \Sigma_g - 2(\Sigma_r \Sigma_g)^{1/2}\right)
+\end{equation}
+
+\textbf{Purpose} \\
+FD (and FID) is used as a primary metric for ranking the overall quality of generative models. It groups both the \textbf{fidelity} (realism) and \textbf{diversity} of the generated samples into a single score. A lower score indicates better performance.
+
+\textbf{Limitations}
+\begin{itemize}
+    \item \textbf{Encoder Bias (FID)}: The standard Inception-V3 encoder is biased towards textures over shapes and features relevant to its 1k ImageNet classes.
+    \item \textbf{Poor Human Correlation}: FID scores often do not correlate strongly with human evaluations of perceptual realism (especially for diffusion models).
+    \item \textbf{Sample Bias}: The calculation is biased by the finite number of samples (e.g., 50k); the true value would be lower with infinite samples.
+    \item \textbf{Conflates Metrics}: Combining fidelity and diversity into one score makes it difficult to diagnose why a model is failing.
+\end{itemize}
+
+\subsubsection*{2. FD$\infty$ (Fréchet Distance Infinite)}
+
+\textbf{Definition} \\
+A variant of FD designed to correct for the inherent bias introduced by using a finite number of samples. FD$\infty$ is calculated by evaluating the standard FD at multiple sample sizes (e.g., 15 intervals from 5k to 50k), fitting a linear trend, and extrapolating the value to an infinite number of samples ($N=\infty$).
+
+\textbf{Advantages}
+\begin{itemize}
+    \item Provides a less biased estimate of the Fréchet Distance compared to the standard calculation.
+    \item More stable with respect to the number of samples used.
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item While it reduces bias, it does not completely solve the problem, and values still tend to decrease as more samples are used.
+    \item It relies on the same (potentially flawed) encoder as the underlying FD metric.
+\end{itemize}
+
+\subsubsection*{3. sFID (Spatial FID)}
+
+\textbf{Definition} \\
+A variant of FID that computes the Fréchet Distance using representations from an \textit{intermediate layer} of the Inception-V3 network (specifically, the \texttt{mixed\_6/conv} layer) instead of the final \texttt{pool3} layer.
+
+\textbf{Purpose} \\
+Developed to capture more spatial or textural features rather than the high-level semantic features from the final layer.
+
+\textbf{Limitations}
+\begin{itemize}
+    \item It still relies on the Inception-V3 network and its associated biases.
+    \item It is not widely reported in modern papers compared to the standard FID.
+\end{itemize}
+
+\subsubsection*{Comparative Summary}
+Below is a comparison of the key FD variants:
+
+\begin{center}
+\begin{tabular}{|p{2cm}|p{2cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Metric} & \textbf{Based on} & \textbf{Extension Goal} & \textbf{Key Feature(s)} \\
+\hline
+FD / FID & FD & Baseline metric for overall quality (fidelity + diversity). & $W_2$ distance between Gaussian moments. FID uses Inception-V3. \\
+\hline
+FD$\infty$ & FD & Remove finite-sample bias from the FD calculation. & Extrapolates FD value to $N=\infty$ using a linear fit. \\
+\hline
+sFID & FD / FID & Evaluate on spatial features, not just semantic features. & Uses an intermediate layer (\texttt{mixed\_6/conv}) of Inception-V3. \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas a tu archivo .bib
+
+% @article{heusel2017gans,
+%   title={GANs trained by a two time-scale update rule converge to a local Nash equilibrium},
+%   author={Heusel, M. and Ramsauer, H. and Unterthiner, T. and Nessler, B. and Hochreiter, S.},
+%   journal={arXiv preprint arXiv:1706.08500},
+%   year={2017},
+%   doi={10.48550/arXiv.1706.08500}
+% }
+
+% @article{chong2020effectively,
+%   title={Effectively unbiased FID and inception score and where to find them},
+%   author={Chong, M. J. and Forsyth, D.},
+%   journal={arXiv preprint arXiv:1911.07023},
+%   year={2020},
+%   doi={10.48550/arXiv.1911.07023}
+% }
+
+% @article{nash2021generating,
+%   title={Generating images with sparse representations},
+%   author={Nash, C. and Menick, J. and Dieleman, S. and Battaglia, P. W.},
+%   journal={arXiv preprint arXiv:2103.03841},
+%   year={2021},
+%   doi={10.48550/arXiv.2103.03841}
+% }
