@@ -1,0 +1,164 @@
+\subsection{BLEU}
+
+\subsubsection{Introduction}
+
+BLEU (\textit{Bilingual Evaluation Understudy}) is one of the most influential automatic evaluation metrics in Natural Language Processing (NLP). Introduced by \textbf{Papineni et al. (2002)} \cite{10.3115/1073083.1073135}, it provided a scalable and reproducible way to compare system outputs with human references using \textit{n-gram overlap} rather than subjective human scoring. Since its publication, BLEU has become a cornerstone for evaluating not only machine translation and text generation, but also code generation and other software engineering tasks, as Large Language Models began producing structured, programmatic outputs.
+
+Its core idea, precision over short token sequences, has inspired several specialized variants such as CodeBLEU, CrystalBLEU, Smoothed BLEU, and WeightBLEU, each adapting the metric to better capture syntactic and semantic aspects of specific domains.
+
+\subsubsection{BLEU (Bilingual Evaluation Understudy)}
+
+\subsubsection{Definition} 
+
+BLEU \cite{10.3115/1073083.1073135} measures the correspondence between a candidate text (or code) and one or more reference texts using modified n-gram precision and a brevity penalty:
+
+\begin{equation}
+BLEU = BP \cdot \exp\!\left(\sum_{n=1}^{N} w_n \log p_n\right)
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $p_n$ is the modified precision for n-grams of size $n$,
+    \item $w_n$ is the weight assigned to each n-gram order (commonly $1/N$),
+    \item $BP = \min(1, e^{1 - r/c})$ is the brevity penalty, with $r$ denoting the reference length and $c$ the candidate length.
+\end{itemize}
+
+\subsubsection{Purpose}
+
+Originally designed for machine translation, BLEU later became a general benchmark for textual similarity in natural language generation and software engineering, providing a fast and language-independent evaluation method.
+
+\subsubsection{Applications}
+
+BLEU appears across multiple contexts:
+\begin{itemize}
+    \item Natural Language Generation and NLP evaluation, focusing on fluency and informativeness.
+    \item Software Engineering tasks such as code generation, summarization, repair, translation, commit message generation, and documentation evaluation.
+\end{itemize}
+
+\subsubsection{Limitations}
+
+\begin{itemize}
+    \item Focuses on surface overlap rather than semantic or functional accuracy.
+    \item Is sensitive to tokenization and reference selection.
+    \item Requires multiple references for robust correlation with human judgment.
+\end{itemize}
+
+\subsubsection{CodeBLEU}
+
+\subsubsection{Definition}
+
+\textbf{CodeBLEU} \cite{ren2020codebleumethodautomaticevaluation} extends BLEU to software engineering tasks by integrating additional structural and semantic dimensions:
+\begin{enumerate}
+    \item Weighted n-gram matching, assigning higher weights to programming language keywords.
+    \item AST-based structural matching, measuring syntactic correctness.
+    \item Data-flow matching, evaluating semantic and logical consistency.
+\end{enumerate}
+
+\begin{equation}
+CodeBLEU = \alpha P_{ng} + \beta P_{wng} + \gamma P_{ast} + \delta P_{df}
+\end{equation}
+
+\subsubsection{Advantages}
+
+\begin{itemize}
+    \item Shows better correlation with functional correctness in generated code.
+    \item Reduces false positives caused by superficial textual overlap.
+\end{itemize}
+
+\subsubsection{Use Cases}
+
+CodeBLEU is used extensively in code generation, translation, and summarization tasks where both syntax and semantics are critical.
+
+\subsubsection{CrystalBLEU}
+
+\subsubsection{Definition}
+
+\textbf{CrystalBLEU} refines BLEU by excluding high-frequency trivial n-grams that appear broadly across programming corpora, thereby reducing score inflation. \cite{10.1145/3551349.3556903}
+
+\subsubsection{Advantages}
+
+\begin{itemize}
+    \item Provides a more reliable indicator of semantic similarity in code.
+    \item Distinguishes genuine logical equivalence from shared boilerplate.
+\end{itemize}
+
+\subsubsection{Use Cases}
+
+CrystalBLEU is applied in the evaluation of model-generated code similarity and variant synthesis.
+
+\subsubsection{Smoothed BLEU / Smoothed 4-gram BLEU}
+
+\subsubsection{Definition}
+
+Smoothed BLEU variants modify the computation of higher-order n-gram precision values by adding a small smoothing constant, thereby avoiding zero scores in short outputs with sparse matches. \cite{Allal2023SantaCoder, Wang2021CodeT5}
+
+\subsubsection{Use Cases}
+
+These variants are particularly useful for code summarization, short documentation generation, and low-resource text generation scenarios.
+
+\subsubsection{WeightBLEU}
+
+\subsubsection{Definition}
+
+WeightBLEU reweights n-gram or token contributions based on their importance in the task context, such as assigning higher priority to syntax or control-flow keywords in code. It preserves the BLEU formulation while adapting the weight vector $w_n$ or applying per-token weights. \cite{Yang2024CodeScoreR}
+
+\subsubsection{Use Cases}
+
+WeightBLEU is commonly applied in code migration and generation tasks where token significance varies across contexts.
+
+\subsubsection{Comparative Summary}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{l l X X l}
+\hline\hline
+\textbf{Metric} & \textbf{Based on} & \textbf{Extension Goal} & \textbf{Added Features} & \textbf{Domain} \\
+\hline
+BLEU & -- & Baseline precision-based metric & Modified n-gram precision, brevity penalty & NLP, SE \\
+CodeBLEU & BLEU & Incorporate syntax and semantics & Weighted n-gram, AST, data-flow matching & SE \\
+CrystalBLEU & BLEU & Filter trivial overlaps & Removal of high-frequency n-grams & SE \\
+Smoothed BLEU & BLEU & Stabilize short outputs & Smoothing of higher-order n-grams & NLP, SE \\
+WeightBLEU & BLEU & Token importance weighting & Variable n-gram and token weights & SE \\
+\hline\hline
+\end{tabularx}
+\caption{Comparison of BLEU and its main variants}
+\end{table}
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced or used in the following papers:
+
+\sloppy
+\cite{
+Chang2023SurveyLLMs,
+Lin2024SWC,
+Hou2023LLMsSESLR,
+Bektas2025CriticalReview,
+Hu2025BenchmarksSE,
+Allal2023SantaCoder,
+Wang2021CodeT5,
+Yang2024CodeScoreR,
+HuZhou2024LLMMetrics,
+Chen2024SurveyCodeGen,
+Zhou2025LLMAsJudge,
+Zhuo2023ICEScore,
+Srivastava2022BeyondImitation,
+Anand2024AnalysisLLMCode,
+Paul2024BenchmarksMetricsCodeGen,
+Wang2022ReCode,
+Evtikhiev2023OutOfBLEU,
+Chen2021EvaluatingLLMCode,
+Lu2021CodeXGLUE,
+Austin2021ProgramSynthesisLLM,
+Dong2023CodeScore,
+Tong2024CodeJudge,
+Zheng2023CodeGeeX,
+Zhu2022XLCoST,
+Chen2024DLBasedSE,
+Rong2025LLMOptimizationEducation,
+Sagodi2024CodeSynthesisEvaluation,
+Ko2025CodingProficiency,
+Mundhra2025IndustrialCaseStudy,
+}
+\fussy
+
