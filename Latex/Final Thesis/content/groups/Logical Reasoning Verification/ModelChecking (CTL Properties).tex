@@ -1,0 +1,71 @@
+\subsection{Model Checking (CTL Properties)}
+
+\subsubsection*{Definition}
+\textbf{Model Checking} is an automated technique used in behavioral verification to determine whether a system's model conforms to a given set of formal properties.
+
+In the context of software verification, this process often involves:
+\begin{itemize}
+    \item \textbf{Inferring a Model}: Automatically generating a behavioral model (like an automaton or Mealy machine) from a running application, often using Active Automata Learning (AAL).
+    \item \textbf{Specifying Properties}: Formally defining the desired system behaviors using a temporal logic. A common choice for this is \textbf{Computation Tree Logic (CTL)}, which can express properties over the possible execution paths of the system.
+    \item \textbf{Verification}: Using a model checker tool to algorithmically and automatically check if the inferred model satisfies the specified CTL properties.
+\end{itemize}
+
+\subsubsection*{Formula (General Idea)}
+Model Checking is not based on a single arithmetic formula but on an algorithmic decision process. The formal verification condition is expressed as:
+
+\begin{equation}
+    M \models \phi
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $M$: The behavioral model of the system (e.g., an inferred automaton).
+    \item $\phi$ (phi): The property (or specification) written in a temporal logic like CTL.
+    \item $\models$ (``models''): The satisfaction relation, meaning the model checker verifies that the property holds true for the model.
+\end{itemize}
+
+If the property does not hold ($M \not\models \phi$), the checker typically returns a \textbf{counterexample} (a trace or execution path) that demonstrates the violation.
+
+\subsubsection*{Purpose}
+The primary purpose of Model Checking with CTL properties is to provide \textbf{fully automated quality control and validation} for software systems. Specific goals include:
+\begin{itemize}
+    \item \textbf{Verifying Correctness}: Automatically verifying that a generated application behaves as intended.
+    \item \textbf{Validating LLM-Generated Code}: Serving as a runtime check to control the quality of code produced by Large Language Models.
+    \item \textbf{Validating Migration}: Confirming that a system migration (e.g., JS to TS) preserves the original behavior by comparing models.
+    \item \textbf{Automating Correction}: Using counterexamples to automatically refine prompts or code.
+\end{itemize}
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering \& Code Generation
+    \item Behavioral Verification
+    \item System Migration (e.g., Legacy Modernization)
+    \item Validation of LLM-generated code
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Automation}: Provides a fully automated method for verifying system properties, requiring no manual test case creation.
+    \item \textbf{Intuitive Feedback}: Inferred models (via AAL) provide a clear visual understanding of the system's actual behavior.
+    \item \textbf{Actionable Corrections}: Generates specific counterexample traces upon failure, which can be fed back into the development loop.
+    \item \textbf{Effective for Migration}: Can quantify behavioral discrepancies between system versions (``difference automata'').
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Scalability}: Depends on the scalability of the Active Automata Learning (AAL) process and managing state explosion.
+    \item \textbf{Property Specification}: Writing correct and complete CTL properties requires specialized expertise in formal methods.
+    \item \textbf{Model Fidelity}: Verification is performed on an \textit{inferred} model. Accuracy depends on how faithfully this model captures the real system's behavior.
+\end{itemize}
+
+% añadir esta entrada al archivo .bib
+% @article{clarke1986automatic,
+%   title={Automatic verification of finite-state concurrent systems using temporal logic specifications},
+%   author={Clarke, E. M. and Emerson, E. A. and Sistla, A. P.},
+%   journal={ACM Transactions on Programming Languages and Systems},
+%   volume={8},
+%   number={2},
+%   pages={244--263},
+%   year={1986},
+%   doi={10.1145/5397.5399}
+% }

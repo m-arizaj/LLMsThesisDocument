@@ -1,0 +1,71 @@
+\subsection{Semantic Metrics}
+
+\subsubsection*{Introduction}
+In the context of code generation and evaluation, \textbf{semantic metrics} and techniques move beyond assessing surface-level syntax (i.e., ``is this valid code?'') to evaluate the underlying \textbf{meaning, logic, and intent} of the code or the problem description.
+
+This category includes metrics that evaluate the ``semantic quality'' of a generated output (like a fuzzing seed) as well as benchmark techniques designed to \textit{test} a model's semantic understanding by intentionally altering a problem's meaning.
+
+\subsubsection*{1. Semantic Correctness (Seed Quality)}
+\textbf{Definition} \\
+Semantic Correctness is a metric used to evaluate the quality of LLM-generated inputs, particularly fuzzing seeds. Rather than just checking for random or syntactically valid strings, this metric assesses whether the generated seeds are \textbf{semantically valid} and \textbf{meaningful} according to the expected data format of the target function (e.g., generating a valid YAML document structure for a YAML parser, not just random text).
+
+\textbf{Purpose} \\
+To measure the quality and effectiveness of LLM-generated seeds for fuzzing, determining if the model truly understands the \textbf{intent} of the target function's data requirements.
+
+\textbf{Applications} \\
+\begin{itemize}
+    \item LLM-driven Fuzzing
+    \item Security Testing
+    \item LLM Evaluation
+\end{itemize}
+
+\subsubsection*{2. Semantic Perturbation (Robustness Testing)}
+\textbf{Definition} \\
+Semantic Perturbation is not a direct output metric but rather a \textbf{benchmark technique} used to evaluate the robustness of a code generation model. It involves applying ``alterations to problem meaning for added complexity'' to the problem description.
+
+For example, a problem might be altered from ``calculate the sum of all \textit{even} numbers'' to ``calculate the sum of all \textit{odd} numbers.'' This tests whether the model is truly understanding the semantic details of the request or just repeating a learned pattern associated with the general phrasing.
+
+\textbf{Purpose} \\
+To assess an LLM's robustness and its ability to handle nuanced changes in a problem's semantic requirements, which is a more advanced test than simple surface-level or syntactic perturbations.
+
+\textbf{Applications} \\
+\begin{itemize}
+    \item Evaluating the robustness of code generation models.
+    \item Creating more challenging benchmark problems.
+\end{itemize}
+
+\subsubsection*{Comparative Summary}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{2.5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Metric / Technique} & \textbf{Type} & \textbf{Measures} & \textbf{Domain} \\
+\hline
+Semantic Correctness & Output Metric & The structural and logical validity of generated data (e.g., fuzz seeds). & Fuzzing, Security \\
+\hline
+Semantic Perturbation & Eval Technique & A model's robustness by altering the \textit{meaning} of a problem's prompt. & Benchmark Robustness \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas al archivo .bib
+
+% @article{black2024evaluating,
+%   title={Evaluating large language models for enhanced fuzzing: An analysis framework for LLM-driven seed generation},
+%   author={Black, G. and Vaidyan, V. M. and Comert, G.},
+%   journal={IEEE Access},
+%   volume={12},
+%   pages={156094--156108},
+%   year={2024},
+%   doi={10.1109/ACCESS.2024.3484947}
+% }
+
+% @incollection{anand2025analysis,
+%   title={Analysis of LLM code synthesis in software productivity},
+%   author={Anand, A. and Chopra, S. and Arora, M.},
+%   booktitle={Applied intelligence and computing},
+%   editor={Saraswat, M. and Kumari, R.},
+%   pages={235--243},
+%   year={2025},
+%   publisher={Universal Inovators},
+%   doi={10.56155/978-81-955020-9-7-24}
+% }

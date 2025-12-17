@@ -1,0 +1,61 @@
+\subsection{SIDE}
+
+\subsubsection*{Definition}
+\textbf{SIDE} is an \textbf{embedding-based metric} specifically designed to evaluate the quality of code summaries. It differentiates itself from other embedding-based metrics like BERTScore by applying \textbf{contrastive learning}.
+
+Instead of just measuring direct similarity, SIDE enhances the evaluation by learning to pull similar (positive) code-summary pairs closer together in the embedding space while pushing dissimilar (negative) pairs apart. This approach allows it to better capture the semantic adequacy of a generated summary.
+
+\subsubsection*{Formula (General Idea)}
+SIDE works by encoding both the generated artifact (the code summary) and a reference summary into high-dimensional vectors (embeddings) and then measuring the similarity between them.
+
+While the core calculation relies on similarity, the embeddings $\mathbf{e}$ are optimized via contrastive learning. The metric can be conceptually represented as:
+
+\begin{equation}
+    \text{SIDE}(S_{gen}, S_{ref}) \sim \cos(\mathbf{e}_{gen}, \mathbf{e}_{ref})
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\mathbf{e}_{gen}$ and $\mathbf{e}_{ref}$ are the vector representations of the generated and reference summaries, respectively.
+    \item The embedding space is trained to minimize the distance between semantic equivalents and maximize the distance between dissimilar pairs.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of SIDE is to assess the quality of machine-generated code summaries. It is used as an automatic metric to compare a candidate summary against a human-written reference summary, aiming for a closer correlation with human judgment than traditional n-gram metrics.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Code Summarization
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{State-of-the-Art}: It is considered a state-of-the-art metric specifically designed for the code summarization task.
+    \item \textbf{Task-Specific}: Unlike general text-based metrics (like BLEU or ROUGE), SIDE's use of contrastive learning is tailored specifically for the nuances of code documentation.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Similarity vs. Correctness}: Like other embedding-based metrics, SIDE ``approximates correctness through similarity.'' This is a limitation because ``similarity does not always align with correctness.'' A summary could be syntactically different but semantically correct, or vice versa, leading to potential scoring discrepancies.
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @inproceedings{mastropaolo2024evaluating,
+%   title={Evaluating code summarization techniques: A new metric and an empirical characterization},
+%   author={Mastropaolo, A. and Ciniselli, M. and Di Penta, M. and Bavota, G.},
+%   booktitle={Proceedings of the 46th IEEE/ACM International Conference on Software Engineering},
+%   pages={1--13},
+%   year={2024},
+%   publisher={ACM},
+%   doi={10.1145/3597503.3639174}
+% }
+
+% @article{zhou2025sejury,
+%   title={SE-Jury: An LLM-as-ensemble-judge metric for narrowing the gap with human evaluation in SE},
+%   author={Zhou, X. and Kim, K. and Zhang, T. and Lo, D. and Han, D. G.},
+%   journal={arXiv preprint arXiv:2505.20854},
+%   year={2025},
+%   doi={10.48550/arXiv.2505.20854}
+% }

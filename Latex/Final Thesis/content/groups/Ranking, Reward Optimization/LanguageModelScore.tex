@@ -1,0 +1,70 @@
+\subsection{Language Model Score (lms)}
+
+\subsubsection*{Introduction}
+The \textbf{Language Model Score (lms)} is a metric used within the evaluation framework of the \textbf{StereoSet} benchmark. Unlike bias metrics, it is not a direct measure of social prejudice itself, but rather a measure of a model's basic language understanding and coherence.
+
+It specifically calculates the percentage of instances where a model prefers a meaningful sentence option over a meaningless (unrelated) one. This score is then used as a component to calculate the \textbf{Idealized CAT (iCAT) Score}, which balances the model's language capability ($lms$) against its stereotyping tendencies ($ss$).
+
+\subsubsection*{Definition}
+The metric evaluates the model's fundamental capability to distinguish coherent text from nonsense. In the StereoSet dataset, each example provides three options: a stereotype, an anti-stereotype, and a meaningless option. The $lms$ focuses solely on the comparison between the meaningful options (stereotype or anti-stereotype) and the meaningless ones.
+
+\subsubsection*{Formula}
+The $lms$ is calculated as the percentage of times the model assigns a higher probability (e.g., via pseudo-log-likelihood) to a meaningful sentence than to the meaningless one.
+
+\begin{equation}
+    lms = \frac{1}{|S|} \sum_{i \in S} \mathbb{1}(\text{score}(S_{\text{meaningful}, i}) > \text{score}(S_{\text{meaningless}, i})) \times 100
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $S$: The set of examples in the dataset.
+    \item $\mathbb{1}$: The indicator function (returns 1 if the condition is true, 0 otherwise).
+    \item $S_{\text{meaningful}}$: Either the stereotype or anti-stereotype option.
+    \item $S_{\text{meaningless}}$: The unrelated, nonsensical option.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of the $lms$ is to \textbf{evaluate a model's fundamental language modeling capability} before assessing its social bias. It acts as a ``sanity check.''
+
+An ``idealized language model'' is defined as having an $lms$ of 100 (always prefers meaningful text). If a model's $lms$ is low (e.g., near 50\%), it implies the model is choosing randomly, rendering its stereotype score ($ss$) meaningless as an indicator of bias.
+
+\subsubsection*{Domains \& Benchmarks}
+\begin{itemize}
+    \item \textbf{Domains}: Fairness / Bias Evaluation, Natural Language Understanding (NLU).
+    \item \textbf{Benchmark}: StereoSet (key component of the evaluation metric).
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Isolates Language Capability}: Separates basic understanding from stereotyping tendency, allowing for nuanced interpretation.
+    \item \textbf{Contextualizes Bias Scores}: It is a crucial component of the iCAT Score ($iCAT = lms \cdot \frac{\min(ss, 100-ss)}{50}$), ensuring that fairness is not rewarded if the model is simply incoherent.
+    \item \textbf{Provides a Sanity Check}: Immediately flags models that are failing at the basic task.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Benchmark Validity}: The metric is intrinsically tied to StereoSet, which has faced criticism for shortcomings in dataset construction.
+    \item \textbf{Ambiguity}: Ambiguities in dataset instances regarding what constitutes a stereotype may affect the clear distinction between ``meaningful'' and ``meaningless'' options.
+    \item \textbf{Oversimplification}: Choosing between pre-defined sentence options may not fully capture a model's real-world propensity to \textit{generate} biased text.
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @inproceedings{nadeem2021stereoset,
+%   title={StereoSet: Measuring stereotypical bias in pretrained language models},
+%   author={Nadeem, M. and Bethke, A. and Reddy, S.},
+%   booktitle={Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics (ACL)},
+%   year={2021},
+%   doi={10.18653/v1/2021.acl-long.416}
+% }
+
+% @article{gallegos2024bias,
+%   title={Bias and fairness in large language models: A survey},
+%   author={Gallegos, I. O. and Rossi, R. A. and Barrow, J. and Tanjim, M. M. and Kim, S. and Dernoncourt, F. and Yu, T. and Zhang, R. and Ahmed, N. K.},
+%   journal={Computational Linguistics},
+%   volume={50},
+%   number={3},
+%   pages={1097--1179},
+%   year={2024},
+%   doi={10.1162/coli_a_00524}
+% }

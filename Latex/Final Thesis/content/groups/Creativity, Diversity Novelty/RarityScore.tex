@@ -1,0 +1,56 @@
+\subsection{Rarity Score}
+
+\subsubsection*{Definition}
+The \textbf{Rarity Score (RS)} is a metric used to evaluate the ``uncommonness'' or ``unlikeliness'' of an individual synthesized image. Formally defined by Han et al. (2022), it relies on k-nearest neighbours (k-NN) computed in a representation space, similar to precision and density metrics.
+
+It quantifies rarity by measuring the density of the \textit{real} data manifold in the vicinity of a \textit{generated} sample.
+
+\subsubsection*{Formula}
+The Rarity Score for a single generated image $x$ relative to the set of real samples $\{x_j^r\}_{j=1}^m$ is defined as the minimum k-NN distance among the real samples whose neighborhood contains $x$.
+
+\begin{equation}
+    \text{Rarity}(x, \{x_j^r\}_{j=1}^m) = \min_{j \in J(x, \{x_j^r\}_{j=1}^m)} \text{NND}_k(x_j^r)
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\text{NND}_k(x_j^r)$: The distance from a real sample $x_j^r$ to its $k$-th nearest neighbour within the real dataset.
+    \item $B(x_j^r, \text{NND}_k(x_j^r))$: The Euclidean ball centered at $x_j^r$ with a radius equal to its k-NN distance.
+    \item $J(x, \{x_j^r\}_{j=1}^m)$: The set of real samples whose neighborhood ``covers'' the generated sample $x$. Formally:
+    \begin{equation}
+        J(x, \{x_j^r\}_{j=1}^m) = \{j=1,...,m \mid x \in B(x_j^r, \text{NND}_k(x_j^r))\}
+    \end{equation}
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose is to provide a quantitative measure of ``unlikeliness'' for generated samples.
+
+In generative model evaluation, it serves as a diagnostic tool to investigate human evaluator bias. It helps researchers check if evaluators are confusing ``unrealism'' (fakeness) with ``unlikeliness'' (rarity) by correlating human error rates with Rarity Scores.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Generative Models
+    \item Image Generation
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Specific Metric}: Provides a concrete value for the ``unlikeliness'' of a sample relative to training data.
+    \item \textbf{Bias Diagnosis}: Useful for validating human evaluation setups, ensuring models aren't penalized simply for producing diverse, rare samples. (e.g., used successfully in Stein et al., 2023).
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{On-Manifold Requirement}: The score can only be determined for generated images that fall ``on manifold'' (i.e., contained within at least one real sample's neighborhood).
+    \item \textbf{Encoder Dependent}: Results depend heavily on the feature extractor used (e.g., Inception-v3 vs. DINOv2).
+    \item \textbf{Sensitive to Dataset Issues}: Correlation with human evaluation can be skewed by quality issues in the ``real'' training set (e.g., low-quality images in CIFAR10).
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{han2022rarity,
+%   title={Rarity score: A new metric to evaluate the uncommonness of synthesized images},
+%   author={Han, J. and Choi, H. and Choi, Y. and Kim, J. and Ha, J.-W. and Choi, J.},
+%   journal={arXiv preprint arXiv:2206.08549},
+%   year={2022},
+%   doi={10.48550/arXiv.2206.08549}
+% }

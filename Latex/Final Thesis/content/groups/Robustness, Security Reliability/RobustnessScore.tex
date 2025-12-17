@@ -1,0 +1,116 @@
+\subsection{Robustness}
+
+\subsubsection*{Introduction}
+Robustness is a critical, non-functional dimension for evaluating Large Language Models (LLMs) and complex software systems. It refers to the model's ability to \textbf{maintain stability and functional correctness} when faced with unexpected, anomalous, or challenging inputs, such as data perturbations, noise, adversarial attacks, or disinformation.
+
+Robustness is not measured by a single formula but is a comprehensive evaluation category. Researchers employ specific metrics to quantify it, such as Attack Success Rate (ASR) and Performance Drop Rate (PDR).
+
+\subsubsection*{1. Robustness (General Category)}
+\textbf{Definition} \\
+Robustness is an evaluation dimension that measures the stability and reliability of an LLM when encountering challenging or malformed inputs. It sits alongside Intelligence, Reliability, and Security.
+
+\textbf{Purpose} \\
+To ensure performance does not degrade significantly when inputs deviate from the standard ``clean'' training data. This includes handling everything from typos to malicious attacks.
+
+\textbf{Applications} \\
+\begin{itemize}
+    \item \textbf{General LLM Evaluation}: Assessing stability against prompt variations.
+    \item \textbf{Software Engineering}: Evaluating error handling and defensive programming.
+\end{itemize}
+
+\subsubsection*{2. Adversarial \& Out-of-Distribution (OOD) Robustness}
+\textbf{Definition} \\
+A major sub-category of robustness testing focusing on two types of data:
+\begin{itemize}
+    \item \textbf{Adversarial}: Inputs intentionally designed to cause failure (e.g., ``jailbreaking'', synonym replacements).
+    \item \textbf{Out-of-Distribution (OOD)}: Inputs from a different data distribution than the training set.
+\end{itemize}
+
+\subsubsection*{3. Attack Success Rate (ASR)}
+\textbf{Definition} \\
+ASR measures the percentage of time an adversarial attack successfully tricks the model into producing an incorrect output, \textit{given that the model was correct on the original input}.
+
+\textbf{Formula} \\
+\begin{equation}
+    \text{ASR} = \sum_{(x,y) \in \mathcal{D}} \mathbb{I}[f(H(x)) \neq y] \cdot \mathbb{I}[f(x) = y]
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\mathcal{D}$: Dataset of (input, label) pairs.
+    \item $f$: The model.
+    \item $H(x)$: The adversarial example generated from input $x$.
+    \item $\mathbb{I}$: The indicator function (1 if true, 0 if false).
+\end{itemize}
+
+\textit{Note: While the source defines it as a summation, ASR is typically normalized by the count of originally correct predictions to obtain a percentage.}
+
+\subsubsection*{4. Performance Drop Rate (PDR)}
+\textbf{Definition} \\
+PDR is a unified metric designed to evaluate robustness specifically against adversarial prompts (e.g., in PromptBench). It quantifies the relative performance degradation.
+
+\textbf{Formula} \\
+\begin{equation}
+    \text{PDR} = 1 - \frac{\sum_{(x,y) \in \mathcal{D}} M(f([A(P),x]), y)}{\sum_{(x,y) \in \mathcal{D}} M(f([P,x]), y)}
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $A$: The adversarial attack applied to a prompt $P$.
+    \item $M$: The task-specific evaluation function.
+    \item $P$: The clean prompt.
+\end{itemize}
+
+\subsubsection*{5. Robustness Score (RS) - LoCoBench}
+\textbf{Definition} \\
+A specific metric within the \textbf{LoCoBench} benchmark (Software Engineering Excellence dimension). Unlike ASR or PDR, this score is based on established software quality standards.
+
+\textbf{Basis}: Based on \textbf{IEEE/ISO 25010} software quality standards.
+
+\textbf{Purpose} \\
+To evaluate the quality of generated code in terms of its reliability, error handling, and defensive programming practices in long-context tasks.
+
+\subsubsection*{Comparative Summary}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{3cm}|}
+\hline
+\textbf{Metric / Category} & \textbf{Based on} & \textbf{Evaluation Goal} & \textbf{Typical Domain} \\
+\hline
+Robustness (Category) & General Concept & Assess overall stability & LLM, NLP, SE \\
+\hline
+ASR & Adversarial Attacks & Measure vulnerability rate & Adversarial Eval \\
+\hline
+PDR & Adversarial Prompts & Measure performance drop \% & Adversarial Eval \\
+\hline
+LoCoBench RS & ISO 25010 & Evaluate SE code quality & SE (Long-Context) \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas al archivo .bib
+
+% @article{chang2023survey,
+%   title={A survey on evaluation of large language models},
+%   author={Chang, Y. and Wang, X. and Wang, J. and others},
+%   journal={arXiv preprint arXiv:2307.03109},
+%   year={2023},
+%   doi={10.48550/arXiv.2307.03109}
+% }
+
+% @inproceedings{lin2024overview,
+%   title={Overview of the comprehensive evaluation of large language models},
+%   author={Lin, L. and Zhu, D. and Shang, J.},
+%   booktitle={2024 IEEE Smart World Congress (SWC)},
+%   pages={1504--1512},
+%   year={2024},
+%   publisher={IEEE},
+%   doi={10.1109/SWC62898.2024.00231}
+% }
+
+% @article{qiu2025locobench,
+%   title={LoCoBench: A benchmark for long-context large language models in complex software engineering},
+%   author={Qiu, J. and Liu, Z. and Liu, Z. and others},
+%   journal={arXiv preprint arXiv:2509.09614},
+%   year={2025},
+%   doi={10.48550/arXiv.2509.09614}
+% }

@@ -1,0 +1,69 @@
+\subsection{Relative Improvement (RImp)}
+
+\subsubsection*{Definition}
+\textbf{Relative Improvement (RImp)} is an evaluation metric used in Fault Localization (FL) to assess the effectiveness of a specific FL technique.
+
+It is calculated by comparing the total number of statements a developer would need to examine to find all faults \textit{using} a specific FL approach versus the total number of statements they would need to examine \textit{without} using that approach (the baseline).
+
+\subsubsection*{Formula}
+Although often described qualitatively as a comparison of effort, the standard calculation for relative improvement can be expressed as:
+
+\begin{equation}
+    \text{RImp} = \frac{\text{Statements}_{\text{baseline}} - \text{Statements}_{\text{FL\_technique}}}{\text{Statements}_{\text{baseline}}} \times 100\%
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\text{Statements}_{\text{baseline}}$: Total statements examined to find all faults without the FL approach.
+    \item $\text{Statements}_{\text{FL\_technique}}$: Total statements examined to find all faults using the FL approach.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose of RImp is to quantify the \textbf{practical benefit or efficiency gain} provided by a fault localization technique. It directly measures the reduction in developer effort (in terms of code statements to review) required to locate all faults, providing a clear indicator of a technique's value.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Fault Localization (FL)
+    \item Deep-Learning-based Fault Localization (DLFL)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Measures Practical Effort}: Directly quantifies the reduction in developer effort, making it a practical metric for assessing a tool's real-world usefulness.
+    \item \textbf{Clear Interpretation}: A higher RImp score clearly indicates a more effective localization technique compared to the baseline.
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @article{chen2025deep,
+%   title={Deep learning-based software engineering: Progress, challenges, and opportunities},
+%   author={Chen, X. and Hu, X. and Huang, Y. and Ma, L. and Wang, H. and Wang, J. and others},
+%   journal={Science China Information Sciences},
+%   volume={68},
+%   pages={111102},
+%   year={2025},
+%   doi={10.1007/s11432-023-4127-5}
+% }
+
+% @article{zhang2017deep,
+%   title={Deep learning-based fault localization with contextual information},
+%   author={Zhang, Z. and Lei, Y. and Tan, Q. and Mao, X. and Zeng, P.},
+%   journal={IEICE Transactions on Information and Systems},
+%   volume={E100.D},
+%   number={12},
+%   pages={3027--3030},
+%   year={2017},
+%   doi={10.1587/transinf.2017EDL8143}
+% }
+
+% @article{zhang2023context,
+%   title={Context-aware neural fault localization},
+%   author={Zhang, Z. and Lei, Y. and Mao, X. and Zeng, P.},
+%   journal={IEEE Transactions on Software Engineering},
+%   volume={49},
+%   number={7},
+%   pages={3862--3883},
+%   year={2023},
+%   doi={10.1109/TSE.2023.3279125}
+% }

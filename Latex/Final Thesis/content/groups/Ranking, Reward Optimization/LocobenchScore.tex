@@ -1,0 +1,67 @@
+\subsection{LoCoBench Score (LCBS)}
+
+\subsubsection*{Definition}
+The \textbf{LoCoBench Score (LCBS)} is a unified, aggregated metric introduced in the \textbf{LoCoBench} benchmark. It is specifically designed to evaluate the performance of long-context Large Language Models (LLMs) in complex, realistic software engineering scenarios.
+
+The LCBS functions as a ``weighted aggregate function that maps the 17-dimensional metric space to a scalar evaluation score.'' This provides a single, comprehensive measure of a model's capabilities across four key dimensions of software development.
+
+\subsubsection*{Formula}
+The LoCoBench Score is calculated as a weighted linear combination of four dimension scores, scaled to a final value on a 0-5 scale. The calculation follows a multi-step process:
+
+\textbf{1. Metric Normalization} \\
+First, each of the 17 individual metrics $m_i$ is normalized to a value $N(m_i)$ in the unit interval $[0, 1]$ using min-max scaling:
+\begin{equation}
+    N(m_i) = \frac{m_i - \min(m_i)}{\max(m_i) - \min(m_i)}
+\end{equation}
+
+\textbf{2. Dimension Aggregation} \\
+The score for each dimension is computed as the arithmetic mean of its constituent normalized metrics. For example, the Software Engineering Excellence (SE) score, derived from 8 metrics, is:
+\begin{equation}
+    SE = \frac{1}{|M_{SE}|} \sum_{m \in M_{SE}} N(m) = \frac{1}{8} \sum_{i=1}^{8} N(m_i^{SE})
+\end{equation}
+
+\textbf{3. Final Score Calculation} \\
+The final LCBS is the weighted sum of the four dimension scores, scaled by 5. The dimensions and their weights are:
+\begin{itemize}
+    \item \textbf{Software Engineering Excellence (SE)}: 40\% ($w_{SE} = 0.4$)
+    \item \textbf{Functional Correctness (FC)}: 30\% ($w_{FC} = 0.3$)
+    \item \textbf{Code Quality Assessment (CQ)}: 20\% ($w_{CQ} = 0.2$)
+    \item \textbf{Long-Context Utilization (LCU)}: 10\% ($w_{LCU} = 0.1$)
+\end{itemize}
+
+The final formula is:
+\begin{equation}
+    LCBS = 5 \cdot (0.4 \cdot SE + 0.3 \cdot FC + 0.2 \cdot CQ + 0.1 \cdot LCU)
+\end{equation}
+
+\subsubsection*{Purpose}
+The primary purpose of the LCBS is to provide a single, unified scalar score that summarizes a model's performance across 17 different metrics. This allows for a holistic and comprehensive comparison of models on complex, long-context software engineering tasks.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Long-Context Evaluation
+    \item Software Engineering
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Comprehensive}: Aggregates 17 distinct metrics across 4 fundamental dimensions of software development.
+    \item \textbf{Unified Score}: Condenses a complex, multi-dimensional evaluation into a single, easy-to-compare scalar score.
+    \item \textbf{Weighted Importance}: The weights are empirically determined to reflect the relative importance of each dimension, prioritizing Software Engineering Excellence.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Aggregation Obscurity}: As an aggregated score, it can hide significant performance variations. Models with similar LCBS may have vastly different specific capabilities.
+    \item \textbf{Weight Subjectivity}: The dimension weights are tied to the benchmark authors' assessment and are open to debate.
+    \item \textbf{Hides Trade-offs}: A high overall LCBS does not guarantee top performance in all areas (e.g., a model could have a high LCBS but poor Long-Context Utilization).
+\end{itemize}
+
+% añadir esta entrada al archivo .bib
+% @article{qiu2025locobench,
+%   title={LoCoBench: A benchmark for long-context large language models in complex software engineering},
+%   author={Qiu, J. and Liu, Z. and Liu, Z. and Murthy, R. and Zhang, J. and Chen, H. and others},
+%   journal={arXiv preprint arXiv:2509.09614},
+%   year={2025},
+%   doi={10.48550/arXiv.2509.09614}
+% }

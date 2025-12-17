@@ -1,0 +1,77 @@
+\subsection{Fault Localization Rank Metrics}
+
+\subsubsection*{Introduction}
+In Software Engineering (SE), \textbf{Fault Localization (FL)} is the critical process of identifying the specific locations of defects (i.e., the buggy statements or functions) in source code. To evaluate the effectiveness of automated FL techniques, a family of \textbf{rank-based metrics} is used.
+
+These metrics assess the performance of an FL model by analyzing the ``suspiciousness'' list it produces, which ranks code elements from most likely to least likely to be faulty. The goal is to measure how much effort (i.e., how far down the list) a developer must expend to find the \textit{actual} fault.
+
+\subsubsection*{1. Top-N}
+\textbf{Definition} \\
+Top-N measures the number (or percentage) of faults that are correctly identified within the top $N$ elements of the ranked suspiciousness list. For example, ``Top-1'' measures how many faults were the \#1 ranked item.
+
+\textbf{Purpose} \\
+This metric is a direct measure of a tool's immediate utility. A high Top-N score (especially for low $N$, like 1, 5, or 10) indicates that the tool frequently places the correct fault within the first few items a developer would examine, saving significant time.
+
+\textbf{Limitations} \\
+It is a binary (hit-or-miss) metric. It does not distinguish between a fault ranked at position $N+1$ and a fault ranked at position 1000.
+
+\subsubsection*{2. MFR (Mean First Rank)}
+\textbf{Definition} \\
+MFR calculates the mean (average) of the rank of the \textit{first} faulty statement found across all faults in a dataset.
+
+\begin{equation}
+    \text{MFR} = \frac{1}{|F|} \sum_{f \in F} \text{rank}(\text{first\_faulty\_element}_f)
+\end{equation}
+
+\noindent where $F$ is the set of all faults (bugs) being evaluated.
+
+\textbf{Purpose} \\
+MFR provides a single score representing the average effort required to find the first sign of the bug. A lower MFR is better, indicating the fault is, on average, ranked higher on the list.
+
+\textbf{Limitations} \\
+In cases of multi-location bugs, MFR only considers the rank of the first faulty element, ignoring the others.
+
+\subsubsection*{3. MAR (Mean Average Rank)}
+\textbf{Definition} \\
+MAR calculates the mean of the \textbf{average rank} of \textit{all} faulty elements associated with a single bug, and then averages this across all bugs in the dataset.
+
+\textbf{Purpose} \\
+Unlike MFR, MAR is designed to provide a more holistic measure of effort for bugs that involve multiple faulty locations. It answers: ``On average, what was the rank of \textit{all} the buggy pieces of code?''
+
+\subsubsection*{4. EXAM}
+\textbf{Definition} \\
+EXAM (Expected Maximum Fault Localization) measures the \textbf{expected rank} of the first correct fault location found in the ranked list of code elements. (Note: In many contexts, this is interpreted as the percentage of the code a developer must ``examine'' to find the fault).
+
+\textbf{Purpose} \\
+Similar to MFR, EXAM quantifies the expected effort needed to find the first fault. It is often used as a core metric for comparing the bottom-line effort required by different FL tools.
+
+\subsubsection*{Comparative Summary}
+Below is a comparison of these rank-based metrics:
+
+\begin{center}
+\begin{tabular}{|l|l|p{5.5cm}|l|}
+\hline
+\textbf{Metric} & \textbf{Based on} & \textbf{Purpose} & \textbf{Typical Domain} \\
+\hline
+Top-N & Hit/Miss & Measures if the fault is found within the top $N$ results. & FL Evaluation \\
+\hline
+MFR & Rank & Averages the rank of the \textit{first} faulty element found. & FL Evaluation \\
+\hline
+MAR & Rank & Averages the ranks of \textit{all} faulty elements for a bug. & FL Evaluation \\
+\hline
+EXAM & Rank & Measures the expected rank of the \textit{first} fault found. & FL Evaluation \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir esta entrada al archivo .bib
+% @article{chen2025deep,
+%   title={Deep learning-based software engineering: Progress, challenges, and opportunities},
+%   author={Chen, Z. and Hu, X. and Huang, Y. and Zhang, H. and Zhou, Y. and Xie, T.},
+%   journal={Science China Information Sciences},
+%   volume={68},
+%   number={1},
+%   pages={111102},
+%   year={2025},
+%   doi={10.1007/s11432-023-4127-5}
+% }

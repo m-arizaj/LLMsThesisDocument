@@ -1,0 +1,53 @@
+\subsection{Multiple-Choice Brier Score}
+
+\subsubsection*{Definition}
+The \textbf{Multiple-Choice Brier Score} is a metric used to measure the \textbf{calibration} of a model's predictions in a multiple-choice setting. It quantifies how well the model's assigned probabilities (its ``confidence'') match the actual outcomes (the correctness of its answers).
+
+It is defined as ``the squared error between model assigned probabilities and 0, 1 targets across classes.'' A lower Brier score indicates better calibration (i.e., the model's confidence levels are more reliable).
+
+\subsubsection*{Formula}
+The general Brier Score (BS) for a set of probabilistic predictions is the mean squared error between the predicted probabilities and the actual outcomes. For a single prediction:
+
+\begin{equation}
+    BS = \sum_{i=1}^{C} (p_i - o_i)^2
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $C$: The number of classes (choices).
+    \item $p_i$: The predicted probability for class $i$.
+    \item $o_i$: The actual outcome (1 if class $i$ is the correct target, 0 otherwise).
+\end{itemize}
+
+The total score is then averaged over all $N$ examples in the dataset.
+
+\subsubsection*{Purpose}
+The Brier Score is a \textbf{proper scoring rule} used to measure the accuracy and calibration of a model's predictive probabilities. Its primary purpose is to quantify how well-calibrated a model's uncertainty estimates are; in other words, to check if a model that is ``80\% confident'' is actually correct 80\% of the time.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item General LLM Evaluation
+    \item Model Calibration
+    \item Probabilistic Error Measurement
+    \item Evaluation of Multiple-Choice Tasks
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Proper Scoring Rule}: It is a ``proper scoring rule for measuring the accuracy of predicted probabilities,'' meaning the best possible score is achieved only when the model reports its true, underlying probabilities.
+    \item \textbf{Measures Calibration}: It directly measures the quality of the model's probabilistic predictions, not just the final accuracy.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Less Intuitive}: While rigorous, other metrics like Expected Calibration Error (ECE) are often preferred for their more intuitive interpretation of calibration error.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{srivastava2023beyond,
+%   title={Beyond the imitation game: Quantifying and extrapolating the capabilities of language models},
+%   author={Srivastava, A. and Rastogi, A. and Rao, A. and others},
+%   journal={arXiv preprint arXiv:2206.04615},
+%   year={2023},
+%   doi={10.48550/arXiv.2206.04615}
+% }

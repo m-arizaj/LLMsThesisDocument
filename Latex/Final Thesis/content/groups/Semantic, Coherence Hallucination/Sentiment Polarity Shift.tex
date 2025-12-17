@@ -1,0 +1,92 @@
+\subsection{Sentiment Polarity Shift}
+
+\subsubsection*{Definition}
+\textbf{Sentiment Polarity Shift} is not a single metric, but an evaluation category designed to measure \textbf{Social Bias}. It quantifies how the sentiment polarity (positive, negative, or neutral) of an LLM's response changes when conditioned on different social groups (e.g., by gender, race, or religion).
+
+This approach evaluates whether the model associates certain groups with more negative or positive social connotations. Specific metrics that implement this concept include:
+\begin{itemize}
+    \item \textbf{Regard Score}: Measures ``polarity towards... social groups'' or the positive/negative social connotation.
+    \item \textbf{Counterfactual Sentiment Bias}: Compares the sentiment distributions of two sentences generated from counterfactual prompts (e.g., where only the social group is changed).
+    \item \textbf{Score Parity}: Measures the consistency with which a model generates language (evaluated by a sentiment classifier) with respect to a protected attribute.
+\end{itemize}
+
+\subsubsection*{Calculation (General Idea)}
+These metrics generally rely on an \textbf{auxiliary classifier model} to score the generated text for sentiment or toxicity. The process typically involves:
+
+\begin{enumerate}
+    \item \textbf{Prompting}: The LLM is provided with prompts containing descriptors of social groups, often in counterfactual pairs (e.g., ``The [Group A] man was...'' vs. ``The [Group B] man was...'').
+    \item \textbf{Generation}: The LLM generates text or continuations for each prompt.
+    \item \textbf{Classification}: An external classifier (e.g., a sentiment or toxicity classifier) scores the polarity of each generated text.
+    \item \textbf{Comparison}: The ``shift'' is calculated by comparing the sentiment scores or distributions between the different social groups.
+\end{enumerate}
+
+For example, \textit{Counterfactual Sentiment Bias} uses the Wasserstein-1 distance to measure the difference between the resulting sentiment distributions:
+
+\begin{equation}
+    \text{Shift}(G_A, G_B) = W_1(P(S|G_A), P(S|G_B))
+\end{equation}
+
+\noindent where $P(S|G_X)$ is the sentiment probability distribution conditioned on group $X$.
+
+\subsubsection*{Purpose}
+The main objective is to quantify social and cultural biases by identifying disparate sentiment or polarity in model outputs associated with different groups. This helps detect representational harms such as \textbf{stereotyping} (associating a group with negative attributes) or \textbf{misrepresentation}.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Fairness / Bias Evaluation
+    \item Social / Cultural Bias
+    \item Text Generation (Open-Ended)
+    \item Sentiment Analysis
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Measures Specific Harm}: Directly quantifies disparate sentiment, a well-known representational harm.
+    \item \textbf{Black-Box Applicable}: Can be applied to any model that outputs text, as it relies on an external classifier.
+    \item \textbf{Subtle Bias Detection}: Captures biases more subtle than overt toxicity, such as negative stereotypes or microaggressions.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Classifier Dependency}: The metric is highly dependent on the auxiliary classifier used, which may have its own biases.
+    \item \textbf{Ambiguity}: In open-ended text, it can be difficult to attribute bias specifically to the group in the prompt versus a group mentioned in the continuation.
+    \item \textbf{Sensitivity to Decoding}: Parameter choices (e.g., temperature) can drastically change the measured bias, leading to inconsistent results.
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @article{gallegos2024bias,
+%   title={Bias and fairness in large language models: A survey},
+%   author={Gallegos, I. O. and Rossi, R. A. and Barrow, J. and Tanjim, M. M. and Kim, S. and Dernoncourt, F. and Yu, T. and Zhang, R. and Ahmed, N. K.},
+%   journal={Computational Linguistics},
+%   volume={50},
+%   number={3},
+%   pages={1043--1108},
+%   year={2024},
+%   doi={10.1162/coli_a_00524}
+% }
+
+% @article{dhamala2021bold,
+%   title={BOLD: Dataset and metrics for measuring biases in open-ended language generation},
+%   author={Dhamala, J. and Sun, T. and Kumar, V. and Krishna, S. and Pruksachatkun, Y. and Chang, K.-W. and Gupta, R.},
+%   journal={arXiv preprint arXiv:2101.11718},
+%   year={2021},
+%   doi={10.48550/arXiv.2101.11718}
+% }
+
+% @article{sheng2019woman,
+%   title={The woman worked as a babysitter: On biases in language generation},
+%   author={Sheng, E. and Chang, K.-W. and Natarajan, P. and Peng, N.},
+%   journal={arXiv preprint arXiv:1909.01326},
+%   year={2019},
+%   doi={10.48550/arXiv.1909.01326}
+% }
+
+% @inproceedings{huang2020reducing,
+%   title={Reducing sentiment bias in language models via counterfactual evaluation},
+%   author={Huang, P.-S. and Zhang, H. and Jiang, R. and Stanforth, R. and Welbl, J. and Rae, J. and Maini, V. and Yogatama, D. and Kohli, P.},
+%   booktitle={Findings of the Association for Computational Linguistics: EMNLP 2020},
+%   pages={65--83},
+%   year={2020},
+%   doi={10.18653/v1/2020.findings-emnlp.7}
+% }
