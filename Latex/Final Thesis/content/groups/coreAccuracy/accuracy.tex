@@ -1,0 +1,156 @@
+\subsection{Accuracy}
+
+\subsubsection{Introduction}
+
+Accuracy is one of the most fundamental evaluation metrics in machine learning and software engineering.
+It measures the proportion of correct predictions or outputs relative to the total number of evaluated instances.
+In its most basic form, accuracy is used to quantify how often a model produces the expected or correct result,
+providing an intuitive sense of overall performance.
+
+While simplicity is its main strength, accuracy can also be misleading when dealing with imbalanced datasets,
+where one class dominates the others. Therefore, modern research, especially in Software Engineering, often
+complements accuracy with additional metrics such as precision, recall, and F1-score to obtain a more complete view.
+
+\subsubsection{Mathematical Definition}
+
+The standard definition of accuracy is given by:
+
+\begin{equation}
+Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $TP$ = True Positives
+    \item $TN$ = True Negatives
+    \item $FP$ = False Positives
+    \item $FN$ = False Negatives
+\end{itemize}
+
+This can be interpreted as the ratio of correctly predicted outcomes (both positive and negative)
+over the total number of cases. \cite{10.1145/3533767.3534405}
+
+In discriminative classification problems or multiple-choice tasks, accuracy can also be expressed as:
+
+\begin{equation}
+Accuracy = \frac{\text{Number of Correct Predictions}}{\text{Total Number of Predictions}}
+\end{equation}\cite{10.1162/tacl_a_00675}
+
+\subsubsection{Variants and Derivative Metrics}
+
+Several domain-specific metrics build upon or adapt the core concept of accuracy to better suit
+different Software Engineering and LLM evaluation tasks.
+
+\textbf{Execution Accuracy.}
+Measures the proportion of code generations that execute successfully and produce the correct output.
+It is commonly used in program synthesis benchmarks such as AVATAR, CodeNet and DyCodeEval,
+focusing on functional correctness rather than textual matching. \cite{Hu2025BenchmarksSE}
+
+\textbf{Strict Accuracy.}
+Strict Accuracy is a stringent evaluation metric that counts a prediction as correct only if it exactly matches the gold standard answer.
+In question answering settings, this typically requires the correct answer to be ranked first among all predictions, as formalized by Strict Accuracy (SaCC). \cite{HuZhou2024LLMMetrics}
+In code evaluation benchmarks such as APPS, Strict Accuracy measures the proportion of problems for which the model produces a fully correct solution, with no tolerance for partial correctness, formatting differences, or semantically close but incorrect outputs. Even solutions that pass some unit tests but fail others are considered incorrect under this variant. \cite{Chen2021EvaluatingLLMCode}
+
+\textbf{Lenient Accuracy.}
+A relaxed version that allows partial matches, synonyms, or semantically equivalent answers
+to be considered correct. This variant is useful in \textit{Question Answering (QA)} or
+open-ended generation tasks. \cite{HuZhou2024LLMMetrics}
+
+\textbf{Exact Match Accuracy.}
+Focuses on exact equality between the generated output and the reference, typically at the token-level or line-level in code completion tasks, and at the full-string level in text-to-code and code translation settings.
+A prediction is considered correct only if it matches the ground truth exactly, with no tolerance for partial matches or formatting differences \cite{Lu2021CodeXGLUE}. It is defined as:
+
+\begin{equation}
+ExactMatchAccuracy = \frac{\text{Exact Matches}}{\text{Total Predictions}}
+\end{equation}
+
+\textbf{Selective Accuracy.}
+Used in selective prediction scenarios, where a model may abstain from making predictions below a confidence threshold.
+Selective Accuracy measures the accuracy conditioned on predictions whose maximum confidence exceeds a given threshold, explicitly accounting for coverage and model confidence.
+This metric provides insights into selective confidence behavior and is closely related to calibration analysis. \cite{Liang2022HELM}
+
+\textbf{Token-level Accuracy.}
+Assesses accuracy at the individual token level (e.g., per character, word, or code token).
+It is commonly used in code completion and predictive modeling tasks, where predictions are evaluated locally at each token position, independently of full-line or functional correctness. \cite{Lu2021CodeXGLUE}
+
+\textbf{Top-N Accuracy.}
+Measures whether the correct faulty code element appears within the top $N$ ranked predictions.
+This metric is widely used in fault localization tasks, where models produce a ranked list of code elements according to their likelihood of being faulty.
+For example, \textit{Top-5 Accuracy} considers a fault correctly localized if the true faulty element appears among the top five ranked elements. \cite{Chen2024DLBasedSE}
+
+\textbf{Dependency Traversal Accuracy.}
+Introduced for long-context evaluation and software engineering quality assessment \cite{Qiu2025LoCoBench}, this metric evaluates how accurately a model navigates and reasons over structural or dependency relationships across extended code contexts. 
+Unlike standard accuracy, which focuses on isolated outputs, Dependency Traversal Accuracy captures the correctness of inter-module dependency relationships, making it particularly suitable for assessing code understanding, maintenance, and long-range dependency reasoning.
+
+\subsubsection{Applications in Software Engineering and LLM Evaluation}
+
+Accuracy and its variants are widely used across the following areas:
+
+\begin{itemize}
+    \item \textbf{Code Generation and Program Synthesis:}
+    Execution Accuracy, Strict Accuracy, and functional correctness in datasets such as AVATAR, CodeNet, DyCodeEval and APPS.
+
+    \item \textbf{Defect Detection and Vulnerability Analysis:}
+    Accuracy for classifying defective versus clean code.
+
+    \item \textbf{Long-context and SE Lifecycle Evaluation:}
+    Dependency Traversal Accuracy in LoCoBench, assessing code dependency reasoning.
+\end{itemize}
+
+\subsubsection{Limitations}
+
+\begin{itemize}
+    \item \textbf{Insensitive to class imbalance:}
+    Accuracy may appear high even if a model only predicts the majority class correctly.
+
+    \item \textbf{No differentiation of error types:}
+    False positives and false negatives are weighted equally, which can be misleading in defect prediction.
+
+    \item \textbf{Overly simplistic for complex tasks:}
+    In Software Engineering tasks such as program synthesis or bug localization,
+    other metrics like Pass@k, F1-score, or BLEU provide richer performance insights.
+\end{itemize}
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\sloppy
+\cite{
+Chang2023SurveyLLMs,
+Guo2023EvalLLMs,
+Liang2022HELM,
+Lin2024SWC,
+Woesle2025Hallucinations,
+Hou2023LLMsSESLR,
+Bektas2025CriticalReview,
+Hu2025BenchmarksSE,
+HuZhou2024LLMMetrics,
+Wang2023AMBER,
+Chen2024SurveyCodeGen,
+Srivastava2022BeyondImitation,
+Gallegos2024BiasFairness,
+Anand2024AnalysisLLMCode,
+Paul2024BenchmarksMetricsCodeGen,
+Yang2024CodeScoreR,
+Bistarelli2025UsageLLMCode,
+Chen2021EvaluatingLLMCode,
+Lu2021CodeXGLUE,
+Austin2021ProgramSynthesisLLM,
+Dong2023CodeScore,
+Tong2024CodeJudge,
+Wang2021CodeT5,
+Xu2025LLMAgentsToolLearning,
+Wang2024AutonomousAgentsSurvey,
+Chen2024DLBasedSE,
+Rong2025LLMOptimizationEducation,
+Qiu2025LoCoBench,
+Pena2025NonCodeSETasks,
+Shao2024LLMArchitecturesSurvey,
+Ko2025CodingProficiency,
+}
+\fussy
+
+
+
+
