@@ -1,0 +1,201 @@
+\subsection{Pass@k}
+
+\subsubsection{Introduction}
+
+Pass@k is a functional correctness metric widely used to evaluate code generation models.
+It measures the probability that at least one out of $k$ generated code samples for a given problem passes all predefined unit tests.
+This metric is now standard in many benchmarks, providing a robust estimate of how effectively models can produce correct programs.
+Pass@k captures a model's ability to generate a functionally correct solution rather than a textually similar one, making it a fundamental metric for assessing code intelligence, reasoning, and software reliability. \cite{lyu2024passimprovecodegeneration}
+
+\subsubsection{Mathematical Definition}
+
+Formally, for a dataset with $N$ tasks, where each task $i$ has $n_i$ generated samples,
+and $c_i$ of them pass all test cases, the unbiased estimator of Pass@k is given by:
+
+\[
+\text{Pass@k} = \frac{1}{N} \sum_{i=1}^{N} \left[ 1 - \frac{\binom{n_i - c_i}{k}}{\binom{n_i}{k}} \right]
+\]
+
+where:
+\begin{itemize}
+  \item $n_i$ = number of generated samples for task $i$,
+  \item $c_i$ = number of correct (passing) samples,
+  \item $k$ = number of samples considered,
+  \item $\binom{a}{b}$ = binomial coefficient.
+\end{itemize}
+
+This estimator, introduced by OpenAI \cite{Chen2021EvaluatingLLMCode}, corrects bias from finite sampling when estimating pass rates from multiple generations.
+
+\subsubsection{Variants and Derivative Metrics}
+
+\textbf{1. Pass@1.}
+The most common variant, representing the probability that the first (or top-ranked) generated sample passes all tests.
+Used as a straightforward indicator of baseline correctness and ranking performance.
+
+\textbf{2. Pass@3 / Pass@5 / Pass@10 / Pass@100.}
+These variants measure correctness within a larger set of model generations,
+providing insight into the diversity and robustness of generated solutions:
+\begin{itemize}
+  \item Pass@3 / Pass@5: Capture correctness in small sampling scopes.
+  \item Pass@10: Balances computational cost and diversity.
+  \item Pass@100: Often used in large-scale evaluations to assess upper-bound performance across multiple programming languages or perturbations.
+\end{itemize}\cite{Paul2024BenchmarksMetricsCodeGen}
+
+\textbf{3. Nominal Pass@k (NP@k).}
+Nominal Pass@k refers to the standard Pass@k metric computed on unperturbed data.
+Following Chen et al. (2021) \cite{Chen2021EvaluatingLLMCode}, it estimates the probability that at least one out of $k$ randomly sampled generations passes all predefined test cases for a given problem.
+This metric serves as the nominal functional correctness baseline against which robust variants of Pass@k are compared. \cite{Wang2022ReCode, Zhang2024CodeFort}
+
+\textbf{4. Robust Pass@k (RP@k).}
+Assesses functional correctness under input perturbations or robustness stress tests by
+measuring the worst-case Pass@k across multiple perturbed variants of the same prompt.
+This metric accounts for small semantic-preserving variations such as renamed variables,
+reordered statements, or formatting changes, and evaluates whether correctness is maintained
+under adversarial or stochastic transformations. \cite{Wang2022ReCode, Zhang2024CodeFort}
+
+Variants include:
+\begin{itemize}
+  \item RP@k: General robustness measure defined as the worst-case Pass@k over $s$ perturbations.
+  \item RP10@1: Evaluates single-sample robustness by measuring worst-case correctness across
+  $s=10$ perturbed inputs.
+\end{itemize}
+
+Formally, Robust Pass@k is defined as:
+\begin{equation}
+\mathrm{RP}_s@k
+=
+\mathbb{E}_{x}
+\left[
+1 -
+\frac{\binom{n - rc_{s}(x)}{k}}{\binom{n}{k}}
+\right]
+\end{equation}
+
+where $x$ denotes the original prompt, $n$ is the number of generations per prompt,
+$s$ is the number of perturbations applied, and $rc_{s}(x)$ is the number of samples
+that remain correct across all $s$ perturbed variants of $x$.
+
+
+\textbf{5. Robust Drops@k (RDs@k).}
+While Robust Pass@k (RP$_s$@k) directly measures worst-case robustness in absolute terms,
+it does not explicitly capture how much performance degrades relative to the model's
+unperturbed behavior. In many practical applications, users and developers are more
+interested in the relative performance change between average-case and worst-case
+scenarios, rather than absolute worst-case scores alone.
+
+Robust Drops@k (RD$_s$@k) is introduced to quantify the relative degradation of functional
+correctness caused by input perturbations. It measures the proportional drop from the
+nominal Pass@k to the corresponding Robust Pass@k under $s$ perturbations, providing
+a normalized robustness indicator that is comparable across models and settings.
+
+Formally, Robust Drops@k is defined as:
+\begin{equation}
+\mathrm{RD}_s@k = \frac{\mathrm{Pass@}k - \mathrm{RP}_s@k}{\mathrm{Pass@}k}
+\end{equation}
+
+where Pass@k represents the functional correctness on the original (unperturbed) inputs,
+and RP$_s$@k denotes the worst-case Pass@k across $s$ perturbed variants of each prompt. \cite{Wang2022ReCode}
+
+\textbf{6. Robust Relatives@k (RRs@k).}
+This metric measures the relative retention of correctness across perturbations, but with a stricter definition of robustness. It considers that if a model changes its prediction (even from incorrect to correct) due to a perturbation, it exhibits non-robust behavior.
+Specifically, we define $RC_s^{[-]}$ as the number of correct-to-incorrect changes (worst-case) and $RC_s^{[+]}$ as the number of incorrect-to-correct changes (best-case). The metric captures the fraction of these "flips" in both directions relative to the dataset size $N$. For greedy decoding ($n=k=1$), it is defined as:
+
+\begin{equation}
+    \text{RR}_s@1 := \frac{RC_s^{[+]} + RC_s^{[-]}}{N}
+\end{equation}
+
+This definition generalizes to sampling, where we consider the number of changes within $n$ samples for a prompt $x$. The generalized metric calculates the expected instability:
+
+\begin{equation}
+    \text{RR}_s@k := \mathbb{E}_x \left[ 2 - \frac{\binom{n - rc_s^{[-]}(x)}{k}}{\binom{n}{k}} - \frac{\binom{n - rc_s^{[+]}(x)}{k}}{\binom{n}{k}} \right]
+\end{equation}
+
+Where $rc_s^{[-]}(x)$ and $rc_s^{[+]}(x)$ are the counts of changes for a specific prompt $x$. \cite{Wang2022ReCode}
+
+\textbf{7. Filtered Pass@k.}
+Used in coding competitions and datasets like APPS, where tasks include specific input/output examples in the description. 
+This metric leverages these examples by sampling a large number of solutions and filtering out those that fail to pass these preliminary unit tests. 
+The pass rate is then calculated exclusively on this filtered set of solutions, focusing on candidates that have already demonstrated basic correctness, as opposed to \textit{raw pass@k} which involves no filtering. \cite{Chen2021EvaluatingLLMCode}
+
+\textbf{8. Pass-Ratio@n.}
+Proposed by \emph{Yeo et al. (2024)} \cite{Yeo2024FrameworkEvaluatingCode} to capture the multifaceted nature of code quality, this metric overcomes the limitations of the binary \textit{pass@k} approach. 
+It evaluates the granular functional accuracy by considering the proportion of test cases passed by a generated solution.
+Unlike binary metrics where failing 1 out of 10 tests results in a zero score, pass-ratio measures the degree of correctness. Specifically, for a generated solution $i$, the metric squares the ratio of passed tests to assign more weight to higher accuracy:
+
+\begin{equation}
+    \text{pass-ratio}_i = \left( \frac{\text{passed test cases}_i}{\text{total test cases}} \right)^2
+\end{equation}
+
+The final \textbf{pass-ratio@n} is the average of these values across $n$ inferences to mitigate the randomness of LLM generation:
+
+\begin{equation}
+    \text{pass-ratio}@n := \frac{1}{n} \sum_{i=1}^{n} \text{pass-ratio}_i
+\end{equation}
+
+\subsubsection{Extended Variants and Applications}
+
+Although Pass@k and Pass Rate share the same conceptual foundation, the proportion of generated outputs that successfully pass all test cases, numerous variants have emerged to evaluate different granularities and contexts within software engineering and LLM-based code generation.
+
+\textbf{Granularity of Evaluation}
+\begin{itemize}
+  \item Average Test Pass Rate measures partial correctness by calculating the percentage of individual test cases that succeed within a task, rather than requiring full program success (pass-all-tests). \cite{Paul2024BenchmarksMetricsCodeGen}
+  \item Code Pass Rate and Simulation Pass Rate extend the metric to specific execution contexts such as hardware simulation or domain-specific compilers. \cite{Chen2024SurveyCodeGen}
+\end{itemize}
+
+\subsubsection{Applications in Software Engineering and LLM Evaluation}
+
+\begin{itemize}
+  \item \textbf{Code Generation Benchmarks:} Used in \emph{HumanEval}, \emph{MBPP}, \emph{APPS}, \emph{CodeContests} and \emph{EvalPlus} to evaluate functional correctness across different code tasks.
+  \item \textbf{Multilingual Code Intelligence:} Benchmarks like \emph{MultiPL-E}, \emph{HumanEval-X}, and \emph{HumanEval+} use Pass@k variants to measure cross-language consistency and code accuracy.
+  \item \textbf{Robustness and Perturbation Testing:} Frameworks such as \emph{ReCode} leverage RP@k and RDs@k to analyze resilience against code mutation and syntax changes.
+  \item \textbf{LLM Evaluation and Ranking:} Pass@k serves as a key target metric for optimizing model sampling strategies and for ranking-based training approaches.
+\end{itemize}
+
+\subsubsection{Limitations}
+
+\begin{itemize}
+  \item \textbf{Computationally expensive:} Requires multiple code generations per prompt and complete unit test execution.
+  \item \textbf{Sensitive to test design:} Quality and completeness of test cases directly impact reliability.
+  \item \textbf{Sampling bias:} Smaller $k$ values may underestimate capability; large $k$ values may inflate performance.
+  \item \textbf{Non-transferable across datasets:} A model tuned for one benchmark’s test design may not generalize to others.
+\end{itemize}
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\sloppy
+\cite{
+Bektas2025CriticalReview, 
+Hou2023LLMsSESLR, 
+Hu2025BenchmarksSE, 
+Chen2024SurveyCodeGen, 
+Li2024FullSDLC, 
+Ersoy2024BenchmarkingLlama3, 
+Anand2024AnalysisLLMCode, 
+Paul2024BenchmarksMetricsCodeGen, 
+Liu2023IsYourCodeCorrect, 
+Yeo2024FrameworkEvaluatingCode, 
+Li2024DevEval, 
+Wang2022ReCode, 
+Evtikhiev2023OutOfBLEU, 
+Zhang2024CodeFort, 
+Bistarelli2025UsageLLMCode, 
+Chen2021EvaluatingLLMCode, 
+Zhang2024HumanEvalV, 
+Cassano2022MultiPLE, 
+Li2024EvoCodeBench, 
+Dong2023CodeScore, 
+Niu2024EvaluatingEfficiency, 
+Tong2024CodeJudge, 
+Liu2024EfficientCodeGeneration, 
+Christopoulou2022PanGuCoder, 
+Allal2023SantaCoder, 
+Zheng2023CodeGeeX, 
+Xu2025LLMAgentsToolLearning, 
+Rong2025LLMOptimizationEducation, 
+Sagodi2024CodeSynthesisEvaluation, 
+Du2024ClassLevelCodeGen, 
+Mundhra2025IndustrialCaseStudy,
+}
+\fussy

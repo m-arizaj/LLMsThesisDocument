@@ -1,0 +1,70 @@
+\subsection{F1-score}
+
+\subsubsection{Introduction}
+
+The F1-score is a harmonic mean between Precision and Recall, designed to balance the trade-off between false positives and false negatives in classification tasks.
+It is particularly valuable in imbalanced datasets, where accuracy alone can be misleading.
+In Software Engineering, the F1-score is used for evaluating model performance across multiple domains such as bug detection, code repair, classification, semantic similarity, and functional correctness.
+
+This metric measures the balance between a model's ability to retrieve relevant instances (recall) and avoid misclassifications (precision), thus serving as a robust indicator of predictive reliability. It is commonly used in \textit{defect prediction}, \textit{bug localization}, \textit{natural language reasoning}, and \textit{code generation} studies.
+
+\subsubsection{Mathematical Definition}
+
+The classical formulation of the F1-score, as defined in Hand et al. (2021) \cite{Hand2021} and Yao \& Shepperd (2020) \cite{https://doi.org/10.48550/arxiv.2003.01182}, is:
+
+\[
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
+
+where:
+\begin{itemize}
+    \item $\text{Precision} = \frac{TP}{TP + FP}$
+    \item $\text{Recall} = \frac{TP}{TP + FN}$
+\end{itemize}
+and $TP$, $FP$, and $FN$ denote the true positive, false positive, and false negative counts respectively.
+
+The F1-score ranges from 0 to 1, with 1 representing perfect precision and recall.
+
+\subsubsection{Variants}
+
+Although naming conventions differ across studies, the F1 metric family can be reduced to three main variants:
+
+\textbf{1. Standard F1-Score}
+Used for binary or balanced classification tasks.
+Common in general NLP and SE evaluations for correctness and reasoning performance.
+
+\textbf{2. Macro-F1}
+Computes the unweighted mean of F1-scores across all classes, giving equal importance to each class regardless of frequency.
+
+\textbf{3. Micro-F1}
+Aggregates all instances before calculating precision and recall, thus weighting classes by their number of samples.
+It is widely applied in Named Entity Recognition (NER), token-level classification, and non-code SE tasks like \textit{SELU} (Software Engineering Language Understanding).
+
+\subsubsection{Applications in Software Engineering}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Context} & \textbf{Example Benchmarks/Datasets} & \textbf{Purpose} \\ \hline
+\textbf{Bug Detection / Repair} & Defects4J, QuixBugs \cite{Hou2023LLMsSESLR, Hu2025BenchmarksSE} & Evaluates detection and repair accuracy in software faults \\ \hline
+\textbf{Code Generation} & CodeXGLUE \cite{Lu2021CodeXGLUE, Wang2021CodeT5} & Measures correctness in generated code classification \\ \hline
+\textbf{Clone Detection} & BigCloneBench \cite{Lu2021CodeXGLUE} & Assesses semantic similarity between code fragments \\ \hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Interpretation and Limitations}
+
+While powerful, the F1-score can be misleading in imbalanced datasets, as it overlooks true negatives and can inflate perceived performance.
+Yao \& Shepperd (2021) \cite{https://doi.org/10.48550/arxiv.2103.10201} found that over 21.95\% of performance comparisons in software defect prediction studies change direction when using F1 instead of the Matthews Correlation Coefficient (MCC), demonstrating its sensitivity to class imbalance.
+
+Hand et al. (2021) \cite{Hand2021} further highlight that the harmonic mean formulation of F1 complicates interpretability and propose F*, an interpretable transformation of the F-measure, to address this issue.
+Therefore, while F1 remains a standard metric, it should be complemented by Precision, Recall, or MCC for a complete evaluation.
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\sloppy
+\cite{HuZhou2024LLMMetrics, Bektas2025CriticalReview, Liang2022HELM, Guo2023EvalLLMs, Hou2023LLMsSESLR, Hu2025BenchmarksSE, Chang2023SurveyLLMs, Chen2024SurveyCodeGen, Yang2024CodeScoreR, Lu2021CodeXGLUE, Wang2021CodeT5, Chen2024DLBasedSE, Pena2025NonCodeSETasks, Woesle2025Hallucinations}
+\fussy
