@@ -1,0 +1,59 @@
+\subsection{Usefulness Score}
+
+\subsubsection*{Definition}
+The \textbf{Usefulness Score} is a human-centric, subjective evaluation metric designed to assess the quality of generated code snippets based on their helpfulness to a human developer.
+
+It is not an automated metric but rather a rubric for human annotation, where experienced developers grade a generated code snippet on a 0-4 discrete scale. This score is a key metric for measuring human preference alignment.
+
+\subsubsection*{Grading Scale}
+The metric is defined by the following 5-point scale, as detailed in the \textbf{ICE-Score} paper's appendix:
+
+\begin{description}
+    \item[Score 0 (Totally Useless)] ``Snippet is not at all helpful, it is irrelevant to the problem.''
+    \item[Score 1 (Slightly Helpful)] ``Snippet is slightly helpful, it contains information relevant to the problem, but it is easier to write the solution from scratch.''
+    \item[Score 2 (Somewhat Helpful)] ``Snippet is somewhat helpful, it requires significant changes (compared to the size of the snippet), but is still useful.''
+    \item[Score 3 (Helpful / Almost Useful)] ``Snippet is helpful, but needs to be slightly changed to solve the problem.''
+    \item[Score 4 (Very Helpful)] ``Snippet is very helpful, it solves the problem.''
+\end{description}
+
+\subsubsection*{Purpose}
+The purpose of the Usefulness Score is to capture a human developer's judgment of a code snippet's quality, often missed by traditional token-matching metrics like BLEU. It directly measures how well a generated snippet satisfies a user's requirements and determines how much effort is saved (or wasted) by using it. It serves as a ground truth for training automated metrics (like ICE-Score).
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Code Generation
+    \item Human Preference Alignment
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Human-Aligned}: By definition, this metric has a high correlation with human judgment, which token-matching metrics often lack.
+    \item \textbf{Captures Semantics}: It assesses the \textbf{semantic logic} and \textbf{practical value} of the code, not just its textual similarity to a single reference answer.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Cost and Scalability}: Relies on manual grading from ``experienced software developers,'' making it expensive and difficult to scale compared to automated metrics.
+    \item \textbf{Subjectivity}: As a human-based score, it is subject to variability. (e.g., even human-written reference code in CoNaLa only achieved an average score of 3.4/4).
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @article{evtikhiev2023out,
+%   title={Out of the BLEU: How should we assess quality of the code generation models?},
+%   author={Evtikhiev, M. and Bogomolov, E. and Sokolov, Y. and Bryksin, T.},
+%   journal={arXiv preprint arXiv:2208.03133},
+%   year={2023},
+%   doi={10.48550/arXiv.2208.03133}
+% }
+
+% @inproceedings{yin2018learning,
+%   title={Learning to mine aligned code and natural language pairs from stack overflow},
+%   author={Yin, P. and Deng, B. and Chen, E. and Vasilescu, B. and Neubig, G.},
+%   booktitle={Proceedings of the 15th International Conference on Mining Software Repositories},
+%   pages={476--486},
+%   year={2018},
+%   publisher={Association for Computing Machinery},
+%   doi={10.1145/3196398.3196408}
+% }

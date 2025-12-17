@@ -1,0 +1,64 @@
+\subsection{Vendi Score}
+
+\subsubsection*{Introduction}
+The \textbf{Vendi Score (VS)} is a metric used to evaluate the \textbf{diversity} of samples produced by a generative model. Introduced by Friedman and Dieng (2022), it is heavily utilized in recent analyses (e.g., Stein et al., 2023) to assess inter- vs. intra-class diversity.
+
+The Vendi Score is a ``reference-free'' metric, meaning it does not require a set of real images for comparison. Instead, it quantifies diversity by calculating the ``effective number of unique samples'' within a given set of generated images. A higher Vendi Score indicates greater diversity.
+
+\subsubsection*{Formula (General Definition)}
+The Vendi Score is computed using the eigenvalues of a similarity matrix (kernel) $K$ derived from the generated samples $x_i^g$. The formula represents the exponential of the Shannon entropy of the eigenvalues:
+
+\begin{equation}
+    VS(\{x_i^g\}_{i=1}^n) = \exp\left(-\sum_{i=1}^n \lambda_i \log \lambda_i\right)
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\lambda_i$: The $i$-th eigenvalue of the normalized kernel matrix $K/n$.
+    \item $K_{ii'} = k(x_i^g, x_{i'}^g)$: The similarity (kernel) between two samples (typically a linear or RBF kernel).
+\end{itemize}
+
+\subsubsection*{1. Vendi Score (Overall)}
+\textbf{Definition} \\
+The Overall Vendi Score is calculated across an entire set of generated samples (e.g., 50,000 images) from all classes simultaneously.
+
+\textbf{Purpose \& Limitations} \\
+This metric reports the overall sample diversity. In class-conditional models, it primarily measures \textbf{inter-class diversity} (variety between classes). However, it is considered ``not particularly meaningful'' for these models because a model could achieve a high score simply by generating one distinct sample per class while failing to create variety \textit{within} those classes.
+
+\subsubsection*{2. Vendi Score (Per-Class)}
+\textbf{Definition} \\
+The Per-Class Vendi Score is computed independently for \textbf{each class} in the dataset (e.g., separately for "volcano" images, "comic book" images, etc.), and the final metric is the average of these individual scores.
+
+\textbf{Purpose \& Advantages} \\
+This metric quantifies \textbf{intra-class diversity} (or ``semantic diversity''). It measures how much variety a model produces \textit{within} a single category. Stein et al. (2023) advocate for this variant as a ``more meaningful quantification of semantic diversity,'' noting that it aligns better with visual inspection than the Overall score.
+
+\subsubsection*{Comparative Summary}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3cm}|}
+\hline
+\textbf{Metric} & \textbf{Calculation Basis} & \textbf{What It Measures} & \textbf{Utility} \\
+\hline
+Vendi Score (Overall) & Entire dataset (all classes mixed) & Inter-class diversity & Can be misleading \\
+\hline
+Vendi Score (Per-Class) & Averaged scores from within each class & Intra-class diversity (semantic) & Recommended / Robust \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas a tu archivo .bib
+
+% @article{stein2023exposing,
+%   title={Exposing flaws of generative model evaluation metrics and their unfair treatment of diffusion models},
+%   author={Stein, G. and Cresswell, J. C. and Hosseinzadeh, R. and Sui, Y. and Ross, B. L. and Villecroze, V. and Liu, Z. and Caterini, A. L. and Taylor, J. E. T. and Loaiza-Ganem, G.},
+%   journal={arXiv preprint arXiv:2306.04675},
+%   year={2023},
+%   doi={10.48550/arXiv.2306.04675}
+% }
+
+% @article{friedman2022vendi,
+%   title={The Vendi Score: A diversity evaluation metric for machine learning},
+%   author={Friedman, D. and Dieng, A. B.},
+%   journal={arXiv preprint arXiv:2210.02410},
+%   year={2022},
+%   doi={10.48550/arXiv.2210.02410}
+% }

@@ -1,0 +1,49 @@
+\subsection{System Thinking Score (STS)}
+
+\subsubsection*{Definition}
+The \textbf{System Thinking Score (STS)} is a metric used within the \textbf{LoCoBench} benchmark to evaluate a Large Language Model's (LLM) sophisticated software engineering capabilities.
+
+It is specifically adapted from established systems engineering assessment frameworks (Blanchard and Fabrycky, 2016). The metric assesses the model's holistic understanding of the software system and its awareness of scalability. STS is one of eight metrics that contribute to the \textbf{Software Engineering Excellence} dimension of the LoCoBench Score (LCBS).
+
+\subsubsection*{Calculation}
+Unlike mathematical metrics like BLEU or Pass@k, the STS is not defined by a standalone formula but is a scored assessment within the LoCoBench framework. It functions as a component metric:
+
+\begin{equation}
+    \text{STS} \in \text{Metrics}_{\text{SE Excellence}}
+\end{equation}
+
+It contributes to the aggregated Software Engineering score ($SE$), which is calculated as the mean of its constituent normalized metrics:
+\begin{equation}
+    SE = \frac{1}{N} \sum_{m \in M_{SE}} N(m)
+\end{equation}
+\noindent where STS is one of the metrics $m$ in the set $M_{SE}$.
+
+\subsubsection*{Purpose}
+The purpose of the System Thinking Score is to measure an LLM's ability to go beyond simple code generation and demonstrate a deeper, \textbf{holistic comprehension} of the entire software system. This includes its ability to understand complex system designs, component relationships, and the implications of scalability.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Long-Context LLM Evaluation
+    \item Software Engineering Excellence
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Holistic Evaluation}: Unlike metrics focused on single functions or lines of code, STS assesses a model's understanding of the entire system architecture.
+    \item \textbf{Measures Advanced Skills}: It specifically targets sophisticated software engineering capabilities, such as understanding scalability, which are essential for complex, real-world development.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Benchmark-Specific}: This metric is defined as part of the LoCoBench framework and relies on its specific tasks and scoring protocols.
+    \item \textbf{Framework Dependence}: Its definition is adapted from qualitative systems engineering frameworks rather than being a standalone, universally computed arithmetic formula.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{qiu2025locobench,
+%   title={LoCoBench: A benchmark for long-context large language models in complex software engineering},
+%   author={Qiu, J. and Liu, Z. and Liu, Z. and Murthy, R. and Zhang, J. and Chen, H. and others},
+%   journal={arXiv preprint arXiv:2509.09614},
+%   year={2025},
+%   doi={10.48550/arXiv.2509.09614}
+% }

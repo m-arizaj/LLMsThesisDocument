@@ -1,0 +1,90 @@
+\subsection{Inference (Efficiency and Verification)}
+
+\subsubsection*{Introduction}
+In the evaluation of Large Language Models (LLMs) and the systems they generate, ``Inference'' describes metrics in two distinct categories:
+
+\begin{itemize}
+    \item \textbf{Inference Efficiency}: The performance of a model during the generation phase (speed, resource consumption, runtime).
+    \item \textbf{Behavioral Model Inference}: A specialized verification metric in Software Engineering referring to the success rate of automatically learning a correct behavioral model (e.g., an automaton) to validate functional correctness.
+\end{itemize}
+
+\subsubsection*{1. Inference Efficiency (Runtime / Speed)}
+
+\textbf{Definition} \\
+Inference Efficiency metrics measure the computational cost and speed of a language model when performing its primary function: generating text. HELM (Holistic Evaluation of Language Models) proposes several specific metrics:
+\begin{itemize}
+    \item \textbf{Raw Runtime}: Actual wall-clock time including network noise.
+    \item \textbf{Denoised Inference Runtime}: Estimated runtime with contention (queuing) noise factored out.
+    \item \textbf{Idealized Inference Runtime}: A standardized metric estimating runtime on a uniform, optimized hardware stack (e.g., NVIDIA A100) for fair comparison.
+\end{itemize}
+
+\textbf{Formula (HELM Idealized Runtime)} \\
+The total time for an idealized runtime is modeled as a function of prompt processing time and token generation time:
+
+\begin{equation}
+    \text{Total Time} = F(N_{\text{prompt}}) + g \cdot N_{\text{output}}
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $F$: Function modeling the runtime of processing the prompt tokens ($N_{\text{prompt}}$).
+    \item $g$: Runtime (cost) of generating each additional output token.
+    \item $N_{\text{output}}$: Number of output tokens generated.
+\end{itemize}
+
+\textbf{Purpose} \\
+To measure the practical performance of an LLM. High efficiency is critical for user-facing applications (chatbots) and autonomous agents requiring fast responses.
+
+\textbf{Limitations} \\
+Comparing efficiency is difficult due to non-model factors like hardware types (GPUs/TPUs), software optimizations, and API server contention.
+
+\subsubsection*{2. Behavioral Model Inference (Success Rate)}
+
+\textbf{Definition} \\
+Specific to Learning-Based Testing and Language-Driven Engineering (LDE), this metric does \textbf{not} measure computational speed. Instead, it measures the \textbf{success rate (\%)} of automatically \textit{inferring} a correct behavioral model (e.g., a Mealy machine) from a generated application.
+
+For example, in system migration (e.g., JS to TS), a tool tests the resulting application to infer its behavior. The success rate reflects whether this inferred model is correct, validating the migration.
+
+\textbf{Purpose} \\
+To automatically validate functional correctness and reliability. It verifies that the generated system behaves as intended or identifies behavioral differences using ``difference automata.''
+
+\subsubsection*{Comparative Summary}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{2.5cm}|p{5cm}|p{2.5cm}|}
+\hline
+\textbf{Metric Category} & \textbf{Measures} & \textbf{Description} & \textbf{Typical Domain} \\
+\hline
+Inference Efficiency & Efficiency & Computational cost, time (s), or tokens/sec during text generation. & LLM Evaluation, Agents \\
+\hline
+Behavioral Model Inference & Verification & Success rate (\%) of automatically deriving a correct behavioral automaton from a system. & Software Engineering, LDE \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir estas entradas al archivo .bib
+
+% @article{busch2025llm,
+%   title={LLM-based code generation and system migration in language-driven engineering},
+%   author={Busch, D. and Bainczyk, A. and Smyth, S.},
+%   journal={International Journal on Software Tools for Technology Transfer},
+%   volume={27},
+%   pages={137--147},
+%   year={2025},
+%   doi={10.1007/s10009-025-00798-x}
+% }
+
+% @article{liang2022holistic,
+%   title={Holistic evaluation of language models (HELM)},
+%   author={Liang, P. and Bommasani, R. and Lee, T. and others},
+%   journal={arXiv preprint arXiv:2211.09110},
+%   year={2022},
+%   doi={10.48550/arXiv.2211.09110}
+% }
+
+% @article{wang2023survey,
+%   title={A survey on large language model based autonomous agents},
+%   author={Wang, L. and Ma, C. and Feng, X. and others},
+%   journal={arXiv preprint arXiv:2308.11432},
+%   year={2023},
+%   doi={10.48550/arXiv.2308.11432}
+% }

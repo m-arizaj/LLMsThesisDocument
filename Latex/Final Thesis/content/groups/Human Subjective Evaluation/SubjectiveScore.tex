@@ -1,0 +1,78 @@
+\subsection{Subjective Score}
+
+\subsubsection*{Definition}
+A \textbf{Subjective Score} is a metric used in Human-Centric Evaluation (HCE) to assess foundation models based on human perception, experience, and practical application, rather than on automated, objective quiz performance.
+
+It is determined by human evaluators who assign a rating to a model's performance during a collaborative, open-ended task using a specific five-point discrete scale:
+\begin{enumerate}
+    \item Very Weak
+    \item Weak
+    \item Moderate
+    \item Strong
+    \item Very Strong
+\end{enumerate}
+
+\subsubsection*{Formula}
+The final score is calculated as the arithmetic mean of all ratings provided by the human evaluators across the different dimensions:
+
+\begin{equation}
+    \text{Subjective Score} = \frac{1}{N} \sum_{i=1}^{N} r_i
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $N$: Total number of ratings.
+    \item $r_i$: The rating assigned by the $i$-th evaluator.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose is to bridge the gap left by traditional, model-centric benchmarks (like MMLU). It aims to capture essential subjective dimensions of human experience—such as user satisfaction and contextual adaptability—in realistic, open-ended tasks rather than simple Q\&A formats.
+
+\subsubsection*{Evaluation Dimensions}
+The HCE framework uses the Subjective Score to rate models across three core dimensions:
+
+\begin{itemize}
+    \item \textbf{Problem-Solving Ability}:
+    \begin{itemize}
+        \item \textbf{Analytical Accuracy (A.A.)}: How precisely the model resolves the problem.
+        \item \textbf{Comprehensiveness (Compre.)}: The extent to which the model considers all relevant aspects.
+        \item \textbf{Assistance Efficiency (A.E.)}: How effectively the model saves the user time.
+    \end{itemize}
+    
+    \item \textbf{Information Quality}:
+    \begin{itemize}
+        \item \textbf{Information Reliability (I.R.)}: Accuracy, currency, and freedom from errors.
+        \item \textbf{Exploration Depth (E.D.)}: Level of detail, relevance, and thoroughness.
+    \end{itemize}
+
+    \item \textbf{Interaction Experience}:
+    \begin{itemize}
+        \item \textbf{Content Relevance (C.R.)}: Alignment with the user's query.
+        \item \textbf{Feedback Adaptability (F.A.)}: Ability to adjust based on user feedback.
+        \item \textbf{Expression Naturalness (E.N.)}: Coherence and readability.
+        \item \textbf{Response Timeliness (R.T.)}: Speed of delivery.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Reflects Human Experience}: Captures nuanced qualities like satisfaction and naturalness that objective metrics miss.
+    \item \textbf{Real-World Relevance}: Evaluates models in complex scenarios more representative of practical applications.
+    \item \textbf{Avoids Contamination}: Less susceptible to data contamination (training on test sets) than static benchmarks.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Cost and Scalability}: Relies on human participants, making it expensive and slow to scale.
+    \item \textbf{Subjectivity and Bias}: Scores are influenced by individual evaluator preferences (e.g., preference for verbosity vs. conciseness).
+    \item \textbf{Influenced by Style}: A model's stylistic choices (e.g., rhetoric) can bias the assessment of content quality.
+\end{itemize}
+
+% añadir esta entrada al archivo .bib
+% @article{guo2025human,
+%   title={Human-centric evaluation for foundation models},
+%   author={Guo, Y. and Wang, J. and Ji, K. and Wen, F. and Zhang, Z. and Zhu, X. and Li, C. and Zhai, G.},
+%   journal={arXiv preprint arXiv:2506.01793},
+%   year={2025},
+%   doi={10.48550/arXiv.2506.01793}
+% }

@@ -1,0 +1,77 @@
+\subsection{Surface-Form Constraints}
+
+\subsubsection*{Definition}
+\textbf{Surface-Form Constraints} is a ``much-relaxed form of similarity metric'' used to evaluate generated code.
+
+Instead of measuring functional correctness (i.e., execution and testing) or deep syntactic similarity (like AST matching), this metric simply checks if the generated code adheres to specific low-level textual requirements. It is primarily used in benchmarks to verify that the model's solution includes or excludes specific elements as defined by the problem instructions.
+
+\subsubsection*{Formula (General Idea)}
+This metric is not a complex calculation but rather a binary check for adherence to constraints. It can be formally expressed as an indicator function that verifies two conditions:
+
+\begin{equation}
+    \text{Pass} = \mathbb{I}\left( \left( \forall r \in R, r \in C_{\text{gen}} \right) \land \left( \forall f \in F, f \notin C_{\text{gen}} \right) \right)
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $C_{\text{gen}}$: The generated code.
+    \item $R$: The set of \textbf{required} elements (e.g., specific API calls, keywords like ``pandas'').
+    \item $F$: The set of \textbf{forbidden} elements (e.g., restricted libraries).
+    \item $\mathbb{I}$: Indicator function returning 1 (Pass) if all conditions are met, 0 otherwise.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose is to provide a simple, automated check on the \textbf{structure or composition} of the generated code, rather than its full functional correctness. It helps measure whether a model can follow specific instructions about \textit{how} to solve a problem (e.g., ``solve this using the `Pandas` library'').
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Code Generation
+    \item Data Science Code Generation
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Simplicity}: It is computationally much cheaper and faster than executing code or parsing an Abstract Syntax Tree (AST).
+    \item \textbf{Method Verification}: It allows benchmarks to strictly test if a model uses a specific, required tool (like a specific library function) to solve a problem.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{No Guarantee of Correctness}: This metric is ``relaxed.'' Code can pass the surface-form constraints (e.g., it includes the word ``pandas'') but still be functionally incorrect, buggy, or incomplete.
+    \item \textbf{Brittle}: It is a surface-level check and does not capture the semantic or logical correctness of the code.
+\end{itemize}
+
+\subsubsection*{Related Concepts}
+\begin{itemize}
+    \item \textbf{Surface Perturbation}: A benchmark design feature (used in DS-1000) where the problem's wording is changed to test robustness. This is distinct from Surface-Form Constraints, which is a metric for evaluating the output code.
+\end{itemize}
+
+% añadir estas entradas a tu archivo .bib
+
+% @article{lai2022ds1000,
+%   title={DS-1000: A natural and reliable benchmark for data science code generation},
+%   author={Lai, Y. and Li, C. and Wang, Y. and Zhang, T. and Zhong, R. and Zettlemoyer, L. and Yih, S. W. and Fried, D. and Wang, S. and Yu, T.},
+%   journal={arXiv preprint arXiv:2211.11501},
+%   year={2022},
+%   doi={10.48550/arXiv.2211.11501}
+% }
+
+% @article{ghoshpaul2024benchmarks,
+%   title={Benchmarks and metrics for evaluations of code generation: A critical review},
+%   author={Ghosh Paul, D. and Zhu, H. and Bayley, I.},
+%   journal={arXiv preprint arXiv:2406.12655},
+%   year={2024},
+%   doi={10.48550/arXiv.2406.12655}
+% }
+
+% @incollection{anand2025analysis,
+%   title={Analysis of LLM code synthesis in software productivity},
+%   author={Anand, A. and Chopra, S. and Arora, M.},
+%   booktitle={Applied intelligence and computing},
+%   editor={Saraswat, M. and Kumari, R.},
+%   pages={235--243},
+%   year={2025},
+%   publisher={Universal Inovators},
+%   doi={10.56155/978-81-955020-9-7-24}
+% }

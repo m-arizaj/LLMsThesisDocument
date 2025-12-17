@@ -1,0 +1,78 @@
+\subsection{COMET}
+
+\subsubsection*{Definition}
+\textbf{COMET} (Crosslingual Optimized Metric for Evaluation of Translation) is an automatic evaluation metric for text generation. It is an \textbf{LLM-based metric}, meaning it leverages a pre-trained cross-lingual language model (like XLM-RoBERTa) to evaluate the quality of a generated text (hypothesis) by comparing it to a source text and a reference text.
+
+Unlike traditional metrics that rely on n-gram overlap, COMET is trained to \textbf{predict human judgments} of quality, capturing semantic nuances more effectively.
+
+\subsubsection*{Formula (General Idea)}
+COMET does not use a simple, static statistical formula like BLEU. Instead, it is a neural framework.
+
+The model takes a tuple $(s, h, r)$ consisting of:
+\begin{itemize}
+    \item $s$: Source text.
+    \item $h$: Hypothesis (candidate text).
+    \item $r$: Reference text.
+\end{itemize}
+
+These inputs are passed through a pre-trained encoder (e.g., XLM-R) to obtain vector representations. These embeddings are then combined and passed through a regression head to predict a quality score $\hat{y}$:
+
+\begin{equation}
+    \hat{y} = f_{\theta}(\text{Enc}(s), \text{Enc}(h), \text{Enc}(r))
+\end{equation}
+
+\noindent where $f_{\theta}$ is the trained estimator that minimizes the error against human quality scores.
+
+\subsubsection*{Purpose}
+The primary purpose is to provide an evaluation metric that correlates highly with human judgment, moving beyond surface-level matching to leverage the deep semantic understanding of LLMs.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Machine Translation (MT)
+    \item Natural Language Generation (NLG)
+    \item LLM Evaluation
+    \item Software Engineering (as a baseline)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{High Correlation with Humans}: Specifically trained to replicate human assessments.
+    \item \textbf{Semantic Understanding}: Captures nuances and meaning better than surface-level overlap metrics.
+    \item \textbf{Cross-lingual}: Effective for evaluating translation due to its cross-lingual pre-training.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Reference Dependency}: Requires high-quality reference texts, which can be expensive or unavailable.
+    \item \textbf{Poor Functional Correlation}: In code generation, it shows ``extremely weak correlation'' with functional correctness (e.g., only $r_p \approx 0.12$ on APPS-Eval).
+    \item \textbf{Computational Cost}: More expensive to run than statistical metrics like BLEU.
+\end{itemize}
+
+% añadir estas entradas al archivo .bib
+
+% @inproceedings{rei2020comet,
+%   title={COMET: A neural framework for MT evaluation},
+%   author={Rei, R. and Stewart, C. and Farinha, A. C. and Lavie, A.},
+%   booktitle={Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+%   pages={2685--2702},
+%   year={2020},
+%   doi={10.18653/v1/2020.emnlp-main.213}
+% }
+
+% @inproceedings{lin2024overview,
+%   title={Overview of the comprehensive evaluation of Large Language Models},
+%   author={Lin, L. and Zhu, D. and Shang, J.},
+%   booktitle={2024 IEEE Smart World Congress (SWC)},
+%   pages={1--8},
+%   year={2024},
+%   publisher={IEEE},
+%   doi={10.1109/SWC62898.2024.00231}
+% }
+
+% @article{dong2024codescore,
+%   title={CodeScore: Evaluating code generation by learning code execution},
+%   author={Dong, Y. and Ding, J. and Jiang, X. and Li, G. and Li, Z. and Jin, Z.},
+%   journal={arXiv preprint arXiv:2301.09043},
+%   year={2024},
+%   doi={10.48550/arXiv.2301.09043}
+% }

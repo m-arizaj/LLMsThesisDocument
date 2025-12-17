@@ -1,0 +1,35 @@
+\subsection{Verbosity}
+
+\subsubsection*{Definition}
+\textbf{Verbosity} is a metric used in code generation evaluation to measure the ``wordiness'' or excessive length of a Large Language Model's (LLM) output.
+
+It is typically treated as a trade-off against functional performance, where high verbosity is considered a negative characteristic, even if the model's output is functionally correct.
+
+\subsubsection*{Purpose}
+The purpose of measuring verbosity is to assess the practical utility and ``communication clarity'' of an LLM. Models that are overly verbose may provide correct answers but are less efficient for developers, who must read and parse the unnecessarily long output. It highlights the balance between raw performance and conciseness.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Software Engineering
+    \item Code Generation
+    \item LLM Evaluation
+\end{itemize}
+
+\subsubsection*{Key Findings \& Trade-offs}
+Recent comprehensive evaluations (e.g., of over 80 LLMs) have identified a clear trade-off between capability and brevity:
+\begin{itemize}
+    \item Top performers in functional correctness (such as \textbf{OpenAI o1-preview}, \textbf{o1-mini}, and \textbf{Anthropic Claude 3.5 Sonnet}) often exhibit ``significantly higher latency and verbosity.''
+    \item This demonstrates that achieving high reasoning performance often currently comes at the cost of less concise communication.
+\end{itemize}
+
+% añadir esta entrada al archivo .bib
+% @article{bistarelli2025usage,
+%   title={Usage of Large Language Model for code generation tasks: A review},
+%   author={Bistarelli, S. and Fiore, M. and Mercanti, I. and Mongiello, M.},
+%   journal={SN Computer Science},
+%   volume={6},
+%   number={6},
+%   pages={673},
+%   year={2025},
+%   doi={10.1007/s42979-025-04241-5}
+% }

@@ -1,0 +1,58 @@
+\subsection{Stereotype Score (ss)}
+
+\subsubsection*{Definition}
+The \textbf{Stereotype Score (ss)} is an automatic evaluation metric used in the \textbf{StereoSet} benchmark to measure stereotypical bias in large language models.
+
+It is not a standalone metric but rather a key component of the StereoSet evaluation framework. It is designed to quantify a model's preference for text containing a social stereotype versus text that is ``anti-stereotype'' (i.e., neutral or positive).
+
+\subsubsection*{Formula}
+The Stereotype Score is calculated based on a model's performance on the StereoSet dataset, where it chooses between a stereotypical option and an anti-stereotypical option given a context.
+
+\begin{equation}
+    ss = \frac{\text{Count}(\text{Model prefers stereotype})}{\text{Total Instances}} \times 100
+\end{equation}
+
+\textbf{Ideal Score}: An ideal, unbiased model chooses the stereotype and anti-stereotype options with equal probability, resulting in a score of:
+\begin{equation}
+    ss_{\text{ideal}} = 50
+\end{equation}
+
+This score is used to calculate the benchmark's main metric, the \textbf{Idealized CAT (iCAT) Score}, combining it with the language modeling score ($lms$):
+\begin{equation}
+    \text{iCAT} = lms \cdot \frac{\min(ss, 100-ss)}{50}
+\end{equation}
+
+\subsubsection*{Purpose}
+The purpose of the Stereotype Score is to explicitly measure a model's stereotypical bias. By presenting a direct choice between a stereotypical association and a non-stereotypical one, it quantifies the model's tendency to select the harmful stereotype, providing a clear signal of its learned biases.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Fairness / Bias Evaluation
+    \item Stereotypical Bias Evaluation
+    \item Natural Language Processing (NLP)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Contextual}: Measures bias within a sentence or discourse context, which is more nuanced than simple word-embedding associations.
+    \item \textbf{Interpretable}: The score is a simple percentage (0-100), with a clear target (50) for unbiased behavior.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Validity of ``Anti-stereotype''}: The concept of an anti-stereotype option is controversial. It may not reflect real-world power dynamics, making the 50/50 target a questionable indicator of true fairness.
+    \item \textbf{Ambiguity}: The dataset has been criticized for ambiguities regarding which stereotypes are actually captured.
+    \item \textbf{Ranking vs. Generation}: It measures preference by ranking pre-written sentences, which may not fully capture the model's tendency to \textit{produce} stereotypes in open-ended generation.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @article{nadeem2021stereoset,
+%   title={StereoSet: Measuring stereotypical bias in pretrained language models},
+%   author={Nadeem, M. and Bethke, A. and Reddy, S.},
+%   journal={Computational Linguistics},
+%   volume={47},
+%   number={1},
+%   pages={103--142},
+%   year={2021},
+%   doi={10.1162/coli_a_00524}
+% }

@@ -1,0 +1,46 @@
+\subsection{User-Related Metrics (Rating \& Satisfaction)}
+
+\subsubsection*{Introduction}
+In the evaluation of code generation models, \textbf{User-Related Metrics} are a class of \textbf{feedback-based evaluation} methods. These metrics are essential for assessing the practical quality of generated code by incorporating human judgment and expertise.
+
+Unlike automated metrics that check for correctness or similarity, user-related metrics focus on the practical \textbf{usability, helpfulness, and overall experience} of a developer using an LLM as a tool. This approach helps evaluate aspects like readability, maintainability, and real-world effectiveness.
+
+\subsubsection*{1. User Rating}
+\textbf{Definition} \\
+User Rating is a subjective metric used in the \textbf{RealHumanEval} benchmark to measure the perceived ``usability and helpfulness'' of model-generated code.
+
+In the study, experienced programmers (213 participants) were asked to complete real programming tasks using LLM assistance (auto-completion or chat). Afterward, they rated the model's contribution on a \textbf{scale from 1 to 5}.
+
+\textbf{Purpose} \\
+The goal is to capture a subjective measure of a model's practical usability. It helps identify discrepancies between a user's preference and the model's actual technical performance, providing insights for user-centric optimizations.
+
+\subsubsection*{2. User Satisfaction}
+\textbf{Definition} \\
+User Satisfaction is a subjective metric used in the \textbf{Copilot Evaluation Harness} benchmark to measure a developer's ``overall experience'' when using GitHub Copilot.
+
+Developers used Copilot within Visual Studio Code to complete tasks (code generation, bug fixing, documentation) and provided feedback on the tool's helpfulness, accuracy, and quality, including a satisfaction rating on a \textbf{scale from 1 to 5}.
+
+\textbf{Purpose} \\
+This metric aims to comprehensively evaluate a model's performance in a real-world development environment, assessing its practical applicability and efficiency gains by directly polling developers.
+
+\subsubsection*{Comparative Summary}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{4.5cm}|c|p{3.5cm}|}
+\hline
+\textbf{Metric} & \textbf{Definition} & \textbf{Scale} & \textbf{Benchmark} \\
+\hline
+User Rating & Measures the ``usability and helpfulness'' of generated code. & 1 to 5 & RealHumanEval \\
+\hline
+User Satisfaction & Measures the ``overall experience'' of using the LLM tool. & 1 to 5 & Copilot Evaluation Harness \\
+\hline
+\end{tabular}
+\end{center}
+
+% añadir esta entrada al archivo .bib
+% @article{chen2024survey,
+%   title={A survey on evaluating large language models in code generation tasks},
+%   author={Chen, L. and Guo, Q. and Jia, H. and Zeng, Z. and Wang, X. and Xu, Y. and Wu, J. and Wang, Y. and others},
+%   journal={arXiv preprint arXiv:2408.16498},
+%   year={2024},
+%   doi={10.48550/arXiv.2408.16498}
+% }
