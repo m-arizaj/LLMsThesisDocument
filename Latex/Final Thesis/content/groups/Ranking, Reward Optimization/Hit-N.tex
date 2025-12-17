@@ -1,0 +1,54 @@
+\subsection{Hit-N}
+
+\subsubsection*{Definition}
+\textbf{Hit-N} (also referred to as Hit-N (multi-defects)) is an evaluation metric used in fault localization. It is specifically ``designed for multi-defects.''
+
+The metric measures the number of bugs (out of a set of known bugs) for which a fault localization tool's predicted set of suspicious code elements (e.g., the top-ranked statements) successfully ``contains at least N faulty statements.''
+
+\subsubsection*{Formula (General Idea)}
+The metric is defined qualitatively based on a counting mechanism. It can be expressed as:
+
+\begin{equation}
+    \text{Hit-N} = \sum_{b \in B} \mathbb{1}(|S_{\text{predicted}}(b) \cap S_{\text{faulty}}(b)| \geq N)
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $B$: The set of bugs in the multi-bug benchmark.
+    \item $S_{\text{predicted}}(b)$: The set of suspicious statements predicted by the tool for bug $b$.
+    \item $S_{\text{faulty}}(b)$: The set of actual faulty statements for bug $b$.
+    \item $N$: The threshold number of faulty statements required for a ``hit.''
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of Hit-N is to evaluate the effectiveness of fault localization techniques in scenarios involving multiple defects. Unlike metrics that might only measure the rank of the \textit{first} fault found (like Mean First Rank - MFR), Hit-N assesses a tool's ability to identify faulty statements across multiple, potentially interacting, bugs within the same project.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Fault Localization Evaluation
+    \item LLM Evaluation (as applied to code/debugging tasks)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Designed for Multi-Defect Scenarios}: Its main advantage is its specific design for evaluating performance against multiple bugs, which is often a more realistic scenario than the single-bug assumption.
+    \item \textbf{Measures Set-Based Success}: It evaluates the \textit{set} of predicted locations rather than just the single highest-ranked location.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Infrequent Use}: Survey literature indicates that this metric is not commonly used (listing only one use case in reviewed literature).
+    \item \textbf{Niche Application}: Its utility is limited to multi-defect fault localization; it is not a general-purpose metric. Most existing fault localization research still assumes only one bug is present.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @inproceedings{li2022fault,
+%   title={Fault localization to detect co-change fixing locations},
+%   author={Li, Y. and Wang, S. and Nguyen, T. N.},
+%   booktitle={Proceedings of the 30th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+%   pages={659--671},
+%   year={2022},
+%   publisher={ACM},
+%   address={New York},
+%   doi={10.1145/3540250.3549137}
+% }

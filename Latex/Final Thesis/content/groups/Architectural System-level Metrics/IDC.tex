@@ -1,0 +1,55 @@
+\subsection{Incremental Development Capability (IDC)}
+
+\subsubsection*{Introduction}
+The \textbf{Incremental Development Capability (IDC)} is a novel metric introduced by Qiu et al. (2025) as part of the LoCoBench benchmark. It is designed to evaluate a Large Language Model's (LLM) ability to build effectively on previous development work across multiple sessions.
+
+This metric addresses a critical gap in traditional evaluations by measuring how well a model handles incremental tasks, a crucial capability for realistic, long-context software development that is often overlooked by other benchmarks. It falls under the ``Functional Correctness'' dimension of the LoCoBench framework.
+
+\subsubsection*{Definition}
+The IDC score is calculated based on a sequence of incremental development tasks $T$ applied to a codebase across multiple states $S$. Ideally, it measures the capacity to extend functionality without breaking existing code.
+
+\subsubsection*{Formula}
+For a sequence of tasks $T=\{t_1, t_2, ..., t_k\}$ that cause codebase state transitions $S_0 \rightarrow S_1 \rightarrow \dots \rightarrow S_k$, the IDC is defined as:
+
+\begin{equation}
+    \text{IDC}(T) = \frac{1}{|T|} \sum_{i=1}^{|T|} \frac{\xi(t_i, S_{i-1}) \cdot \sigma(t_i, S_i)}{\beta(t_i, S_{i-1}, S_i) + 1}
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $\xi(t_i, S_{i-1})$: A score from $[0, 1]$ that measures the \textbf{extension quality} of the new task $t_i$ relative to the previous codebase state $S_{i-1}$.
+    \item $\sigma(t_i, S_i)$: A score from $[0, 1]$ that quantifies the \textbf{integration smoothness} of the changes within the new codebase state $S_i$.
+    \item $\beta(t_i, S_{i-1}, S_i)$: A count ($\ge 0$) of the \textbf{breaking changes} introduced during the transition from $S_{i-1}$ to $S_i$.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of the IDC metric is to assess an LLM's performance in realistic, \textbf{multi-session development workflows}. It specifically measures how well a model can understand a pre-existing state and incrementally add or modify functionality without introducing breaking changes, simulating a continuous development process.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Long-Context Software Engineering
+    \item Functional Correctness Evaluation
+    \item Multi-Session Development
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Realistic Evaluation}: It measures a capability that is crucial for practical, long-term software development but is not captured by metrics focused on single, isolated tasks.
+    \item \textbf{Focus on Continuity}: It specifically evaluates context retention and the ability to build upon existing work.
+    \item \textbf{Accounts for Regressions}: The formula directly penalizes ``breaking changes'' (via the denominator), rewarding models that maintain system integrity.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Benchmark Specificity}: As a metric newly proposed in the LoCoBench paper, it is highly specific to the benchmark's structure.
+    \item \textbf{Component Complexity}: Its calculation relies on other complex measures like ``extension quality'' and ``integration smoothness,'' which require precise definitions and measurement tools themselves.
+\end{itemize}
+
+% añadir esta entrada al archivo .bib
+% @article{qiu2025locobench,
+%   title={LoCoBench: A benchmark for long-context large language models in complex software engineering},
+%   author={Qiu, J. and Liu, Z. and Liu, Z. and Murthy, R. and Zhang, J. and Chen, H. and others},
+%   journal={arXiv preprint arXiv:2509.09614},
+%   year={2025},
+%   doi={10.48550/arXiv.2509.09614}
+% }

@@ -1,0 +1,62 @@
+\subsection{Idealized Context Association (ICAT)}
+
+\subsubsection*{Definition}
+The \textbf{Idealized Context Association Test (iCAT) Score} is a metric introduced by Nadeem, Bethke, and Reddy (2021) to measure stereotypical bias in language models. It is designed to be used with the \textbf{StereoSet} dataset.
+
+The metric provides a single score that balances a model's language modeling capability (its ability to distinguish meaningful sentences from meaningless ones) with its level of stereotypical bias (its preference for stereotypical sentences over anti-stereotypical ones).
+
+\subsubsection*{Formula}
+The iCAT score is calculated based on two sub-scores derived from the StereoSet benchmark:
+
+\begin{itemize}
+    \item \textbf{$lms$ (Language Modeling Score)}: The percentage of instances where the model correctly prefers a meaningful sentence option over a meaningless (unrelated) one. Ideally 100.
+    \item \textbf{$ss$ (Stereotype Score)}: The percentage of instances where the model prefers a stereotypical option over an anti-stereotypical one. Ideally 50 (indicating no preference/bias).
+\end{itemize}
+
+The iCAT score is defined as:
+
+\begin{equation}
+    \text{iCAT} = lms \times \frac{\min(ss, 100 - ss)}{50}
+\end{equation}
+
+\subsubsection*{Purpose}
+The purpose of iCAT is to provide a single, consolidated metric that evaluates a model's stereotypical bias while also accounting for its fundamental language understanding. 
+
+The goal is to reward models that are both coherent (high $lms$) and unbiased ($ss$ near 50). A model that simply chooses ``anti-stereotype'' every time might get a good bias score but would be penalized by iCAT if it fails to distinguish meaningful sentences from nonsensical ones.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Fairness / Bias Evaluation
+    \item Natural Language Processing (NLP)
+    \item Stereotype Measurement
+    \item Contextual Bias Balance
+\end{itemize}
+
+\subsubsection*{Benchmarks}
+\begin{itemize}
+    \item \textbf{StereoSet}: The iCAT metric was introduced specifically for this benchmark, which evaluates model bias across intrasentence and intersentence tasks covering stereotypes related to race, gender, religion, and profession.
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Balanced Score}: It combines a measure of language ability ($lms$) with a measure of bias ($ss$) into a single, interpretable score.
+    \item \textbf{Penalizes Naive Models}: A model cannot achieve a high iCAT score by simply avoiding stereotypes; it must also demonstrate strong language modeling capabilities.
+    \item \textbf{Clear Target}: The metric provides a clear ``ideal'' target (an $lms$ of 100 and an $ss$ of 50) for model evaluation.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Dataset Dependency}: The metric is intrinsically tied to the StereoSet dataset. Criticisms of the dataset's validity apply to the metric as well.
+    \item \textbf{Validity Concerns}: Research (e.g., Blodgett et al., 2021) has noted that many instances in StereoSet contain ``ambiguities about what stereotypes they capture'' or inconsistent perturbations.
+    \item \textbf{Weak Downstream Correlation}: The iCAT score is based on pseudo-log-likelihood (PLL) preferences. Some studies caution that PLL metrics may have only weak correlations with biases that appear in real-world downstream tasks.
+\end{itemize}
+
+% añadir esta entrada a tu archivo .bib
+% @inproceedings{nadeem2021stereoset,
+%   title={StereoSet: Measuring stereotypical bias in pretrained language models},
+%   author={Nadeem, M. and Bethke, A. and Reddy, S.},
+%   booktitle={Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics},
+%   pages={5356--5371},
+%   year={2021},
+%   doi={10.18653/v1/2021.acl-long.416}
+% }

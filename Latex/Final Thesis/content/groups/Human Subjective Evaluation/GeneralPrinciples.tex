@@ -1,0 +1,61 @@
+\subsection{General Principles}
+
+\subsubsection*{Introduction}
+The \textbf{General Principles} metric in DevEval evaluates the overall quality of software design artifacts produced by LLMs. Rather than assessing correctness with respect to a specification (handled separately by the Faithfulness metric), General Principles focuses on the \textbf{internal design quality} of UML diagrams and architecture designs.
+
+The metric aims to capture desirable software engineering characteristics such as cohesion, decoupling, uniformity, integration, practicability, interaction complexity, and alignment with widely accepted design conventions. According to the paper, ``The general principles metric plays a crucial role, with each task sharing common elements while maintaining specific criteria.''
+
+\subsubsection*{Formula}
+DevEval does not define a mathematical formula for the General Principles metric. Instead, it is a \textbf{qualitative, LLM-as-a-judge evaluation} that relies on rubric-style criteria. Each principle is assessed by a judge LLM based on specific rubric text provided in the benchmark's appendix.
+
+\subsubsection*{Variants (By Design Subtask)}
+While there are no distinct named variants, the metric adapts its criteria depending on the specific design artifact being evaluated:
+
+\begin{enumerate}
+    \item \textbf{UML Class Diagrams}:
+    \begin{itemize}
+        \item \textit{Cohesion and Decoupling}: ``The design should aim for high cohesion within individual classes and low coupling between different classes.''
+        \item \textit{Complexity}: Evaluated using metrics such as total number of classes, average methods per class, and inheritance depth.
+        \item \textit{Practicability}: The design must be readable, understandable, and evidently modular.
+    \end{itemize}
+
+    \item \textbf{UML Sequence Diagrams}:
+    \begin{itemize}
+        \item \textit{Uniformity and Integration}: The design should demonstrate a consistent style and integrated approach.
+        \item \textit{Interaction Complexity}: Focuses on the number of messages, depth of nested calls, and participating objects.
+        \item \textit{Practicability}: Focuses on readability, understandability, and clarity in interactions.
+    \end{itemize}
+
+    \item \textbf{Architecture Design}:
+    \begin{itemize}
+        \item \textit{Uniformity and Integration}: Ensuring seamless component interaction with high cohesion and decoupling.
+        \item \textit{Distinction Between Design and Coding}: Recognizing the design process as distinct from implementation.
+        \item \textit{Conformance}: Evaluating adherence to community and industry standards.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection*{Applications in Software Engineering}
+General Principles maps directly onto classical software engineering design quality attributes, making it essential for evaluating whether models can generate designs that real developers could meaningfully implement. Key attributes include:
+\begin{itemize}
+    \item \textbf{Cohesion \& Decoupling}: Improving maintainability and testing.
+    \item \textbf{Practicability}: Mirroring human judgments of usability and clarity.
+    \item \textbf{Uniformity}: Ensuring systematic rather than piecemeal design.
+    \item \textbf{Interaction Complexity}: Crucial for distributed and concurrent systems.
+\end{itemize}
+
+\subsubsection*{Interpretation}
+\begin{itemize}
+    \item \textbf{High Score}: Indicates high cohesion, low coupling, readable structure, appropriate complexity, and adherence to community standards.
+    \item \textbf{Low Score}: Suggests disorganized structure, excessive coupling, poor readability, or inconsistent architecture layouts.
+\end{itemize}
+
+Empirically, results show strong variability: GPT-4-Turbo achieves a \textbf{97.9\% win rate} against GPT-3.5-Turbo, while smaller models score significantly lower, underscoring that design quality requires strong reasoning capabilities.
+
+% añadir esta entrada al archivo .bib
+% @article{li2024prompting,
+%   title={Prompting large language models to tackle the full software development lifecycle: A case study},
+%   author={Li, B. and Wu, W. and Tang, Z. and Shi, S.},
+%   journal={arXiv preprint arXiv:2403.08604},
+%   year={2024},
+%   doi={10.48550/arXiv.2403.08604}
+% }

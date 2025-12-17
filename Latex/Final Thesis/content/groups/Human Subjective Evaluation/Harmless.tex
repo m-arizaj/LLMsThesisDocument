@@ -1,0 +1,60 @@
+\subsection{Harmlessness}
+
+\subsubsection*{Introduction}
+Harmlessness is a key aspect of \textbf{human-centered evaluation} for Large Language Models (LLMs). It is not a single computational metric but rather a category of assessment that measures a model’s propensity to generate outputs that are unsafe, toxic, offensive, discriminatory, or could incite harm.
+
+This evaluation is considered a cornerstone of ensuring that LLMs are safe and ``not... harmful'' for real-world deployment, serving as a critical filter before models are released to the public.
+
+\subsubsection*{Definition}
+Harmlessness is defined as the measure of a model's alignment with safety standards and human values. Unlike functional metrics, it focuses on the prevention of negative outcomes.
+
+\subsubsection*{Measurement Methodology}
+Harmlessness is primarily measured using \textbf{Human Evaluation}. The standard process typically involves:
+
+\begin{enumerate}
+    \item \textbf{Red-Teaming}: Human evaluators or adversarial models create ``red-teaming'' prompts—inputs specifically designed to try and elicit undesirable or harmful behavior from the model.
+    \item \textbf{Rating}: Human evaluators are presented with the model's responses to these adversarial prompts.
+    \item \textbf{Scoring}: The evaluators rate the responses based on criteria such as safety, toxicity, offensiveness, and overall harmlessness.
+\end{enumerate}
+
+\subsubsection*{Purpose}
+The primary purpose is to \textbf{ensure LLM safety and alignment}. It builds trust and prevents models from causing real-world harm to users or perpetuating societal biases.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Human-centered Evaluation
+    \item Ethical Evaluation
+    \item LLM Safety \& Alignment
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Directly Measures Safety}: Unlike proxy metrics, human evaluation directly assesses the potential for harm from a human perspective.
+    \item \textbf{Captures Nuance}: Humans can identify subtle forms of toxicity, discrimination, or manipulation that automated metrics might miss.
+    \item \textbf{Gold Standard}: It is often the ground truth against which automated safety metrics are validated.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Subjectivity}: The assessment of what is ``harmful'' can vary significantly between different human evaluators.
+    \item \textbf{Scalability}: Relying on human evaluators is expensive and time-consuming compared to automated metrics.
+    \item \textbf{Prompt Dependence}: The effectiveness of the evaluation heavily depends on the quality and creativity of the ``red-teaming'' prompts used.
+\end{itemize}
+
+% añadir estas entradas a tu archivo .bib
+
+% @article{liang2022holistic,
+%   title={Holistic evaluation of language models},
+%   author={Liang, P. and Bommasani, R. and Lee, T. and others},
+%   journal={arXiv preprint arXiv:2211.09110},
+%   year={2022},
+%   doi={10.48550/arXiv.2211.09110}
+% }
+
+% @article{zheng2023judging,
+%   title={Judging LLM-as-a-judge with MT-Bench and Chatbot Arena},
+%   author={Zheng, L. and Chiang, W.-L. and Sheng, Y. and others},
+%   journal={arXiv preprint arXiv:2306.05685},
+%   year={2023},
+%   doi={10.48550/arXiv.2306.05685}
+% }

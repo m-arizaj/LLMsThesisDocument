@@ -1,0 +1,68 @@
+\subsection{Helpfulness}
+
+\subsubsection*{Introduction}
+Helpfulness is a key category of \textbf{human-centered evaluation} for Large Language Models (LLMs). It is a qualitative assessment that measures how well an LLM's response satisfies a user's request, answers their question, or accomplishes the instructed task.
+
+It is the primary metric for evaluating a model's utility and capability, often balanced against ``Harmlessness'' to ensure that responses are not only safe but also functional and useful.
+
+\subsubsection*{Definition}
+Helpfulness is defined as the measure of a model's ability to provide high-quality, relevant, and accurate answers that align with the user's intent. It quantifies the practical utility of the system.
+
+\subsubsection*{Measurement Methodology}
+Helpfulness is measured primarily through \textbf{Human Evaluation}, often using a ``battle'' or pairwise comparison format:
+
+\begin{itemize}
+    \item \textbf{Chatbot Arena}: Human users interact with two different anonymous models, ask them the same question, and vote for which model provided the ``better'' (i.e., more helpful and thorough) response.
+    \item \textbf{HELM}: Uses human evaluations to score model outputs on various criteria, including accuracy and helpfulness for specific tasks.
+\end{itemize}
+
+In these evaluations, raters score based on relevance, accuracy, completeness, and overall quality.
+
+\subsubsection*{Purpose}
+The purpose of measuring helpfulness is to \textbf{quantify the utility and performance} of an LLM from a user's perspective. It serves as the main metric for determining if a model is proficient at following instructions, which is the primary goal of assistant-style models.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Human-centered Evaluation
+    \item LLM Evaluation / NLP
+    \item Chatbot Performance
+\end{itemize}
+
+\subsubsection*{Benchmarks}
+\begin{itemize}
+    \item \textbf{HELM} (Holistic Evaluation of Language Models)
+    \item \textbf{Chatbot Arena}
+    \item \textbf{MT-Bench} (often used in conjunction with Chatbot Arena)
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Aligns with User Goals}: Directly measures what most users care about—getting a good answer.
+    \item \textbf{Captures Nuance}: Human evaluators can reward responses that are not just factually correct but also well-written, comprehensive, and appropriately toned.
+    \item \textbf{Gold Standard for Utility}: It serves as the most reliable ``ground truth'' for a model's practical capability, often revealing gaps that automated metrics miss.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Subjectivity}: What one user finds ``helpful,'' another might find overly verbose or simplistic. The metric is inherently subjective.
+    \item \textbf{Scalability}: Collecting human judgments is expensive and slow compared to running automated computational metrics.
+    \item \textbf{Evaluator Bias}: Ratings can be influenced by the knowledge, preferences, and potential biases of the human evaluators.
+\end{itemize}
+
+% añadir estas entradas a tu archivo .bib
+
+% @article{liang2022holistic,
+%   title={Holistic evaluation of language models},
+%   author={Liang, P. and Bommasani, R. and Lee, T. and others},
+%   journal={arXiv preprint arXiv:2211.09110},
+%   year={2022},
+%   doi={10.48550/arXiv.2211.09110}
+% }
+
+% @article{zheng2023judging,
+%   title={Judging LLM-as-a-judge with MT-Bench and Chatbot Arena},
+%   author={Zheng, L. and Chiang, W.-L. and Sheng, Y. and others},
+%   journal={arXiv preprint arXiv:2306.05685},
+%   year={2023},
+%   doi={10.48550/arXiv.2306.05685}
+% }

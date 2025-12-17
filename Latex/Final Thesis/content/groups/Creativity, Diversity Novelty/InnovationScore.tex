@@ -1,0 +1,59 @@
+\subsection{Innovation Score (IS)}
+
+\subsubsection*{Definition}
+The \textbf{Innovation Score (IS)} is a metric used within the LoCoBench benchmark to evaluate the quality of a model's solution. It is adapted from research on creative problem-solving assessment in software engineering (Glass, 2002).
+
+The metric is designed to move beyond mere functional correctness and assess the \textbf{creativity and modernity} of the generated solution. It specifically evaluates the model's use of new approaches, modern practices, and creative solutions.
+
+\subsubsection*{Formula (General Idea)}
+The LoCoBench paper (Qiu et al., 2025) does not specify a mathematical formula for the Innovation Score. It is presented as a qualitative assessment contributing to the overall LoCoBench Score (LCBS). Its calculation is based on evaluating:
+\begin{itemize}
+    \item The use of \textbf{new approaches}.
+    \item Adherence to \textbf{modern software development practices}.
+    \item The presence of \textbf{creative solutions} rather than brute-force code.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The purpose of the Innovation Score is to quantify the ``creativity'' of an LLM's solution. It rewards models that not only solve a problem but do so by employing innovative techniques, using modern software development practices, and generating creative solutions rather than just functional code.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Long-Context / Software Engineering
+    \item Software Engineering Excellence
+    \item Creative Problem-Solving Assessment
+\end{itemize}
+
+\subsubsection*{Benchmarks}
+\begin{itemize}
+    \item \textbf{LoCoBench}: The IS is a component metric of this benchmark, contributing specifically to the ``Software Engineering Excellence'' dimension.
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Measures Quality Beyond Correctness}: It provides a way to evaluate a qualitative and sophisticated aspect of code generation that is often overlooked by metrics focused solely on functional correctness.
+    \item \textbf{Encourages Modern Practices}: By rewarding ``modern practices,'' the metric encourages models to generate code that is up-to-date with current industry standards.
+    \item \textbf{Assesses Creativity}: It is one of the few metrics explicitly designed to quantify the ``creative'' aspect of a model's problem-solving ability.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{Subjectivity}: As it is based on concepts like ``creative solutions,'' the score is inherently difficult to compute automatically and likely relies on qualitative or heuristic-based assessments.
+    \item \textbf{Undefined Calculation}: The source paper does not provide the exact implementation or formula for how ``innovation'' is technically measured and scored.
+\end{itemize}
+
+% añadir estas entradas a tu archivo .bib
+
+% @book{glass2002facts,
+%   title={Facts and fallacies of software engineering},
+%   author={Glass, R. L.},
+%   year={2002},
+%   publisher={Addison-Wesley}
+% }
+
+% @article{qiu2025locobench,
+%   title={LoCoBench: A benchmark for long-context large language models in complex software engineering},
+%   author={Qiu, J. and Liu, Z. and Liu, Z. and others},
+%   journal={arXiv preprint arXiv:2509.09614},
+%   year={2025},
+%   doi={10.48550/arXiv.2509.09614}
+% }

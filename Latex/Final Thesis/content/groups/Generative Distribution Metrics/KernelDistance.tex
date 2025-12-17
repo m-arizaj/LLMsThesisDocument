@@ -1,0 +1,60 @@
+\subsection{Kernel Distance (KD / KID)}
+
+\subsubsection*{Introduction}
+The \textbf{Kernel Distance (KD)}, often referred to as the \textbf{Kernel Inception Distance (KID)} when used with the Inception-V3 network, is a metric for evaluating generative models. Introduced by Bińkowski et al. (2018), it was designed as an alternative to the Fréchet Inception Distance (FID).
+
+Unlike FID, which only compares the first two moments (mean and covariance) of the real and generated distributions, KD aims to be a proper distance between the entire distributions. It does this by using an unbiased estimate of the \textit{Maximum Mean Discrepancy} (MMD).
+
+\subsubsection*{Formula}
+The Kernel Distance is calculated as an unbiased estimate of the MMD between the sets of real ($r$) and generated ($g$) samples (after being passed through an encoder):
+
+\begin{equation}
+    \text{KD}(\{x^g\}, \{x^r\}) = \frac{1}{n(n-1)}\sum_{i \neq i'}^n k(x_i^g, x_{i'}^g) + \frac{1}{m(m-1)}\sum_{j \neq j'}^m k(x_j^r, x_{j'}^r) - \frac{2}{nm}\sum_{i=1}^n \sum_{j=1}^m k(x_i^g, x_j^r)
+\end{equation}
+
+\noindent where:
+\begin{itemize}
+    \item $k$: A positive definite kernel, which is a hyperparameter (a standard 3rd degree polynomial kernel is commonly used).
+    \item $\{x^g\}$: The set of $n$ generated samples.
+    \item $\{x^r\}$: The set of $m$ real samples.
+\end{itemize}
+
+\subsubsection*{Purpose}
+The primary purpose of KD/KID is to serve as a \textbf{ranking metric} for the overall quality of generative models. It overcomes a key limitation of FID by providing a metric that is a proper distance between distributions, not just a comparison of their first two moments.
+
+\subsubsection*{Domains}
+\begin{itemize}
+    \item Generative Models / Image Generation
+    \item Ranking / Overall Quality
+\end{itemize}
+
+\subsubsection*{Advantages}
+\begin{itemize}
+    \item \textbf{Proper Distributional Metric}: Unlike FD, KD measures distance between distributions and is not limited to comparing their first two moments.
+    \item \textbf{No Gaussian Assumption}: It does not assume that the feature distributions are Gaussian, making it potentially more robust for varied data distributions.
+\end{itemize}
+
+\subsubsection*{Limitations}
+\begin{itemize}
+    \item \textbf{High Correlation with FD}: Despite its different theoretical basis, KD is found to be very highly correlated with Fréchet Distance (FD) and FD$\infty$ across various encoders, resulting in essentially the same model rankings.
+    \item \textbf{Encoder-Dependent}: Its correlation with human perception of quality depends heavily on the feature extractor used.
+    \item \textbf{Poor Inception-V3 Correlation}: When used with the standard Inception-V3 network (as KID), the metric does \textit{not} correlate well with human evaluations of image realism, particularly on complex datasets.
+\end{itemize}
+
+% añadir estas entradas a tu archivo .bib
+
+% @inproceedings{binkowski2018demystifying,
+%   title={Demystifying MMD GANs},
+%   author={Bińkowski, M. and Sutherland, D. J. and Arbel, M. and Gretton, A.},
+%   booktitle={International Conference on Learning Representations},
+%   year={2018},
+%   doi={10.48550/arXiv.1801.01401}
+% }
+
+% @article{stein2023exposing,
+%   title={Exposing flaws of generative model evaluation metrics and their unfair treatment of diffusion models},
+%   author={Stein, G. and Cresswell, J. C. and Hosseinzadeh, R. and Sui, Y. and Ross, B. L. and others},
+%   journal={arXiv preprint arXiv:2306.04675},
+%   year={2023},
+%   doi={10.48550/arXiv.2306.04675}
+% }
