@@ -1,0 +1,46 @@
+\subsection{ROUGE}
+
+\subsubsection{Introduction}
+
+ROUGE (Recall-Oriented Understudy for Gisting Evaluation) is a family of metrics used to evaluate the quality of generated text by comparing it to reference outputs. Originally designed for summarization tasks, ROUGE has been adapted for code summarization, documentation generation, and textual similarity evaluation in Software Engineering contexts.
+While BLEU focuses on precision, ROUGE emphasizes recall, measuring how much of the reference is captured by the generated text. However, modern formulations often utilize the F1-score variant to balance both coverage (Recall) and accuracy (Precision).
+
+\subsubsection{Mathematical Definition}
+
+According to Hu \& Zhou (2024) \cite{HuZhou2024LLMMetrics}, ROUGE-N is formally defined as an n-gram level F1 score. First, Precision and Recall are calculated:
+
+\[
+\text{Precision}_n = \frac{\text{Count}_{match}(gram_n)}{\text{Total n-grams in generated text}}, \quad \text{Recall}_n = \frac{\text{Count}_{match}(gram_n)}{\text{Total n-grams in reference text}}
+\]
+
+Then, ROUGE-N is computed as the harmonic mean:
+
+\[
+\text{ROUGE-N} = \frac{2 \times \text{Precision}_n \times \text{Recall}_n}{\text{Precision}_n + \text{Recall}_n}
+\]
+
+
+Similarly, \textbf{ROUGE-L} is calculated as the F1-score based on the Longest Common Subsequence (LCS) between the candidate and reference, rather than fixed n-grams.
+
+\subsubsection{Variants}
+
+\textbf{1. ROUGE-N (N-gram F1)}
+Measures the F1-score of n-gram overlap. The most common variants are ROUGE-1 (unigram) and ROUGE-2 (bigram), used to assess lexical accuracy and phrase fluency respectively.
+
+\textbf{2. ROUGE-L}
+Based on the Longest Common Subsequence (LCS), this variant captures sequence-level similarity and structure. It is the most appropriate variant for Software Engineering tasks where sequence order is critical.
+
+\subsubsection{Interpretation and Limitations}
+
+ROUGE offers a robust way to evaluate recall-oriented quality. However, it has notable limitations:
+\begin{itemize}
+    \item \textbf{Equal Token Weighting:} It assigns equal importance to every token, failing to distinguish between content-critical words (e.g., nouns, verbs) and less impactful particles.
+    \item \textbf{Lack of Semantic Awareness:} It struggles with word variants and synonymy, making it challenging to comprehensively capture the essence of texts or code that use different variable names for the same logic.
+\end{itemize}
+Recent studies suggest combining ROUGE with semantic metrics like BERTScore or METEOR to address these issues.
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{HuZhou2024LLMMetrics, Bektas2025CriticalReview, Liang2022HELM, Hou2023LLMsSESLR, Hu2025BenchmarksSE, Chang2023SurveyLLMs, Zhou2025LLMAsJudge, Zhuo2023ICEScore, Srivastava2022BeyondImitation, Anand2024AnalysisLLMCode, Paul2024BenchmarksMetricsCodeGen, Evtikhiev2023OutOfBLEU, Yang2024CodeScoreR, Tong2024CodeJudge, Xu2025LLMAgentsToolLearning, Mundhra2025IndustrialCaseStudy}
