@@ -1,0 +1,87 @@
+\subsection{Recall}
+
+\subsubsection{Introduction}
+
+Recall (also known as Sensitivity or True Positive Rate) measures the proportion of relevant instances that are successfully retrieved by a model. It is particularly important in contexts where false negatives are costly, such as defect detection, security vulnerability identification, or code correctness prediction in software engineering.
+
+The general formula is:
+
+\[
+\text{Recall} = \frac{TP}{TP + FN}
+\]
+
+where:
+\begin{itemize}
+    \item $TP$ = True Positives (correctly identified positive instances)
+    \item $FN$ = False Negatives (missed positive instances)
+\end{itemize}
+
+Recall emphasizes the completeness of a model's predictions, how well it captures all relevant items, rather than just the precision of those retrieved.
+
+\subsubsection{Theoretical Context}
+
+In software engineering, recall has become a fundamental measure for evaluating model performance in bug detection, defect prediction, classification robustness, and code understanding.
+It helps determine whether a model can identify as many true issues or relevant entities as possible, which is critical when omissions (false negatives) are more harmful than false alarms (false positives).
+
+\begin{itemize}
+    \item \textbf{Tantithamthavorn et al. (2018)} emphasize that recall is highly sensitive to class imbalance, a common issue in defect prediction datasets. When the majority of cases are non-defective, optimizing recall ensures that minority (defective) cases are not ignored, an insight that translates directly to LLM evaluations where rare but critical cases like security vulnerabilities or logical failures exist. \cite{tantithamthavorn2018impactclassrebalancingtechniques}
+    
+    \item \textbf{Wattanakriengkrai et al. (2020)} extend this perspective by applying recall to line-level code defect prediction, demonstrating that a higher recall reflects a model's capacity to detect all potentially defective lines. This parallels LLM-based code generation or repair tasks, where missing a single error can compromise functional correctness. \cite{https://doi.org/10.48550/arxiv.2009.03612}
+    
+    \item \textbf{Díaz, Ekstrand \& Mitra (2023)} discuss recall from a broader evaluation theory perspective, connecting it to robustness and lexicographic evaluation in large-scale model assessment. They propose that recall is not only a detection measure but also a lens to evaluate models' stability and reliability across edge cases, which aligns with LLM robustness testing in software engineering and NLP. \cite{https://doi.org/10.48550/arxiv.2302.11370}
+\end{itemize}
+
+\subsubsection{Variants of Recall}
+
+Across software engineering benchmarks and LLM evaluations, Recall appears in multiple specialized forms to adapt to context-specific needs:
+
+\textbf{1. Recall@k (Reference Dependency Recall).}
+In the context of \emph{EvoCodeBench}, this metric does not measure functional correctness, but rather the model's ability to invoke relevant dependencies defined in the provided context. It gauges the recall of reference dependencies (such as function calls or class usages from the repository) within the generated programs.
+
+Specifically, for a given requirement, the model generates $k$ programs. A parser extracts the set of dependencies $\mathbb{P}_i$ for each generated program $i$. These are compared against the ground truth reference dependencies $\mathbb{R}$. The metric calculates the maximum proportion of reference dependencies captured by any of the $k$ generations:
+
+\[
+\text{Recall@k} := \mathbb{E}_{\text{Requirements}} \left[ \max_{i \in [1, k]} \frac{|\mathbb{R} \cap \mathbb{P}_i|}{|\mathbb{R}|} \right]
+\]
+
+where:
+\begin{itemize}
+    \item $\mathbb{R}$ = Set of reference dependencies (ground truth).
+    \item $\mathbb{P}_i$ = Set of dependencies extracted from the $i$-th generated program.
+    \item $|\cdot|$ = The number of elements in the set.
+\end{itemize}
+
+This metric highlights behavioral differences between models; for instance, instruction-tuned models like the GPT family tend to have lower Recall@k because they are "conservative" and generate self-contained code, whereas other LLMs are more "aggressive" in attempting to use existing repository dependencies. \cite{Li2024EvoCodeBench}
+
+\textbf{2. Dependency Recall (DEP).}
+Designed for class-level code generation tasks like \texttt{ClassEval}, this metric measures the model's capability to generate code that correctly depends on the class context like invoking other methods or accessing fields. 
+It calculates the recall of necessary and unique dependencies found in the canonical solution against those present in the generated code. \cite{Du2024ClassLevelCodeGen}
+
+\begin{itemize}
+    \item \textbf{DEP(F)} — \textit{Field Dependency Recall}: Measures the proportion of unique field accesses (e.g., \texttt{self.field}) present in the canonical solution that are successfully generated in the model's output.
+    \item \textbf{DEP(M)} — \textit{Method Dependency Recall}: Measures the proportion of unique method invocations (e.g., \texttt{self.method()}) present in the canonical solution that are successfully called in the generated code.
+\end{itemize}
+
+Formally, for a set of generated dependencies $G_i$ and actual dependencies in the canonical solution $S_i$, the metrics are defined as:
+
+\[
+\text{DEP}(M) = \frac{\sum_{i=1}^{n} G_i(M)}{\sum_{i=1}^{n} S_i(M)}, \quad \text{DEP}(F) = \frac{\sum_{i=1}^{n} G_i(F)}{\sum_{i=1}^{n} S_i(F)}
+\]
+
+Note that redundant calls are counted only once to ensure values fall within $[0, 1]$. \cite{Du2024ClassLevelCodeGen}
+
+\subsubsection{Applications in Software Engineering}
+
+\begin{itemize}
+    \item \textbf{Bug Detection / Repair}: Ensures that the model detects as many defective components or code lines as possible.
+    \item \textbf{Classification Tasks}: Measures the completeness of predictions in multi-class or discriminative models.
+    \item \textbf{Security Evaluation}: Assesses the detection rate of vulnerabilities.
+    \item \textbf{Dependency Understanding}: Evaluates structural correctness and code context maintenance.
+    \item \textbf{Hallucination and Robustness Testing}: Monitors how consistently models recall true facts or relevant entities.
+\end{itemize}
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{HuZhou2024LLMMetrics, Bektas2025CriticalReview, Hou2023LLMsSESLR, Hu2025BenchmarksSE, Wang2023AMBER, Anand2024AnalysisLLMCode, Li2024DevEval, Yang2024CodeScoreR, Li2024EvoCodeBench, Allal2023SantaCoder, Xu2025LLMAgentsToolLearning, Chen2024DLBasedSE, Du2024ClassLevelCodeGen, Stein2023MetricFlaws}

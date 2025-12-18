@@ -1,0 +1,64 @@
+\subsection{Precision}
+
+\subsubsection{Introduction}
+
+Precision is a fundamental metric for evaluating classification and generation tasks, measuring the proportion of correctly predicted positive instances out of all instances predicted as positive. It focuses on minimizing false positives, thus quantifying the model's ability to produce accurate positive outputs.
+In Software Engineering, precision is widely used in defect prediction, bug detection, classification, and security evaluation tasks to assess the reliability of model predictions.
+
+However, it is important to note that Precision is highly sensitive to class skew (prevalence). Unlike metrics based on the confusion matrix columns (like Recall), Precision depends on the row distribution; therefore, all else being equal, precision tends to decrease as the prevalence of the positive class decreases \cite{https://doi.org/10.48550/arxiv.2304.00059}.
+
+\subsubsection{Mathematical Definition}
+
+The mathematical definition of precision is:
+
+\[
+\text{Precision} = \frac{TP}{TP + FP}
+\]
+
+where:
+\begin{itemize}
+    \item \textbf{TP (True Positives):} Correctly identified positive cases
+    \item \textbf{FP (False Positives):} Incorrectly predicted positive cases
+\end{itemize}
+
+\subsubsection{Variants}
+
+Based on recent reviews of evaluation metrics in data mining and SE, precision has evolved into several specialized forms:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Variant} & \textbf{Description} & \textbf{Typical Use Cases} \\ \hline
+\textbf{Standard Precision} & Standard metric used in binary classification. Measures the positive patterns correctly predicted from total predicted positive patterns \cite{M2015}. & Bug detection, defect prediction, and security evaluation. \\ \hline
+\textbf{Averaged Precision} & Used for multi-class problems. It computes the average of per-class precision across all classes ($ \sum P_i / L $) \cite{M2015}. & Multi-class defect classification or code categorization. \\ \hline
+\textbf{Optimized Precision (OP)} & A hybrid metric defined as $OP = \text{Accuracy} - \frac{|Sp - Sn|}{Sp + Sn}$. It penalizes the score based on the balance between specificity ($Sp$) and sensitivity ($Sn$) \cite{M2015}. & Optimized heuristic classifiers and imbalanced DNA sequence analysis. \\ \hline
+\textbf{Mean Average Precision (mAP)} & Computes the mean of precision values across multiple recall levels. Often associated with the Area Under the Precision-Recall Curve (AUPRC) \cite{https://doi.org/10.48550/arxiv.2304.00059}. & Retrieval tasks, ranking code clones, and evaluating classifiers on highly skewed datasets. \\ \hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Applications in Software Engineering}
+
+Precision is extensively reported across SE benchmarks and studies:
+
+\begin{itemize}
+    \item \textbf{Software Defect Prediction (SDP):} Studies on embedded software (e.g., Samsung telecommunication systems) use Precision alongside Recall and F-measure to minimize false alarms in defect detection \cite{Kang2024}.
+    \item \textbf{Imbalanced Data Handling:} In contexts with low prevalence of defects (skewed data), Precision is combined with Recall (via AUPRC) to focus on the "early retrieval area," ensuring that the highest-ranked defect predictions are accurate \cite{https://doi.org/10.48550/arxiv.2304.00059}.
+    \item \textbf{Generative Model Evaluation:} Precision serves as a fidelity indicator, ensuring generated code or documentation aligns with ground truth without hallucinating content.
+\end{itemize}
+
+\subsubsection{Mathematical Insight: AUPRC}
+
+While mAP summarizes the curve, the \textbf{Area Under the Precision-Recall Curve (AUPRC)} provides a threshold-free evaluation. It is mathematically defined by integrating Precision (PPV) as a function of Recall (TPR) \cite{https://doi.org/10.48550/arxiv.2304.00059}:
+
+\[
+\text{AUPRC} = \int_{0}^{1} PPV(TPR) \, dTPR
+\]
+
+This formulation is particularly preferred over AUROC when the primary goal is to achieve high performance in the "early retrieval area" (top-ranked predictions) for rare classes \cite{https://doi.org/10.48550/arxiv.2304.00059}.
+
+\subsubsection{Additional References}
+
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{HuZhou2024LLMMetrics, Bektas2025CriticalReview, Hou2023LLMsSESLR, Hu2025BenchmarksSE, Wang2023AMBER, Anand2024AnalysisLLMCode, Yang2024CodeScoreR, Lu2021CodeXGLUE, Allal2023SantaCoder, Chen2024DLBasedSE, Stein2023MetricFlaws}
