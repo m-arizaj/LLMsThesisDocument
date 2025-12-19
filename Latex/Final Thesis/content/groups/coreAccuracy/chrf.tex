@@ -1,0 +1,58 @@
+\subsection{chrF}
+
+\subsubsection{Introduction}
+
+chrF is a character-level evaluation metric proposed to assess text similarity between system outputs and human references \cite{Popovic2017ChrFPlus}.
+It is based on the F-score computed over the overlap of character n-grams, combining precision and recall.
+Unlike word-based metrics such as BLEU, chrF is less sensitive to tokenization and more robust across morphologically rich languages \cite{Popovic2017ChrFPlus}.
+In software engineering, chrF is used to measure similarity between generated and reference code snippets, summaries, or documentation, capturing how closely a model’s output aligns at the subword or character level.
+
+\subsubsection{Formula}
+
+chrF is calculated as the F$\beta$-score between character-level n-gram precision and recall \cite{Popovic2017ChrFPlus}:
+
+\[
+\text{chrF}_{\beta} = \frac{(1 + \beta^2) \cdot (\text{Precision} \times \text{Recall})}
+{(\beta^2 \cdot \text{Precision}) + \text{Recall}}
+\]
+
+Where:
+\begin{itemize}
+    \item \textbf{Precision:} fraction of overlapping character n-grams in the generated text.
+    \item \textbf{Recall:} fraction of overlapping n-grams in the reference text.
+    \item $\beta$: weighting factor (commonly 2), emphasizing recall over precision \cite{Popovic2017ChrFPlus}.
+\end{itemize}
+
+The metric is averaged over n-grams (typically $n = 2\text{--}6$).
+
+\subsubsection{Variants}
+
+\begin{itemize}
+    \item \textbf{chrF:} Original version, purely character-based.
+    \item \textbf{ChrF++:} Extended version that also includes word-level n-grams to balance surface and semantic matching \cite{Popovic2017ChrFPlus}.
+\end{itemize}
+
+Both variants can be applied to tasks such as text generation, summarization, and code translation.
+
+\subsubsection{Application in Software Engineering}
+
+In SE-related LLM evaluations, chrF quantifies character-level overlap between generated code or comments and their references.
+It is particularly useful when exact token matches are too strict, allowing partial similarity to contribute to the score.
+Studies using chrF in code generation datasets such as HumanEval and CoNaLa show that while it captures low-level textual resemblance, it does not always correlate with functional correctness. Therefore, it is often combined with execution-based metrics (e.g., Pass@k) to provide a more complete evaluation of code quality.
+
+Recent extrinsic evaluation work by Moghe et al. (2022) highlights that although chrF is interpretable and efficient, it exhibits limited correlation with downstream task success, suggesting it should be used mainly for surface-level comparison rather than deep semantic evaluation \cite{Moghe2022Extrinsic}.
+
+\subsubsection{Interpretation}
+
+\begin{itemize}
+    \item \textbf{High chrF values} indicate strong surface similarity at the character level.
+    \item \textbf{Moderate values} often reflect stylistic or structural differences despite semantic similarity.
+    \item \textbf{Low values} correspond to significant lexical or structural variation between model and reference output.
+\end{itemize}
+
+In software engineering contexts, chrF is valuable for quick model comparisons and regression testing in generative code tasks.
+
+\subsubsection{Additional References}
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{Yang2024CodeScoreR, Zhou2025LLMAsJudge, Zhuo2023ICEScore, Paul2024BenchmarksMetricsCodeGen, Evtikhiev2023OutOfBLEU}

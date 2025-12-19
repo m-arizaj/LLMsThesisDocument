@@ -1,0 +1,52 @@
+\subsection{Mean Reciprocal Rank}
+
+\subsubsection{Introduction}
+
+Mean Reciprocal Rank (MRR) is a ranking-based evaluation metric used to assess how well a model retrieves or ranks relevant results. It measures the position of the first relevant item in a ranked list, emphasizing early retrieval of correct answers.
+In software engineering, MRR is particularly valuable for tasks such as code search, API recommendation, and fault localization, where ranking accuracy directly impacts developer productivity.
+
+\subsubsection{Formula}
+
+The MRR is defined as \cite{HuZhou2024LLMMetrics}:
+
+\[
+\text{MRR} = \frac{1}{|Q|} \sum_{i=1}^{|Q|} \frac{1}{\text{rank}_i}
+\]
+
+Where:
+\begin{itemize}
+    \item $Q$ is the set of queries or test cases.
+    \item $\text{rank}_i$ is the position of the first correct (relevant) result for query $i$.
+\end{itemize}
+
+This metric rewards systems that place correct results higher in the ranking, with scores ranging from 0 (no correct result) to 1 (perfect ranking).
+
+\subsubsection{Variants}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Variant} & \textbf{Description} \\ \hline
+\textbf{RR@k (Reciprocal Rank @ k)} & Measures the reciprocal rank of the first relevant answer, but only if it appears within the top $k$ results (otherwise the score is 0). \cite{Liang2022HELM} \\ \hline
+\textbf{Mean Reciprocal Rank (Standard)} & Averages reciprocal ranks across all queries without a cutoff. This is the standard form used to evaluate overall system performance. \cite{HuZhou2024LLMMetrics} \\ \hline
+\end{tabularx}
+\caption{Variants of Mean Reciprocal Rank (MRR)}
+\end{table}
+
+\subsubsection{Interpretation}
+
+In the context of software engineering, MRR provides an interpretable measure of retrieval efficiency:
+
+\begin{itemize}
+    \item A higher MRR indicates that the model consistently ranks the correct result closer to the top.
+    \item It is particularly effective for code search, bug localization, and question answering, where users typically examine only the first few retrieved results \cite{HuZhou2024LLMMetrics}.
+    \item However, MRR does not account for multiple relevant results (only the first one), so it is often complemented with metrics like \textit{nDCG} or \textit{MAP} in more complex retrieval evaluations.
+\end{itemize}
+
+Recent research (Diaz, 2023) \cite{https://doi.org/10.48550/arxiv.2306.07908} has improved MRR's sensitivity by integrating lexicographic precision, addressing its limitations in distinguishing among models with similar reciprocal ranks but different ranking quality distributions.
+
+\subsubsection{Additional References}
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{HuZhou2024LLMMetrics, Bektas2025CriticalReview, Liang2022HELM, Hou2023LLMsSESLR, Hu2025BenchmarksSE, Lu2021CodeXGLUE, Zhu2022XLCoST, Chen2024DLBasedSE}

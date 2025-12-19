@@ -1,0 +1,47 @@
+\subsection{Percentage-based Metrics}
+
+\subsubsection{Introduction}
+
+Percentage-based metrics quantify evaluation outcomes as proportions or rates, expressing the share of successful, applicable, or authentic outputs relative to all evaluated samples. These metrics appear widely in software engineering tasks—especially program repair, robustness evaluation, and generative model analysis—because they provide interpretable ratios that summarize how often a system behaves correctly or reliably.
+
+\subsubsection{Key Metrics}
+
+\textbf{1. \%Resolved} \cite{Jimenez2023SWEBench} \\
+Used in program-repair benchmarks such as \textit{SWE-bench} and \textit{SWE-bench Lite}, \%Resolved measures the proportion of problems for which the generated patch passes all tests.
+\[
+\%\text{Resolved} = \frac{N_{\text{resolved}}}{N_{\text{total}}} \times 100
+\]
+This metric captures functional correctness, as a task is only counted as resolved when all target behaviors are satisfied.
+
+\textbf{2. \%Apply} \cite{Jimenez2023SWEBench} \\
+Represents the proportion of generated patches that can be applied without breaking compilation or dependencies.
+\[
+\%\text{Apply} = \frac{N_{\text{applicable}}}{N_{\text{total}}} \times 100
+\]
+It reflects structural validity and integration feasibility, distinguishing syntactically valid patches from those that cannot be applied.
+
+\textbf{3. Drop\%} \cite{Zhang2024CodeFort} \\
+In robustness evaluation—such as \textit{ReCode} and \textit{CodeFort}—Drop\% quantifies the relative performance degradation under semantic-preserving perturbations.
+\[
+\text{Drop}\% = \frac{\text{Score}_{\text{baseline}} - \text{Score}_{\text{perturbed}}}{\text{Score}_{\text{baseline}}} \times 100
+\]
+This metric is used to report robustness drop rates, particularly under code-syntax perturbations that strongly affect code-generation models.
+
+\textbf{4. AuthPct (Percentage of Authentic Samples)} \cite{Stein2023MetricFlaws} \\
+Derived from generative-model evaluation literature, including large-scale perceptual studies, AuthPct measures the proportion of generated samples classified as authentic or realistic by a discriminator or by human-aligned evaluators.
+\[
+\text{AuthPct} = \frac{N_{\text{authentic}}}{N_{\text{generated}}} \times 100
+\]
+It captures perceptual realism: how often generated images (or text/code variants) resemble genuine samples from the target distribution.
+
+\subsubsection{Interpretation}
+
+Percentage metrics provide directly interpretable, task-specific measures of model performance:
+
+\begin{itemize}
+    \item In \textit{software repair}, \%Resolved indicates functional reliability, while \%Apply measures whether outputs can even be used \cite{Jimenez2023SWEBench}.
+    \item In \textit{robustness evaluation}, Drop\% quantifies how severely perturbations degrade performance \cite{Zhang2024CodeFort}.
+    \item In \textit{generative evaluation}, AuthPct reflects the realism and authenticity of produced samples \cite{Stein2023MetricFlaws}.
+\end{itemize}
+
+Because these metrics express outcomes as ratios, they facilitate comparison across heterogeneous tasks, datasets, and models, complementing absolute metrics such as accuracy or distance-based similarity scores.

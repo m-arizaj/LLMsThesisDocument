@@ -1,0 +1,93 @@
+\subsection{Cohen Metrics}
+
+\subsubsection{Introduction}
+
+Cohen metrics provide two complementary statistical tools used to evaluate effect sizes and inter-rater reliability.
+\begin{itemize}
+    \item \textbf{Cohen's $d$} quantifies the standardized difference between two groups and appears in bias-assessment methods such as the Word Embedding Association Test (WEAT) and the Sentence Encoder Association Test (SEAT), where an adapted effect-size formulation based on Cohen's $d$ is employed to measure conceptual associations.
+    \item \textbf{Cohen's $\kappa$ (kappa)} measures the agreement between two raters beyond chance, widely used in human-evaluation settings and annotation reliability analyses in Software Engineering (SE) and LLM assessment \cite{Zhou2025LLMAsJudge}.
+\end{itemize}
+Together, these metrics support reproducible evaluation, statistical interpretability, and reliability analysis in both bias measurement and human-judgment-based assessments.
+
+\subsubsection{Cohen's $d$ - Effect Size}
+
+\textbf{Description} \\
+Cohen's $d$ measures the standardized mean difference between two groups \cite{Sullivan2012EffectSize}.
+In NLP and SE bias evaluation frameworks such as WEAT and SEAT, an \textit{adapted effect-size formulation derived from Cohen's $d$} is used to quantify how strongly association patterns differ between concept categories within embedding spaces.
+
+\textbf{Formula} \\
+The classical formulation of Cohen's $d$ is \cite{Sullivan2012EffectSize}:
+
+\[
+d = \frac{\bar{X}_1 - \bar{X}_2}{s_p}
+\]
+
+with pooled standard deviation:
+
+\[
+s_p = \sqrt{\frac{s_1^2 + s_2^2}{2}}
+\]
+
+where:
+\begin{itemize}
+    \item $\bar{X}_1$, $\bar{X}_2$ are the group means,
+    \item $s_1$, $s_2$ are their standard deviations,
+    \item $s_p$ is the pooled standard deviation.
+\end{itemize}
+
+\textbf{Interpretation} \\
+Typical effect-size magnitudes (Sullivan \& Feinn, 2012) \cite{Sullivan2012EffectSize}:
+\begin{itemize}
+    \item Small: $d \approx 0.2$
+    \item Medium: $d \approx 0.5$
+    \item Large: $d \approx 0.8$
+\end{itemize}
+
+In embedding-bias contexts, larger effect sizes indicate stronger differential associations between concept categories, offering a normalized measure of bias strength beyond raw similarity differences.
+
+\subsubsection{Cohen's $\kappa$  Inter-Rater Agreement}
+
+\textbf{Description} \\
+Cohen's $\kappa$ (kappa) quantifies the agreement between two raters after accounting for chance.
+This metric is widely used in SE evaluation tasks involving human annotation—including code summarization, code explanation assessment, debugging-explanation evaluation, and other annotation-driven judgments—to measure annotation consistency or to compare human and model-produced labels \cite{Zhou2025LLMAsJudge}.
+
+\textbf{Formula} \\
+The $\kappa$ coefficient is defined as:
+
+\[
+\kappa = \frac{p_o - p_e}{1 - p_e}
+\]
+
+where:
+\begin{itemize}
+    \item $p_o$ = observed agreement proportion,
+    \item $p_e$ = expected agreement by chance.
+\end{itemize}
+
+\textbf{Interpretation} \\
+The $\kappa$ statistic ranges from -1 to 1:
+\begin{itemize}
+    \item 1 = perfect agreement
+    \item 0 = agreement equal to chance
+    \item < 0 = worse than chance
+\end{itemize}
+
+Interpretation thresholds:
+\begin{itemize}
+    \item 0.01-0.20: Slight agreement
+    \item 0.21-0.40: Fair agreement
+    \item 0.41-0.60: Moderate agreement
+    \item 0.61-0.80: Substantial agreement
+    \item 0.81-1.00: Almost perfect agreement
+\end{itemize}
+
+Cohen's $\kappa$ enables objective assessment of annotation reliability and helps validate consistency in evaluation pipelines involving human or expert reviewers \cite{Zhou2025LLMAsJudge}.
+
+\subsubsection{Interpretation in Software Engineering Context}
+
+\begin{itemize}
+    \item \textbf{Cohen's $d$:} Used as an effect-size measure in embedding-based bias evaluation to capture the magnitude of conceptual associations relevant to fairness or representational bias in SE-related language models.
+    \item \textbf{Cohen's $\kappa$:} Used to quantify agreement among annotators in tasks such as code review assessment, documentation quality rating, automated debugging explanation evaluation, or correctness judgments of generated code \cite{Zhou2025LLMAsJudge}.
+\end{itemize}
+
+Both metrics support higher reliability, transparency, and interpretability in SE-focused LLM evaluation.

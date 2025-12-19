@@ -1,0 +1,62 @@
+\subsection{Coverage}
+
+\subsubsection{Introduction}
+
+Coverage is a metric used to evaluate how thoroughly a system, model, or set of test cases explores a given space—most commonly code, input conditions, or tasks. In software engineering, code coverage quantifies the proportion of code elements (statements, branches, or functions) executed by test cases. High coverage indicates better validation and testing completeness, while low coverage reveals untested or unreachable code.
+Recent work (Tufano et al., 2023) \cite{tufano2023predictingcodecoverageexecution} extends this concept to predict coverage without executing code, proposing machine learning approaches that estimate coverage based on static or semantic representations.
+This evolution makes coverage relevant not only for software testing, but also for LLM-based code generation and evaluation of AI systems that produce executable artifacts.
+
+\subsubsection{Formula}
+
+Coverage is typically computed as a ratio:
+
+\[
+\text{Coverage} = \frac{\text{Number of elements covered}}{\text{Total number of elements}} \times 100
+\]
+
+Where “elements” can refer to lines, statements, branches, methods, or any unit of analysis depending on the coverage type.
+Coverage values range from 0\% (no coverage) to 100\% (full coverage).
+
+\subsubsection{Variants}
+
+Coverage has several important variants depending on what is measured: 
+
+\begin{itemize}
+    \item \textbf{Code Coverage:} Fraction of source code executed during testing or generation \cite{Liu2023IsYourCodeCorrect}.
+    \item \textbf{Branch Coverage:} Proportion of decision branches (e.g., if conditions) executed \cite{Schafer2024UnitTestGeneration}.
+    \item \textbf{Statement Coverage:} Portion of executable statements covered by tests \cite{Schafer2024UnitTestGeneration}.
+    \item \textbf{Coverage@n:} Percentage of top-n generated solutions or test cases that achieve successful coverage \cite{Chen2024SurveyCodeGen}.
+    \item \textbf{Information Coverage Utilization:} Measures how efficiently contextual or memory resources (e.g., long-context models) are used to cover input information \cite{Qiu2025LoCoBench}.
+\end{itemize}
+
+\subsubsection{Applications in Software Engineering}
+
+Coverage is widely used across SE evaluation benchmarks to measure how effectively systems exercise or validate code and functionality. The metric appears in multiple research contexts, such as:
+
+\begin{itemize}
+    \item \textbf{Test Quality and Effectiveness:} DevEval and TESTPILOT frameworks use coverage and branch coverage to estimate test adequacy and generation quality \cite{Schafer2024UnitTestGeneration}.
+    \item \textbf{LLM-based Code Generation:} Datasets like HumanEval and CoderUJB use coverage, coverage@n, and code coverage to measure the structural correctness of generated solutions \cite{Chen2024SurveyCodeGen, Liu2023IsYourCodeCorrect}.
+    \item \textbf{Autonomous Agent Evaluation:} Benchmarks such as AgentBench apply coverage as a measure of task completion success in multi-step reasoning environments \cite{Wang2024AutonomousAgentsSurvey}.
+    \item \textbf{Generative and Multimodal Systems:} AMBER assesses object coverage for hallucination detection and generative completeness \cite{Wang2023AMBER}.
+    \item \textbf{Long-Context Utilization:} LoCoBench introduces information coverage utilization, quantifying how effectively long context windows are used to access relevant content \cite{Qiu2025LoCoBench}.
+\end{itemize}
+
+These examples show that coverage has evolved from a testing metric into a cross-domain evaluation criterion applicable to both traditional SE pipelines and modern LLM-driven generation tasks.
+
+\subsubsection{Interpretation}
+
+Coverage serves as a proxy for thoroughness and reliability:
+
+\begin{itemize}
+    \item High coverage implies that the system, code generator, or test suite has explored a large portion of the search or execution space.
+    \item However, high coverage does not necessarily guarantee correctness, as uncovered paths may still contain critical bugs or unverified functionality.
+    \item In LLM-based SE evaluation, coverage helps estimate functional completeness, how much of the expected or reference behavior is actually represented in the generated output.
+    \item Coverage diversity and information utilization provide additional insight into robustness and generalization by revealing whether models rely on narrow or broad exploration.
+\end{itemize}
+
+In short, coverage reflects how well a system “sees” its problem space, bridging quality assurance in traditional testing with behavioral analysis of generative AI models.
+
+\subsubsection{Additional References}
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{Wang2023AMBER, Chen2024SurveyCodeGen, Li2024FullSDLC, Liu2023IsYourCodeCorrect, Wang2024AutonomousAgentsSurvey, Qiu2025LoCoBench, Black2024LLMFuzzing, Schafer2024UnitTestGeneration, Stein2023MetricFlaws}

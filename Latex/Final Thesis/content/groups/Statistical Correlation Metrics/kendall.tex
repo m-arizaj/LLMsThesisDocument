@@ -1,0 +1,66 @@
+\subsection{Kendall's \texorpdfstring{$\tau$}{tau}}
+
+\subsubsection{Introduction}
+
+Kendall's $\tau$ (Kendall's tau) is a rank correlation coefficient that measures the degree of agreement between two ranked variables. It evaluates how consistently two sets of rankings (for example, human judgments and automatic metric scores) order the same items. 
+In software engineering evaluation, it is widely applied to assess how well an automatic metric correlates with human or functional correctness evaluations, particularly in code generation, metric validation, and LLM-based assessments.
+
+\subsubsection{Formula and Structure}
+
+Kendall's $\tau$ compares all possible pairs of items to determine whether their relative orderings are consistent (concordant) or inconsistent (discordant). 
+
+Formally, given $C$ concordant pairs and $D$ discordant pairs:
+
+\[
+\tau = \frac{C - D}{\frac{1}{2}n(n-1)}
+\]
+
+Alternatively, to handle ties in ranking values—a critical issue in modern metric evaluation—the more robust variant \textit{Kendall's $\tau_b$} is used \cite{Deutsch2023TiesMatter}:
+
+\[
+\tau_b = \frac{C - D}{\sqrt{(C + D + T_h)(C + D + T_m)}}
+\]
+
+Where:
+\begin{itemize}
+    \item $T_h$: number of ties in the human ranking
+    \item $T_m$: number of ties in the metric ranking
+\end{itemize}
+
+The resulting value of $\tau$ ranges from $-1$ to $+1$:
+\begin{itemize}
+    \item \textbf{+1:} perfect agreement (identical ranking)
+    \item \textbf{-1:} perfect disagreement (inverse ranking)
+    \item \textbf{0:} no correlation (random order)
+\end{itemize}
+
+\textbf{Example Interpretation}
+
+If an automatic code quality metric and human evaluations order 100 solutions similarly, and 70 pairs are concordant while 30 are discordant:
+
+\[
+\tau = \frac{70 - 30}{100} = 0.4
+\]
+
+This indicates a moderate positive correlation between the automatic metric and human judgment.
+
+\subsubsection{Applications in Software Engineering}
+
+Kendall's $\tau$ is a core tool for meta-evaluation of metrics in software engineering. It quantifies how well automated evaluation metrics reproduce human-like rankings of generated code or model outputs.
+Recent studies (Deutsch et al., 2023) show that standard Kendall's $\tau$ can struggle with ties in modern metrics and propose improved formulations such as pairwise accuracy and tie calibration to enhance its sensitivity and robustness \cite{Deutsch2023TiesMatter}.
+
+\subsubsection{Interpretation}
+
+In SE metric analysis:
+\begin{itemize}
+    \item \textbf{High $\tau$ values} indicate that the metric mirrors human judgment effectively.
+    \item \textbf{Low or negative $\tau$ values} reveal divergence, meaning the metric ranks outputs differently than humans or functional tests.
+    \item The inclusion of \textbf{tie-aware variants ($\tau_b$)} is crucial in LLM evaluation scenarios where several outputs may share equal scores \cite{Deutsch2023TiesMatter}.
+\end{itemize}
+
+This makes Kendall's $\tau$ a benchmark correlation measure for assessing reliability and consistency across diverse evaluation metrics.
+
+\subsubsection{Additional References}
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{Zhou2025LLMAsJudge, Zhuo2023ICEScore, Zhou2023CodeBERTScore, Dong2023CodeScore, Tong2024CodeJudge}

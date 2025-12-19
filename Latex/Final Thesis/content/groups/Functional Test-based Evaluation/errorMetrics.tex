@@ -1,0 +1,76 @@
+\subsection{Error Metrics}
+
+\subsubsection{Introduction}
+
+Error metrics quantify the deviation between predicted or generated outputs and their expected or reference values.
+In software engineering and LLM evaluation, these metrics are used to assess reliability, calibration, robustness, and the degree of correctness in model predictions or code outputs. They encompass measures such as Expected Calibration Error (ECE), Mean Absolute Error (MAE), Error Rate, and Human Error Rate, each focusing on a different aspect of model performance and reliability.
+
+\subsubsection{Formula and Structure}
+
+\textbf{1. Expected Calibration Error (ECE)}
+ECE measures how well a model's predicted confidence aligns with actual correctness \cite{Lin2024SWC, Liang2022HELM, Chang2023SurveyLLMs, Srivastava2022BeyondImitation}.
+For a model partitioned into $M$ bins based on confidence scores:
+
+\[
+\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{n} \, |\text{acc}(B_m) - \text{conf}(B_m)|
+\]
+
+Where:
+\begin{itemize}
+    \item $B_m$ is the set of samples in bin $m$.
+    \item $\text{acc}(B_m)$ is the accuracy in bin $m$.
+    \item $\text{conf}(B_m)$ is the average confidence of samples in $B_m$.
+    \item $n$ is the total number of samples.
+\end{itemize}
+
+A lower ECE indicates better calibration between model confidence and accuracy.
+
+\textbf{2. Mean Absolute Error (MAE)}
+MAE measures the average magnitude of errors between predicted and actual values, without considering direction \cite{Yang2024CodeScoreR, Dong2023CodeScore}:
+
+\[
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y_i}|
+\]
+
+It is widely used in \textit{Fit-to-Pass} evaluations and \textit{consistency checks} for LLM-based code generation.
+
+\textbf{3. Error Rate}
+Error Rate quantifies the proportion of incorrect predictions or generated outputs relative to the total \cite{Hemberg2024EvolvingCodeLLM}:
+
+\[
+\text{ErrorRate} = \frac{N_{\text{errors}}}{N_{\text{total}}}
+\]
+
+This metric may be applied at the operator, token, or program level, depending on the evaluation task.
+
+\textbf{4. Human Error Rate}
+Used in generative or multimodal evaluations, this measures disagreement or deviation between human annotators' judgments and reference answers \cite{Stein2023MetricFlaws}.
+
+\textbf{5. Error Tracing}
+Refers to the process of identifying, locating, and quantifying specific errors in code or system outputs \cite{Li2025LLMSoftwareTesting}.
+While not a numeric metric by itself, it supports debugging and fault localization by linking model-generated defects to specific patterns or code regions.
+
+\subsubsection{Variants}
+
+\begin{enumerate}
+    \item \textbf{Expected Calibration Error (ECE):} Evaluates calibration reliability (e.g., HELM, BIG-bench, and LLM Calibration).
+    \item \textbf{Mean Absolute Error (MAE):} Measures numerical prediction accuracy and evaluation consistency in code-related tasks.
+    \item \textbf{Calibration Error:} Used in LLM reliability and uncertainty evaluation contexts \cite{Lin2024SWC}.
+    \item \textbf{Error Rate (Operator-Level):} Captures robustness and reliability in symbolic or arithmetic code generation.
+    \item \textbf{Error Tracing Capability:} Measures the model's effectiveness in identifying the causes of software errors.
+    \item \textbf{Human Error Rate:} Used to measure alignment or fidelity in human evaluation of generated outputs.
+\end{enumerate}
+
+\subsubsection{Interpretation}
+
+Error metrics are fundamental to assessing both the reliability and interpretability of LLMs in software engineering.
+They help identify overconfident models, evaluate calibration quality, and quantify practical prediction deviations.
+
+\begin{itemize}
+    \item \textbf{Low ECE} implies that a model's predicted confidence aligns with its true performance.
+    \item \textbf{Low MAE} reflects consistent and accurate numeric predictions.
+    \item \textbf{Low Error Rate} suggests robust and reliable code generation or symbolic reasoning.
+    \item \textbf{Error Tracing} complements these by providing qualitative insights into fault localization.
+\end{itemize}
+
+Together, these metrics serve as key indicators of model robustness, calibration, and dependability in LLM-based code generation, refactoring, and testing environments.

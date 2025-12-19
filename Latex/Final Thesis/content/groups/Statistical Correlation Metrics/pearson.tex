@@ -1,0 +1,61 @@
+\subsection{Pearson's r}
+
+\subsubsection{Introduction}
+
+Pearson's $r$ is a statistical correlation metric that quantifies the linear relationship between two continuous variables.
+In the context of software engineering and large language model evaluation, it measures how strongly a model's predictions or metric scores align with human judgments or ground-truth references.
+A Pearson coefficient close to $+1$ indicates a strong positive correlation (both values increase together), $-1$ a strong negative correlation, and $0$ no linear relationship.
+
+\subsubsection{Formula}
+
+The coefficient is defined as:
+
+\[
+r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}
+{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
+\]
+
+Where:
+\begin{itemize}
+    \item $x_i$ are the predicted or computed metric values
+    \item $y_i$ are the corresponding reference or human-evaluated scores
+    \item $\bar{x}$ and $\bar{y}$ are their respective means
+\end{itemize}
+
+This formulation captures how closely two sets of scores vary together in a linear fashion.
+
+\subsubsection{Variants}
+
+While the metric itself is standard, implementations may vary depending on the evaluation focus:
+\begin{itemize}
+    \item \textbf{Pearson's $r_p$:} Used to explicitly denote Pearson's correlation in datasets where multiple correlation metrics (e.g., Spearman's $\rho$, Kendall's $\tau$) are also reported.
+    \item \textbf{Weighted Pearson correlation:} Used when samples carry unequal importance or reliability weights.
+\end{itemize}
+
+\subsubsection{Application in Software Engineering}
+
+In SE contexts, Pearson's $r$ is widely applied to validate how well automatic evaluation metrics or model-generated scores reflect human judgments, code correctness, or performance measures.
+For instance, in defect prediction, code quality analysis, and LLM metric validation, Pearson's $r$ helps determine whether quantitative metrics track real-world outcomes such as defect counts or human ratings.
+
+Recent research (Hrishikesh et al., 2025) used Pearson's $r$ to analyze correlations between Co-Change Graph Entropy and defect density, reporting values up to 0.54, indicating a moderately strong linear relationship between entropy and code defect rates \cite{Hrishikesh2025CoChange}.
+
+\subsubsection{Interpretation}
+
+\begin{itemize}
+    \item \textbf{High positive $r$ (> 0.7):} Strong agreement between automated metric and reference evaluation.
+    \item \textbf{Moderate $r$ (0.3 – 0.7):} Partial linear relationship; other nonlinear factors may exist.
+    \item \textbf{Low or near-zero $r$:} Weak alignment, suggesting the metric captures a different dimension.
+\end{itemize}
+
+In LLM evaluation for code generation, Pearson's $r$ complements other correlation metrics (Spearman's $\rho$, Kendall's $\tau$) by specifically revealing linear consistency between model outputs and human preferences.
+
+\subsubsection{Contextual Examples}
+
+This metric appears in multiple SE and LLM evaluation settings:
+\begin{itemize}
+    \item \textbf{Correlation with Human Judgment:} Used in datasets such as HumanEval to validate metric alignment with expert evaluations \cite{Zhuo2023ICEScore}.
+    \item \textbf{Correlation with Human Preference:} Measures how predicted rankings or scores correspond to human-preferred solutions \cite{Zhou2023CodeBERTScore}.
+    \item \textbf{Correlation Evaluation (General):} Applied to test whether automatic metrics track performance consistency across models and benchmarks \cite{Dong2023CodeScore}.
+\end{itemize}
+
+These uses highlight its role as a baseline measure of metric reliability and evaluation robustness in multi-metric LLM assessment pipelines.

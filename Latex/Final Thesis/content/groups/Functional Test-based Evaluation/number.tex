@@ -1,0 +1,36 @@
+\subsection{Number-based Metrics}
+
+\subsubsection{Introduction}
+
+Number-based metrics quantify model performance or efficiency through discrete counts, such as executed instructions, iterations, or user–model interactions. They provide a transparent measure of computational effort, optimization behavior, and feedback efficiency, especially relevant in code repair, LLM evaluation, and interactive programming tasks.
+
+\subsubsection{Key Metrics}
+
+\textbf{1. Number of Executed Instructions} \cite{Liu2024EfficientCodeGeneration} \\
+Used in the EVALPERF (2024) benchmark, this metric represents the number of machine instructions executed between two program points. EVALPERF obtains this value directly from hardware performance counters, which provide high reproducibility and low measurement overhead. A lower number of executed instructions generally indicates more efficient execution, although values may differ across hardware platforms due to architectural variation.
+
+\textbf{2. Number of Iterations} \cite{Alhanahnah2025FormalSpecRepair} \\
+Applied in \textit{ARepair} and \textit{Alloy4Fun (2025)} benchmarks to assess iterative repair or synthesis processes.
+\[
+\text{Iter}_{\text{count}} = \sum_{t=1}^{T} 1
+\]
+It captures how many iterations a system requires to reach a valid or repaired solution, serving as a direct indicator of convergence speed and algorithmic efficiency.
+
+\textbf{3. Number of Messages (with Feedback)} \cite{Coello2024EffectivenessChatGPT} \\
+Introduced in Coello et al. (2024), this metric tracks how many model–user message exchanges occur before reaching a correct solution.
+\[
+\text{Msg}_{\text{count}} = \text{Total interactions until correct output}
+\]
+It measures feedback efficiency, highlighting the model’s ability to learn or adapt through user guidance.
+
+\subsubsection{Interpretation}
+
+Number metrics serve as process-oriented indicators:
+
+\begin{itemize}
+    \item In code generation, they indicate computational effort by reporting the number of executed machine instructions \cite{Liu2024EfficientCodeGeneration}.
+    \item In program repair, they reflect algorithmic convergence (iterations) \cite{Alhanahnah2025FormalSpecRepair}.
+    \item In LLM feedback tasks, they indicate interaction efficiency (messages) \cite{Coello2024EffectivenessChatGPT}.
+\end{itemize}
+
+Collectively, they reveal how much computational or conversational effort is required for models to produce successful outcomes, offering a crucial complement to accuracy-based or functional metrics.
