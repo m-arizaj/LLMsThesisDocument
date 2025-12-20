@@ -1,0 +1,81 @@
+\subsection{Code Style Adherence}
+
+\subsubsection{Introduction}
+
+Code Style Adherence (CSA) is one of the three Code Quality Assessment metrics in LoCoBench. It evaluates whether code produced by a model follows the conventions and best practices expected in professional software engineering \cite{Qiu2025LoCoBench}. The authors explicitly define CSA as:
+\begin{quote}
+“Style guide compliance measurement based on coding standards literature (Kernighan and Pike, 1999) and automated linting frameworks, evaluating naming conventions, formatting consistency, and language-specific best practices.” \cite{Qiu2025LoCoBench}
+\end{quote}
+
+Within the LoCoBench Score (LCBS), CSA contributes to the Code Quality dimension, which holds a 20\% weight in the final composite score \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Formula}
+
+The paper does not provide a standalone raw formula for CSA, because its computation depends on the underlying language-specific style tools. However, the authors explain that CSA is one of the metrics included in the Code Quality set:
+
+\begin{quote}
+“Code Quality Assessment includes Security Analysis Score, Average Issues Found (inverted), and Code Style Adherence.” \cite{Qiu2025LoCoBench}
+\end{quote}
+
+While the raw CSA score is tool-dependent, LoCoBench provides a unified normalization function used for all metrics, including CSA:
+
+\[
+N(m_i) = \frac{m_i - \min(m_i)}{\max(m_i) - \min(m_i)}
+\]
+
+The normalized metrics are then aggregated into the Code Quality score:
+
+\[
+CQ = \frac{1}{3}\left(N(\text{SAS}) + N(\text{AIF}) + N(\text{CSA})\right)
+\]
+
+And the Code Quality dimension contributes to the LoCoBench Score via \cite{Qiu2025LoCoBench}:
+
+\[
+\text{LCBS} = 5\,(0.4\,\text{SE} + 0.3\,\text{FC} + 0.2\,\text{CQ} + 0.1\,\text{LCU})
+\]
+
+\subsubsection{Applications in Software Engineering}
+
+\textbf{Enforcing consistency in large codebases} \\
+In multi-file, long-context scenarios, code style consistency is essential for maintainability and readability. 
+LoCoBench therefore applies style tools during validation to reflect real engineering environments where style checks are part of CI pipelines \cite{Qiu2025LoCoBench}.
+
+\textbf{Evaluating cross-session consistency} \\
+For multi-session tasks, the benchmark instructs models to:
+\begin{quote}
+“Preserve naming conventions and code style.” \cite{Qiu2025LoCoBench}
+\end{quote}
+CSA indirectly measures whether a model can maintain consistent style decisions when generating or modifying code across long development sequences.
+
+\textbf{Complementing other quality metrics} \\
+CSA complements:
+\begin{itemize}
+    \item \textit{SAS} (security)
+    \item \textit{AIF} (static analysis code smell detection)
+\end{itemize}
+Together, these three measures provide a multi-dimensional view of code quality \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Interpretation}
+
+\textbf{What a high CSA score means} \\
+A high CSA score indicates that the model’s output:
+\begin{itemize}
+    \item follows standard naming and formatting conventions,
+    \item adheres to established best practices for the language,
+    \item produces code that would pass typical style constraints in CI systems.
+\end{itemize}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Corresponds to industry-standard evaluations (linting, formatting tools) \cite{Qiu2025LoCoBench}.
+    \item Reflects both readability and maintainability.
+    \item Useful in long-context settings where code consistency is critical.
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item The paper does not define how linting outputs are converted into numerical CSA scores.
+    \item CSA is tool-dependent, meaning different rulesets affect comparability.
+    \item No human judgment correlation studies are provided in the text.
+\end{itemize}

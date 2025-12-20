@@ -1,0 +1,125 @@
+\subsection{Perplexity and Bits-Per-Byte (BPB)}
+
+\subsubsection{Introduction}
+
+Perplexity and Bits-Per-Byte (BPB) are intrinsic language-model evaluation metrics derived from the average negative log-likelihood of text \cite{Meister2021BeyondPerplexity}. Both quantify how well a model predicts sequences, differing only in the unit of normalization: perplexity measures prediction quality per token, while BPB measures it per byte.
+Perplexity has historically been the dominant evaluation metric in language modeling and sequence prediction, whereas modern benchmarking frameworks increasingly use BPB due to its tokenization-invariant nature. Both metrics appear in evaluation pipelines for LLMs and can be applied in software-engineering contexts where generative or predictive models operate on structured or natural-language content.
+
+\subsubsection{Formula}
+
+\textbf{Perplexity} \\
+Perplexity is defined as the exponential of the average negative log-probability of the reference sequence \cite{Meister2021BeyondPerplexity}:
+
+\[
+\text{Perplexity}
+= 2^{-\frac{1}{M}\sum_{j=1}^{M} \log_2 \hat P(y_j)}
+\]
+
+where:
+\begin{itemize}
+    \item $y_j$ is the $j$-th reference token,
+    \item $\hat P(y_j)$ is the model-assigned probability,
+    \item $M$ is the number of tokens.
+\end{itemize}
+
+An equivalent sequence-probability form is:
+
+\[
+\text{Perplexity}
+= \left( \prod_{t=1}^{T} P(w_t \mid w_{1:t-1}) \right)^{-\frac{1}{T}}.
+\]
+
+Lower values indicate that the model assigns higher likelihood to the observed sequence.
+
+\textbf{Bits-Per-Byte (BPB)} \\
+BPB expresses the average negative log-likelihood of text per byte, measured in bits:
+
+\[
+\text{BPB} = -\frac{1}{B}\sum_{i=1}^{B} \log_2 P(x_i)
+\]
+
+where:
+\begin{itemize}
+    \item $x_i$ is the $i$-th byte in the sequence,
+    \item $B$ is the number of bytes.
+\end{itemize}
+
+Lower BPB corresponds to better language-modeling performance.
+
+\textbf{Relationship Between the Metrics} \\
+Both are transformations of average log-loss:
+\begin{itemize}
+    \item Perplexity is $\;2^{\text{cross-entropy per token}}$.
+    \item BPB is cross-entropy expressed directly in bits per byte.
+\end{itemize}
+
+HELM identifies log BPB as equivalent in role to classical perplexity for LM loss.
+
+\subsubsection{Variants}
+
+\textbf{Token-based Variants of Perplexity}
+\begin{itemize}
+    \item \textbf{Unigram-Normalized Perplexity ($PPLu$):}
+    A vocabulary-size-invariant measure normalizing by a unigram model \cite{Roh2020UnigramPPL}:
+    \[
+    PPLu = \left( \prod_{t=1}^{T} \frac{P(w_t \mid w_{1:t-1})}{P(w_t)} \right)^{-\frac{1}{T}}.
+    \]
+    This formulation adjusts for differences in vocabulary size and subword segmentation \cite{Roh2020UnigramPPL}.
+
+    \item \textbf{Base-$e$ or Base-10 Perplexity:}
+    Identical structure, changing the exponential base.
+\end{itemize}
+
+\textbf{BPB Variants} \\
+The papers describe BPB as a single metric, but its computation depends on:
+\begin{itemize}
+    \item byte-level decomposition (UTF-8 or equivalent),
+    \item average log-loss in base 2,
+    \item optional reporting of \textit{log BPB} as a training-loss equivalent.
+\end{itemize}
+
+\textbf{Conceptual Properties}
+\begin{itemize}
+    \item Perplexity and BPB both measure intrinsic LM quality, but perplexity is tokenization-dependent, whereas BPB is tokenization-invariant \cite{Roh2020UnigramPPL}.
+    \item Mutual-information interpretations exist for normalized perplexity variants, connecting perplexity to predictive dependence between tokens \cite{Meister2021BeyondPerplexity}.
+\end{itemize}
+
+\subsubsection{Application in Software Engineering}
+
+Perplexity and BPB are applied in SE-related LLM evaluation in tasks involving:
+\begin{itemize}
+    \item natural-language comment generation,
+    \item documentation synthesis,
+    \item issue-report summarization,
+    \item requirements text modeling,
+    \item code-related natural language corpora.
+\end{itemize}
+
+BPB is used extensively in holistic evaluation frameworks such as HELM for assessing general language-modeling quality across datasets like The Pile, TwitterAAE, and ICE. Perplexity and log BPB values help characterize how well an LLM models domain-specific text, including developer-written content.
+Both metrics support regression-style assessment of predictive performance in SE benchmarks, allowing comparison of model fit across diverse corpus sizes and tokenization strategies.
+
+\subsubsection{Interpretation}
+
+\textbf{Perplexity}
+\begin{itemize}
+    \item Lower perplexity indicates higher likelihood assigned to the observed data \cite{Meister2021BeyondPerplexity}.
+    \item Reflects fluency and predictive consistency but does not capture higher-level linguistic properties.
+    \item Sensitive to vocabulary size and tokenization choices \cite{Roh2020UnigramPPL}.
+    \item Provides a coarse but widely adopted measure of generative quality.
+\end{itemize}
+
+\textbf{Bits-Per-Byte}
+\begin{itemize}
+    \item Lower BPB means the model compresses text more efficiently in terms of information theory.
+    \item Comparable across tokenization schemes, making it suitable for heterogeneous LLMs.
+    \item Useful for analyzing demographic and dialectal disparities in LM performance.
+\end{itemize}
+
+\textbf{Joint Interpretation} \\
+Both metrics are intrinsic evaluations of sequence prediction.
+Perplexity is interpretable in terms of “average branching factor,” while BPB measures the expected number of bits required to encode each byte of text \cite{Meister2021BeyondPerplexity}. Neither metric alone predicts downstream task performance reliably, and both should be contextualized within broader evaluations involving accuracy, robustness, and fairness.
+
+\subsubsection{Additional References}
+This metric and its variants are referenced and/or used in the following papers:
+
+\cite{HuZhou2024LLMMetrics, Liang2022HELM, Bistarelli2025UsageLLMCode}

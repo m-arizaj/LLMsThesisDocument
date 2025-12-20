@@ -1,0 +1,104 @@
+\subsection{CPU Utilization}
+
+\subsubsection{Introduction}
+
+CPU Utilization is a performance and efficiency metric that quantifies how effectively the computational resources of a Central Processing Unit (CPU) are used during Large Language Model inference or code execution.
+In the context of LLM evaluation, it measures the percentage of CPU cycles actively processing tokens versus idle or waiting states, serving as a critical indicator of inference throughput, latency, and energy efficiency.
+
+This metric was emphasized by Chen et al. (2025) in \textit{A Survey on Evaluating Large Language Models in Code Generation Tasks}, where CPU utilization, execution time, and energy consumption were introduced as part of performance and efficiency evaluation metrics within EffiBench and Mercury frameworks \cite{Chen2024SurveyCodeGen, Huang2024EffiBench, Du2024Mercury}.
+Ditto et al. (2024) later operationalized this metric in \textit{Inference Acceleration for Large Language Models on CPUs}, demonstrating its role in optimizing LLM inference performance through parallelization, batching, and NUMA node isolation \cite{Ditto2024InferenceAcceleration}.
+
+\subsubsection{Formula and Computation}
+
+CPU utilization is defined as the proportion of time the CPU spends executing active processes relative to the total available processing time:
+
+\[
+\text{CPU Utilization} (\%) = \frac{T_{\text{active}}}{T_{\text{total}}} \times 100
+\]
+
+Where:
+\begin{itemize}
+    \item $T_{\text{active}}$ = time spent performing active computation (e.g., matrix multiplications, token generation).
+    \item $T_{\text{total}}$ = total wall-clock time of the inference session.
+\end{itemize}
+
+For LLM-specific evaluations, CPU utilization is often correlated with:
+\begin{itemize}
+    \item \textit{Processed Token Throughput} (tokens/sec processed)
+    \item \textit{Generated Token Throughput} (tokens/sec emitted)
+    \item \textit{Execution Time} (total inference duration)
+    \item \textit{Energy per 1k Tokens} (Watt-hours per 1,000 tokens)
+\end{itemize}
+
+These metrics together describe both computational efficiency and environmental impact during LLM inference.
+
+\subsubsection{Evaluation Context}
+
+CPU-based inference metrics are typically integrated into \textit{EffiBench} and \textit{Mercury}, two major benchmarking frameworks for LLM-generated code efficiency:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{X X X}
+\hline
+\textbf{Benchmark} & \textbf{Metric Components} & \textbf{Description} \\ \hline
+\textit{EffiBench} (Huang et al., 2024) \cite{Huang2024EffiBench} & Execution Time, Memory Usage, CPU Utilization, Code Complexity & Assesses code efficiency and runtime behavior of LLM outputs in standardized environments. \\ \hline
+\textit{Mercury} (Du et al., 2024) \cite{Du2024Mercury} & Execution Time, Memory Usage, Energy Consumption, CPU Utilization & Focuses on real execution performance, measuring total compute and energy cost. \\ \hline
+\end{tabularx}
+\end{center}
+
+Both frameworks use CPU utilization as a measure of how efficiently LLM-generated code or inference processes use available computational resources.
+
+\subsubsection{Application in LLM Inference}
+
+Ditto et al. (2024) propose a practical implementation for CPU-based inference metrics using \textit{Intel® Xeon® Scalable Processors} \cite{Ditto2024InferenceAcceleration}.
+Their study introduced the Bud Inference Engine, a parallelized framework achieving up to \textit{22× improvement} in generated tokens/sec on CPUs compared to baseline runs, with \textit{~49\% lower power consumption} versus GPU-based inference.
+
+\textbf{Example Metrics (4th Gen Intel Xeon Scalable Processor)}
+\begin{center}
+\begin{tabularx}{\textwidth}{l X X X X X}
+\hline
+\textbf{Model} & \textbf{vCPU} & \textbf{Proc. Tok/s} & \textbf{Gen. Tok/s} & \textbf{CPU Util} & \textbf{Power (1k tok)} \\ \hline
+bigcode/starcoderbase-3B & 32 & 992.36 & 167.58 & $\approx 85\%$ & 613 W \\ \hline
+CodeLlama-7B (hf) & 32 & 593.74 & 93.69 & $\approx 82\%$ & — \\ \hline
+LLaMA-2-7B (hf) & NUMA $\times$ 4 & 1852.32 & 305.30 & $> 90\%$ & — \\ \hline
+\end{tabularx}
+\end{center}
+
+Higher CPU utilization correlates with improved throughput and reduced latency, particularly when inference workloads are distributed across NUMA nodes and optimized with AVX/AMX instructions \cite{Ditto2024InferenceAcceleration}.
+
+\subsubsection{Interpretation}
+
+High CPU utilization in LLM inference indicates:
+\begin{itemize}
+    \item Efficient batching and memory management (reduced fragmentation).
+    \item Balanced load across CPU cores (parallel token generation).
+    \item Lower energy cost per token generated.
+    \item Increased throughput (tokens/sec) without significant latency penalties.
+\end{itemize}
+However, over-utilization ($>95\%$) may indicate CPU saturation, potentially causing thermal throttling or degraded latency under concurrent workloads.
+
+\subsubsection{Relation to Other Metrics}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{X X X}
+\hline
+\textbf{Metric} & \textbf{Focus} & \textbf{Relationship to CPU Utilization} \\ \hline
+\textit{Execution Time} & Total time to process an input & Inversely proportional under fixed load \\ \hline
+\textit{Memory Usage} & RAM consumption during inference & Often correlated; inefficient memory allocation lowers CPU utilization \\ \hline
+\textit{Energy Consumption} & Power cost per operation & Positively correlated; higher utilization can mean better performance per watt \\ \hline
+\textit{Throughput (tokens/s)} & Number of tokens processed per second & Directly proportional; core efficiency indicator \\ \hline
+\end{tabularx}
+\end{center}
+
+\subsubsection{Advantages}
+\begin{itemize}
+    \item Quantifies \textit{hardware efficiency} beyond correctness metrics like Pass@k and BLEU.
+    \item Enables \textit{sustainable evaluation}, connecting compute usage to environmental cost.
+    \item Offers a \textit{hardware-agnostic benchmark} for CPU-based deployments (Xeon, EPYC, ARM).
+\end{itemize}
+
+\subsubsection{Limitations}
+\begin{itemize}
+    \item Results depend heavily on hardware architecture like the number of cores or the memory bandwidth.
+    \item High utilization does not always translate to low latency in small-batch settings.
+    \item Not directly comparable to GPU metrics due to architectural differences (parallel vs SIMD).
+\end{itemize}

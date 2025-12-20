@@ -1,0 +1,101 @@
+\subsection{Complexity Metrics}
+
+\subsubsection{Introduction}
+
+Complexity metrics evaluate how difficult code is to understand, maintain, or modify.
+They play a central role in software engineering and LLM-based code generation evaluation, as they correlate with defect proneness, maintainability, debugging effort, and reasoning difficulty \cite{Chen2024SurveyCodeGen}.
+
+Across the sources analyzed, complexity appears through three main metric families:
+\begin{enumerate}
+    \item \textbf{Cyclomatic Complexity} - a structural measure of control-flow difficulty.
+    \item \textbf{Halstead Metrics} - an information-theoretic and cognitive-load perspective.
+    \item \textbf{Hybrid Cyclomatic Complexity (HCC)} - a metric designed for object-oriented systems that integrates inherited complexity into the assessment.
+\end{enumerate}
+
+\subsubsection{Cyclomatic Complexity (McCabe, 1976)}
+Cyclomatic Complexity measures the number of linearly independent execution paths in a program.
+
+\[
+M = E - N + 2P
+\]
+
+Where:
+\begin{itemize}
+    \item $E$ = number of edges
+    \item $N$ = number of nodes
+    \item $P$ = number of connected components
+\end{itemize}
+
+In SWE-bench, cyclomatic complexity is used to profile the structural difficulty of code snippets associated with real-world bugs \cite{Jimenez2023SWEBench}.
+
+\subsubsection{Halstead Complexity Metrics}
+Halstead’s metrics evaluate program complexity through operators and operands.
+They originate from the seminal work where Halstead introduced the Software Science metrics, defining vocabulary, length, volume, difficulty, and effort as core measures of code complexity.
+
+Let:
+\begin{itemize}
+    \item $n_1$ = distinct operators
+    \item $n_2$ = distinct operands
+    \item $N_1$ = total operators
+    \item $N_2$ = total operands
+\end{itemize}
+
+\textbf{Vocabulary}
+\[
+n = n_1 + n_2
+\]
+
+\textbf{Length}
+\[
+N = N_1 + N_2
+\]
+
+\textbf{Volume}
+\[
+V = N \cdot \log_2(n)
+\]
+
+\textbf{Difficulty}
+\[
+D = \frac{n_1}{2} \cdot \frac{N_2}{n_2}
+\]
+
+\textbf{Effort}
+\[
+E = D \cdot V
+\]
+
+Halstead metrics are referenced in \textit{SWE-bench (2023)} as part of the complexity characterization for GitHub issues resolution \cite{Jimenez2023SWEBench}.
+
+\subsubsection{Hybrid Cyclomatic Complexity (HCC)}
+\textit{Unveiling Hybrid Cyclomatic Complexity} (Cernău, Dioșan \& Șerban, 2025) introduces HCC as a metric tailored for object-oriented programming, addressing the limitation that traditional metrics often ignore inherited complexity \cite{Cernau2025HybridComplexity}.
+
+Unlike previous definitions, HCC defines the total complexity of a class as the sum of its own complexity and the complexities of its parent classes:
+
+\[
+HCC = WMC + IWMC
+\]
+
+Where:
+\begin{itemize}
+    \item $WMC$ (Weighted Methods Per Count): The complexity of the class itself (sum of complexities of its methods).
+    \item $IWMC$ (Inherited Weighted Methods Per Count): The sum of the complexities of all parent classes.
+\end{itemize}
+
+The study demonstrates that inherited complexity is a valid and independent factor in defect prediction, and HCC serves as a robust feature for identifying error-prone classes in large Java systems \cite{Cernau2025HybridComplexity}.
+
+\subsubsection{Interpretation}
+Complexity metrics offer complementary perspectives:
+\begin{itemize}
+    \item \textbf{Cyclomatic Complexity} captures branching and structural difficulty within methods.
+    \item \textbf{Halstead Metrics} quantify informational load and cognitive effort.
+    \item \textbf{Hybrid Cyclomatic Complexity (HCC)} extends structural complexity to the architectural level by accounting for inheritance chains \cite{Cernau2025HybridComplexity}.
+\end{itemize}
+
+In LLM evaluation contexts, these metrics are used to:
+\begin{itemize}
+    \item characterize dataset difficulty,
+    \item analyze performance gaps across code tasks \cite{Chen2024SurveyCodeGen},
+    \item interpret bug repair results \cite{Jimenez2023SWEBench},
+    \item support difficulty-aware benchmarking and error analysis.
+\end{itemize}

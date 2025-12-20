@@ -1,0 +1,37 @@
+\subsection{Average Metrics}
+
+\subsubsection{Introduction}
+
+Average metrics represent aggregate measures that summarize the behavior or structural characteristics of model outputs.
+Unlike accuracy or precision, these metrics do not evaluate correctness directly; instead, they quantify aspects such as average code size, contextual length, or the frequency of issues found. They are commonly used for descriptive assessment, helping interpret how efficiently or consistently a model produces results across tasks.
+
+\subsubsection{Common Average-Based Measures}
+
+\textbf{1. Average Issues Found} \cite{Qiu2025LoCoBench} \\
+Used in LoCoBench (2025) to quantify code quality degradation by counting the mean number of architectural or logical issues identified across evaluation runs. A lower value indicates higher consistency and better code integrity.
+This metric serves as a proxy for the robustness and maintainability of LLM-generated code.
+
+\textbf{2. Average Number of Lines of Code (LOC)} \cite{Coello2024EffectivenessChatGPT} \\
+Measures the mean code length produced by the model, typically across a benchmark such as MBPP (2024). It helps evaluate verbosity, compactness, and adherence to minimal coding standards. While shorter code may imply efficiency, overly compressed solutions may sacrifice readability or modularity.
+
+\textbf{3. Average Percentage Beats} \cite{Niu2024EvaluatingEfficiency} \\
+Introduced in LeetCodeEval (2024), this metric reports the mean relative efficiency of model-generated solutions compared to existing user submissions. It indicates how often model code performs above average in runtime or memory usage, expressed as a percentile.
+
+\textbf{4. Average Lines of Code in Context} \cite{Anand2024AnalysisLLMCode} \\
+Used in DS-1000 (2025) to capture the contextual size of input or supporting code provided to the model.
+It reflects task complexity, influencing reasoning performance in multi-file or multi-function scenarios.
+
+\textbf{5. Average Problem Words} \cite{Anand2024AnalysisLLMCode} \\
+Also from DS-1000 (2025), this metric measures the average linguistic complexity of problem descriptions.
+It helps estimate the cognitive load and natural language difficulty faced by the model during problem comprehension.
+
+\subsubsection{Interpretation}
+
+Average metrics provide a high-level statistical perspective on LLM performance:
+\begin{itemize}
+    \item They reveal trends in efficiency, verbosity, or quality across datasets.
+    \item They are complementary to accuracy-based metrics, helping diagnose trade-offs between correctness and style.
+    \item When used longitudinally, they indicate model stability and predictability over multiple runs or problem sets.
+\end{itemize}
+
+In software engineering evaluation, averages are crucial for understanding context scale and quantifying improvement or degradation trends across model versions.

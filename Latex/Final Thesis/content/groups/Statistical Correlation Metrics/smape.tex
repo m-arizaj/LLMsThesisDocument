@@ -1,0 +1,73 @@
+\subsection{SMAPE}
+
+\subsubsection{Introduction}
+
+Symmetric Mean Absolute Percentage Error (SMAPE) is a scale-independent regression metric used to evaluate the relative difference between predicted and actual values. It was introduced as a modification of Mean Absolute Percentage Error (MAPE) to address two major issues: (i) MAPE becomes infinite or undefined when actual values approach zero, and (ii) MAPE is asymmetric, penalizing overestimation differently from underestimation \cite{Chen2017NewAccuracyMeasure}.
+SMAPE replaces the absolute actual value in the denominator with the average of the absolute actual and predicted values, which prevents infinite values and reduces extreme distortions \cite{Kreinovich2014ForecastingQuality}.
+It is widely used in forecasting competitions and appears in regression-based evaluation pipelines, including modern SE/LLM benchmarking tasks where normalized, scale-robust errors are essential.
+
+\subsubsection{Formula}
+
+Two equivalent standard definitions appear in the literature:
+
+\textbf{Similarity-Measure Form (Kreinovich et al., 2014)} \cite{Kreinovich2014ForecastingQuality}
+\[
+\text{SMAPE} = \frac{|x - y|}{(|x| + |y|)/2}
+\]
+
+\textbf{Mean Forecasting-Error Form}
+\[
+\text{SMAPE} = \frac{1}{n} \sum_{t=1}^{n} \frac{2\,|Y_t - F_t|}{|Y_t| + |F_t|}
+\]
+
+where:
+\begin{itemize}
+    \item $Y_t$ = actual value at time $t$,
+    \item $F_t$ = forecast value at time $t$,
+    \item $n$ = number of instances.
+\end{itemize}
+
+Both definitions are mathematically equivalent for non-negative values and bound the metric between $0$ and $2$ (or $0\%$ and $200\%$ when expressed as a percentage) \cite{Chen2017NewAccuracyMeasure}.
+
+\subsubsection{Variants}
+
+\textbf{1. Denominator Convention Differences} \\
+Some formulations use:
+\[
+|Y_t| + |F_t|
+\]
+while others use:
+\[
+(|Y_t| + |F_t|)/2
+\]
+The summed-denominator version is exactly twice the averaged-denominator version; both remain equivalent.
+
+\textbf{2. Modified SMAPE (msMAPE)} \\
+A variant that adds a small constant to the denominator to reduce instability when $Y_t$ or $F_t$ approach zero, while preserving the same conceptual structure.
+
+\textbf{3. Critically Discussed Properties} \\
+\begin{itemize}
+    \item Asymmetry in penalizing overestimation versus underestimation \cite{Chen2017NewAccuracyMeasure}.
+    \item Outlier resistance due to bounded error.
+    \item Scale independence when comparing series of different magnitudes.
+\end{itemize}
+
+\subsubsection{Application in Software Engineering}
+
+SMAPE applies to software engineering tasks involving regression outputs, including estimation of continuous software metrics, resource consumption prediction, and latency or performance modeling.
+It is also used in LLM-based SE evaluation where heterogeneous magnitude scales require normalized error metrics.
+The SELU benchmark for non-code SE tasks uses SMAPE and inverts its values using:
+\[
+1 - \text{SMAPE}
+\]
+to align regression performance with higher-is-better scoring conventions.
+
+\subsubsection{Interpretation}
+
+\begin{itemize}
+    \item \textbf{Low SMAPE values} indicate strong predictive agreement.
+    \item \textbf{High values} reflect large relative deviations between predictions and observations.
+\end{itemize}
+
+Strengths include robustness to zero values, bounded error behavior, and scale independence \cite{Kreinovich2014ForecastingQuality}.
+Limitations include asymmetry in error penalization and instability when both actual and predicted values are near zero, motivating consideration of alternatives such as MASE or UMBRAE in specific contexts \cite{Chen2017NewAccuracyMeasure}.

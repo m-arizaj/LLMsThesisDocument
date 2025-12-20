@@ -1,0 +1,152 @@
+\subsection{Bias Metrics}
+
+\subsubsection{Introduction}
+
+Bias metrics quantify systematic differences in how a model represents, associates, or describes different social groups. Unlike fairness metrics that measure disparities in task accuracy, bias metrics focus on asymmetries in language behavior, internal representations, or generated text \cite{Liang2022HELM}. 
+The four papers emphasize that bias arises from social and historical inequalities and may surface in embeddings, probability distributions, or text produced by the model \cite{Gallegos2024BiasFairness, Mehrabi2021SurveyBias}. Although these works focus on NLP, the same metrics extend naturally to software-engineering contexts such as code-comment generation, documentation synthesis, developer Q\&A, and issue summarization.
+
+\subsubsection{Formula}
+
+\textbf{1. Demographic Representation Bias} \\
+HELM defines demographic representation bias by comparing the observed distribution of group references in model outputs with a reference (usually uniform) distribution \cite{Liang2022HELM}.
+
+Observed distribution:
+\[
+P_{\text{obs}}(i) = \frac{C(i)}{\sum_j C(j)}
+\]
+
+Bias score (Total Variation Distance):
+\[
+\text{RepresentationBias} = \frac{1}{2} \sum_i \left| P_{\text{obs}}(i) - P_{\text{ref}}(i) \right|
+\]
+
+Higher scores indicate uneven representation of demographic groups in generations.
+
+\textbf{2. Stereotypical Association Bias} \\
+For each target concept $t$ (e.g., a profession), the model’s distribution of demographic group mentions is compared to a reference distribution \cite{Liang2022HELM}.
+
+Per-target association:
+\[
+\text{Assoc}_t = \frac{1}{2} \sum_i \left| P_{\text{obs}}^{t}(i) - P_{\text{ref}}(i) \right|
+\]
+
+Overall association:
+\[
+\text{StereotypicalAssociation} = \frac{1}{|T|} \sum_{t \in T} \text{Assoc}_t
+\]
+
+\textbf{3. Embedding-Based Bias (WEAT, CEAT, etc.)} \\
+Embedding-level bias measures asymmetric associations between group-word sets and attribute-word sets \cite{Gallegos2024BiasFairness}.
+
+WEAT effect size:
+\[
+f(A,W) =
+\frac{
+\operatorname{mean}_{a \in A_1}s(a,W_1,W_2)
+-
+\operatorname{mean}_{a \in A_2}s(a,W_1,W_2)
+}{
+\operatorname{std}_{a \in A_1 \cup A_2}s(a,W_1,W_2)
+}
+\]
+
+Meta-analytic CEAT:
+\[
+\text{CEAT} =
+\frac{
+\sum_{i=1}^{N} v_i \cdot \text{WEAT}_i
+}{
+\sum_{i=1}^{N} v_i
+}
+\]
+
+Sentence-level embedding bias:
+\[
+\text{SentenceBias}(S) =
+\sum_{s \in S}
+\left| \cos(s, v_{\text{gender}}) \cdot \alpha_s \right|
+\]
+
+\textbf{4. Probability-Based Bias} \\
+These metrics compare likelihoods assigned to stereotypical vs. counter-stereotypical sentence pairs \cite{Gallegos2024BiasFairness}.
+
+Directional preference:
+\[
+\text{bias}(S_1,S_2) = \mathbf{I}\left(f(S_1) > f(S_2)\right)
+\]
+
+Language Model Bias (LMB) uses a t-statistic over perplexities:
+\[
+\text{LMB} = t\big(\text{PP}(S_{\text{stereotype}}), \text{PP}(S_{\text{anti}})\big)
+\]
+
+\textbf{5. Generated-Text Bias Metrics (Gallegos et al., 2024)}
+
+\textit{HONEST (hurtful completions):}
+\[
+\text{HONEST} =
+\frac{
+\displaystyle \sum_{\hat y \in \hat Y} \mathbf{I}_{\text{HurtLex}}(\hat y)
+}{
+|\hat Y|
+}
+\]
+
+\textit{Psycholinguistic norms:}
+\[
+\text{PsychNorms} =
+\frac{
+\sum_{\hat y} \text{sign}(\text{affect}(\hat y))\,\text{affect}(\hat y)^2
+}{
+\sum_{\hat y} |\text{affect}(\hat y)|
+}
+\]
+
+\textit{Gender polarity:}
+\[
+\text{GenderPolarity} =
+\frac{
+\sum_{\hat y} \text{sign}(\text{bias}(\hat y))\,\text{bias}(\hat y)^2
+}{
+\sum_{\hat y} |\text{bias}(\hat y)|
+}
+\]
+
+\textbf{6. Word-Level Language Model Bias} \\
+Mehrabi et al. (2019) measure directional bias using log-odds under different demographic conditions \cite{Mehrabi2021SurveyBias}:
+
+\[
+\text{bias}(w) = \log \frac{P(w \mid \text{female})}{P(w \mid \text{male})}
+\]
+
+Aggregate statistics (mean, variance) provide corpus-level bias.
+
+\subsubsection{Variants}
+
+Across the four papers, bias metrics cluster into distinct families:
+
+\begin{enumerate}
+    \item \textit{Representation bias} — Compares mention/usage rates of groups against a reference distribution \cite{Liang2022HELM}.
+    \item \textit{Association bias} — Measures how strongly groups are linked to target concepts using TVD or embedding distances \cite{Liang2022HELM, Gallegos2024BiasFairness}.
+    \item \textit{Embedding-based bias} — WEAT, SEAT, CEAT, and sentence-level projections assess representational asymmetries \cite{Gallegos2024BiasFairness}.
+    \item \textit{Probability-based bias} — Compares log-likelihoods or perplexities of paired sentences \cite{Gallegos2024BiasFairness}.
+    \item \textit{Generated-text bias} — Detects harmful, affective, or gendered content in model outputs \cite{Gallegos2024BiasFairness}.
+    \item \textit{Word-level LM bias} — Log-odds differences in word probabilities under demographic prompts \cite{Mehrabi2021SurveyBias}.
+    \item \textit{Holistic evaluation taxonomies} — LLM surveys classify bias as one dimension of broader evaluation frameworks \cite{Chang2023SurveyLLMs}.
+\end{enumerate}
+
+\subsubsection{Applications in Software Engineering}
+
+Although originally designed for general NLP, these metrics transfer directly to SE contexts:
+
+\begin{itemize}
+    \item \textbf{Documentation and comment generation:} Use representation and association metrics to identify skewed portrayals in generated comments or docstrings.
+    \item \textbf{Developer Q\&A assistants:} Generated-text metrics detect harmful phrasing or gendered explanations in LLM support responses.
+    \item \textbf{Code-review explanations:} Embedding-based bias can reveal stereotypical associations encoded in the representations used to generate explanations.
+    \item \textbf{Issue summarization and commit messages:} Probability-based invariance metrics evaluate whether demographic substitutions produce different summaries or interpretations.
+    \item \textbf{End-to-end LLM evaluation pipelines:} As in HELM, bias should be assessed alongside accuracy, robustness, and calibration \cite{Liang2022HELM}.
+\end{itemize}
+
+\subsubsection{Interpretation}
+
+High representation or association bias values indicate systematic asymmetry in how the model describes different groups \cite{Liang2022HELM}. Embedding-based metrics quantify representational biases that may or may not surface in downstream text \cite{Gallegos2024BiasFairness}. Probability-based metrics evaluate whether the model’s likelihood function treats demographic substitutions differently, but may correlate weakly with real harms \cite{Gallegos2024BiasFairness}. Generated-text metrics directly capture observable harmful or gendered language. Mehrabi et al. (2019) stress that bias metrics inherently reflect normative goals, and interpretation should be grounded in specific contexts of harm \cite{Mehrabi2021SurveyBias}.

@@ -1,0 +1,114 @@
+\subsection{CodeJudge}
+
+\subsubsection{Introduction}
+
+CodeJudge is an LLM-based evaluation framework designed to assess the semantic correctness of machine-generated code without relying on test cases. Proposed by Tong \& Zhang (2024) \cite{Tong2024CodeJudge}, CodeJudge introduces a “slow thinking” process that enables large language models to reason through code step by step, improving alignment with human judgment in code evaluation tasks.
+Traditional test-based metrics like Pass@k depend on unit tests, while token-based metrics like BLEU, ROUGE-L and CodeBLEU fail to capture semantic equivalence when code differs syntactically but behaves correctly \cite{Evtikhiev2023OutOfBLEU}. CodeJudge addresses these limitations by using structured reasoning prompts and error taxonomies to judge correctness and quality, even in the absence of reference implementations.
+
+\subsubsection{Formula and Scoring Mechanism}
+
+CodeJudge introduces two main evaluation procedures:
+
+\begin{enumerate}
+    \item \textbf{Analyze-Then-Summarize (A.S.)} - for binary correctness
+    \item \textbf{Taxonomy-Guided Fault Localization (F.L.)} - for graded correctness
+\end{enumerate}
+
+\textbf{1. Analyze-Then-Summarize} \\
+This method decomposes code evaluation into two subtasks:
+\begin{itemize}
+    \item \textit{Analysis}: The LLM identifies the required functionalities from the task description, inspects the code logic, and lists any missing elements.
+    \item \textit{Summarization}: Based on this analysis, the model decides whether the code is correct (1) or incorrect (0).
+\end{itemize}
+
+The binary decision $f(c, t) \in \{0, 1\}$ depends on whether all task requirements are satisfied by the code snippet $c$ given the description $t$.
+
+Formally:
+
+\[
+f(c, t) =
+\begin{cases}
+1, & \text{if all required functionalities are correctly implemented,} \\
+0, & \text{otherwise.}
+\end{cases}
+\]
+
+\textbf{2. Taxonomy-Guided Fault Localization} \\
+For tasks requiring graded correctness (partial or incomplete code), CodeJudge provides a taxonomy of inconsistencies with corresponding severities:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Severity} & \textbf{Type of Inconsistency} & \textbf{Description} \\ \hline
+Negligible & Missing imports, no error handling & Minor, does not affect core functionality \\ \hline
+Small & Input handling or edge case omission & Slight deviation from ideal behavior \\ \hline
+Major & Logical errors & Directly affect semantic correctness \\ \hline
+Fatal & Undefined variables, incomplete code & Cause crashes or total failure \\ \hline
+\end{tabular}
+\end{center}
+
+Each detected inconsistency contributes a penalty based on severity weights:
+
+\[
+\begin{aligned}
+S &= \text{Num}_{\text{small}} \times 5 \\
+M &= \text{Num}_{\text{major}} \times 50 \\
+F &= \text{Num}_{\text{fatal}} \times 100
+\end{aligned}
+\]
+
+Then, the penalty and final CodeJudge Score are computed as:
+
+\[
+\text{Penalty} = \max(-100, -(S + M + F))
+\]
+
+\[
+\text{Score} = 1 - \frac{\text{Penalty}}{100}
+\]
+
+The score ranges from 0 to 1, where 1 indicates a fully correct solution and values below 1 reflect increasing degrees of error severity.
+
+\subsubsection{Variants}
+
+\begin{itemize}
+    \item \textbf{CodeJudge A.S.:} Binary correctness evaluation using Analyze-Then-Summarize. Applied in HumanEval-X, APPS, BigCodeBench \cite{Tong2024CodeJudge}.
+    \item \textbf{CodeJudge F.L.:} Graded correctness using Taxonomy-Guided Fault Localization. Applied in CoNaLa (Human-annotated code usefulness).
+    \item \textbf{CodeJudge w/o REF:} Reference-free version for scenarios without ground-truth code. Used in online evaluation and developer assistance tools.
+    \item \textbf{Few-Shot \& CoT Variants:} Incorporate examples or chain-of-thought reasoning, but found less effective than A.S. in research extensions.
+\end{itemize}
+
+\subsubsection{Interpretation}
+
+CodeJudge redefines automated code evaluation by simulating human-like review reasoning.
+Instead of pass/fail based solely on execution, it evaluates how code meets or deviates from intended logic.
+
+Key interpretative strengths:
+\begin{itemize}
+    \item \textit{No test cases required:} Effective in open-ended tasks.
+    \item \textit{Supports partial correctness:} Differentiates between minor and severe issues.
+    \item \textit{Cross-language generalization:} Valid across Python, Java, C++, JavaScript, Go.
+    \item \textit{LLM adaptability:} Works with GPT-3.5, Llama-3 (8B, 70B), CodeLlama, etc.
+\end{itemize}
+
+Limitations include occasional overemphasis on error handling and misinterpretation of complex logic in advanced benchmarks like APPS.
+
+\subsubsection{Applications in Software Engineering}
+
+\begin{itemize}
+    \item \textbf{Code generation evaluation:} Measures semantic correctness across diverse programming tasks \cite{Tong2024CodeJudge}.
+    \item \textbf{Developer feedback systems:} Enables automated quality feedback without tests.
+    \item \textbf{Benchmarking frameworks:} Used in HumanEval-X, CoNaLa, APPS, BigCodeBench.
+    \item \textbf{Code repair and debugging:} Identifies logic-level inconsistencies for refinement loops.
+\end{itemize}
+
+\subsubsection{Limitations}
+
+While CodeJudge shows strong correlation with human evaluation, challenges remain:
+\begin{itemize}
+    \item Misjudgments in complex control flows or large functions.
+    \item Overestimation of “error-handling” needs.
+    \item Sensitivity to incomplete prompts in zero-shot settings.
+\end{itemize}
+
+Future work involves integrating dynamic execution tracing and improving the weighting of minor vs. major inconsistencies.

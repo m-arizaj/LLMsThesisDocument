@@ -1,0 +1,66 @@
+\subsection{Coherence}
+
+\subsubsection{Introduction}
+
+Coherence measures the internal consistency and logical organization of model outputs. In natural language processing, it evaluates how smoothly sentences or ideas connect to form a unified text \cite{Sheng2023BBScore}. In software engineering, coherence captures the consistency of architectural principles and dependencies across complex systems.
+The Architectural Coherence Score (ACS), introduced in LoCoBench (Qiu et al., 2025), extends this concept to large-scale code reasoning and design evaluation, assessing how well a model preserves architectural integrity throughout long-context scenarios \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Formula and Estimation}
+
+Coherence does not have a single analytical formula, but several frameworks approximate it through statistical or embedding-based similarity between adjacent or related units.
+
+\textbf{Linguistic Coherence} \\
+Embedding-based methods compute pairwise similarity between sentence or paragraph representations:
+\[
+\text{Coherence} = \frac{1}{N-1} \sum_{i=1}^{N-1} \cos(E_i, E_{i+1})
+\]
+where $E_i$ represents the embedding vector of the $i$-th sentence.
+Higher cosine similarity indicates smoother semantic transitions.
+
+Discourse-aware models (e.g., DiscoScore) enhance this by incorporating discourse relations and entity tracking, improving alignment with human perception of coherence \cite{Zhao2023DiscoScore}.
+
+\textbf{Architectural Coherence Score (ACS)} \\
+In software engineering evaluation, the \textit{Architectural Coherence Score (ACS)} quantifies how consistently a codebase adheres to established architectural principles and patterns over large contexts \cite{Qiu2025LoCoBench}.
+
+Formally, given a code system $C$ and a set of architectural patterns $P$, the ACS is defined as:
+
+\[
+\text{ACS}(C) = \frac{1}{|P|} \sum_{p \in P} \frac{w(p) \cdot \alpha(p, C)}{\kappa(p) + \epsilon}
+\]
+
+where:
+\begin{itemize}
+    \item $C$ is the evaluated code or system,
+    \item $P = \{p_1, p_2, \dots, p_m\}$ denotes the set of recognized architectural patterns,
+    \item $w(p) \in [0,1]$ is the \textit{criticality weight} of pattern $p$, reflecting its relative impact on system stability,
+    \item $\alpha(p, C) \in [0,1]$ measures the \textit{adherence} of $C$ to the architectural pattern $p$, considering design principles such as SOLID or dependency constraints,
+    \item $\kappa(p) \geq 1$ represents the \textit{structural complexity} of the pattern,
+    \item $\epsilon > 0$ is a regularization constant to prevent division by zero.
+\end{itemize}
+
+A higher ACS value implies a system that preserves structural cohesion, dependency correctness, and alignment with the intended architecture — even under long-context reasoning or large-scale code generation.
+
+This metric complements others in LoCoBench:
+\begin{itemize}
+    \item \textit{Cross-File Reasoning Depth (CFRD):} focuses on multi-file dependency resolution.
+    \item \textit{Dependency Traversal Accuracy (DTA):} measures correctness in navigating dependency graphs.
+\end{itemize}
+ACS, instead, captures global architectural consistency, serving as a top-level indicator of Software Engineering Excellence and contributing 40\% of the overall LoCoBench Score (LCBS) \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Variants and Contexts of Use}
+
+\begin{itemize}
+    \item \textbf{Textual Coherence:} Evaluates the fluency and logical progression of text (General LLM Evaluation) \cite{Sheng2023BBScore}.
+    \item \textbf{Architectural Coherence Score (ACS):} Measures structural and design consistency in code systems (LoCoBench, 2025) \cite{Qiu2025LoCoBench}.
+    \item \textbf{Entity-based Coherence:} Tracks consistent references and naming across outputs (linguistic or code-based) \cite{Zhao2023DiscoScore}.
+\end{itemize}
+
+\subsubsection{Interpretation}
+
+High coherence indicates that a model maintains consistent logic and structure across its outputs:
+\begin{itemize}
+    \item In linguistic settings, it means that the text flows logically with minimal abrupt shifts or contradictions \cite{Sheng2023BBScore}.
+    \item In software engineering, it implies that the generated or reasoned code maintains consistent architecture, modularity, and dependency relations \cite{Qiu2025LoCoBench}.
+\end{itemize}
+
+Low coherence reflects fragmented reasoning or violations of design integrity — for example, missing dependencies, cyclic module references, or inconsistent abstractions.

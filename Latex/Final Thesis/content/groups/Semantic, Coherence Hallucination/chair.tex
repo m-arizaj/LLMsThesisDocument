@@ -1,0 +1,80 @@
+\subsection{CHAIR}
+
+\subsubsection{Introduction}
+
+CHAIR is a visual-textual consistency metric designed to quantify object hallucination, cases where a model mentions objects that are not present in an image . Introduced by Rohrbach et al. (2018) in \textit{Object Hallucination in Image Captioning} (EMNLP 2018), it evaluates the alignment between generated captions and ground-truth visual object annotations, thus measuring how faithful the description is to the image content \cite{Rohrbach2018ObjectHallucination}.
+Unlike traditional captioning metrics such as CIDEr or SPICE, which only assess textual similarity to reference captions, CHAIR measures the semantic accuracy of image grounding.
+In 2024, the AMBER benchmark (Wang et al., 2024) extended CHAIR as part of a multi-dimensional hallucination evaluation suite for Multimodal Large Language Models (MLLMs), integrating it into the AMBER Score for combined generative and discriminative assessment \cite{Wang2023AMBER}.
+
+\subsubsection{Formula}
+
+CHAIR has two primary variants \cite{Rohrbach2018ObjectHallucination}:
+
+\[
+\text{CHAIR}_i = \frac{|H|}{|M|}
+\]
+
+\[
+\text{CHAIR}_s = \frac{|S_H|}{|S|}
+\]
+
+Where:
+\begin{itemize}
+    \item $|H|$ = number of hallucinated objects (mentioned but not present).
+    \item $|M|$ = total number of objects mentioned in the caption.
+    \item $|S_H|$ = number of sentences containing at least one hallucinated object.
+    \item $|S|$ = total number of generated sentences.
+\end{itemize}
+
+A lower CHAIR value indicates better grounding — fewer hallucinated mentions.
+In practice, object presence is validated against ground-truth labels from datasets such as MSCOCO or AMBER’s annotated images.
+
+\subsubsection{AMBER Integration (2024 Update)}
+
+Within AMBER, CHAIR is computed on generated MLLM responses as follows \cite{Wang2023AMBER}:
+
+\[
+\text{CHAIR}(R) = 1 - \frac{\text{len}(R'_{\text{obj}} \cap A_{\text{obj}})}{\text{len}(R'_{\text{obj}})}
+\]
+
+Where:
+\begin{itemize}
+    \item $R'_{\text{obj}}$ = set of object nouns extracted from model responses.
+    \item $A_{\text{obj}}$ = annotated ground-truth object set for the image.
+\end{itemize}
+
+CHAIR forms part of the AMBER Score, a composite evaluation integrating CHAIR for generative hallucination and $F_1$ for discriminative performance:
+
+\[
+\text{AMBER Score} = \frac{1}{2}\,(1 - \text{CHAIR} + F_1)
+\]
+
+This unified formulation rewards models that both minimize hallucinations and maintain high discriminative accuracy \cite{Wang2023AMBER}.
+
+\subsubsection{Variants and Dimensions}
+
+\begin{itemize}
+    \item \textbf{$CHAIR_i$:} Instance-level hallucination rate — ratio of false object mentions to all mentioned objects. Used in Image Captioning (MSCOCO, Flickr30k) \cite{Rohrbach2018ObjectHallucination}.
+    \item \textbf{$CHAIR_s$:} Sentence-level hallucination rate — fraction of captions with any hallucinated object. Used for Captioning Quality Evaluation \cite{Rohrbach2018ObjectHallucination}.
+    \item \textbf{AMBER-CHAIR:} Modernized variant incorporated in AMBER; measures visual hallucination across both generative and discriminative tasks. Used in MLLMs (GPT-4V, LLaVA, InstructBLIP, etc.) \cite{Wang2023AMBER}.
+\end{itemize}
+
+\subsubsection{Interpretation}
+
+\begin{itemize}
+    \item \textbf{Low CHAIR} $\rightarrow$ Captions accurately describe visible content (faithful grounding).
+    \item \textbf{High CHAIR} $\rightarrow$ Model hallucinates non-existent objects or attributes.
+\end{itemize}
+
+CHAIR provides insights into hallucination origin \cite{Rohrbach2018ObjectHallucination}:
+\begin{itemize}
+    \item \textit{Visual misclassification} — misinterpreting visual input.
+    \item \textit{Language prior bias} — predicting words based on co-occurrence rather than visual cues.
+\end{itemize}
+
+Rohrbach et al. (2018) also introduced image consistency and language consistency analyses, showing that models with higher hallucination rates produce predictions more aligned with their language model than with visual evidence.
+The metric was later generalized in AMBER to quantify hallucinations of existence (missing/spurious objects), attribute (incorrect states, numbers, or actions), and relation (incorrect spatial or interaction relations) \cite{Wang2023AMBER}.
+
+CHAIR quantifies faithfulness, not fluency.
+It serves as a critical complement to text-based metrics (CIDEr, SPICE, METEOR), allowing researchers to evaluate visual hallucinations and semantic grounding simultaneously.
+Its integration into AMBER (2024) demonstrates how hallucination metrics evolve from image captioning to multi-modal reasoning for LLMs.
