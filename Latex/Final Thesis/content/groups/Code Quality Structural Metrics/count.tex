@@ -1,0 +1,161 @@
+\subsection{Count-based Metrics}
+
+\subsubsection{Introduction}
+
+Count-based metrics evaluate Large Language Models (LLMs) in software engineering by measuring \textit{quantities} of outputs rather than their semantic quality. These metrics focus on \textit{how many} of a model’s generated artifacts meet specific criteria or \textit{how large} the generated artifacts are.
+
+Two commonly used count-oriented metrics appear in recent LLM evaluation literature:
+
+\begin{enumerate}
+    \item \textbf{Count@n} \cite{Chen2024SurveyCodeGen}: How many of the $n$ generated samples satisfy a correctness or execution-based condition.
+    \item \textbf{Token Count} \cite{Hemberg2024EvolvingCodeLLM}: The total number of tokens an LLM generates for a code artifact, often used in evolutionary or iterative generation systems.
+\end{enumerate}
+
+Together, these metrics help capture performance in stochastic generation settings and provide insight into verbosity, efficiency, and structural characteristics of generated code.
+
+\subsubsection{Formula}
+
+\textbf{Count@n} \\
+Count@n measures how many out of $n$ samples produced by the model pass a correctness criterion, such as execution tests.
+
+Let the model generate $n$ samples for task instance $i$. Define:
+
+\[
+c_i^{(j)} =
+\begin{cases}
+1 & \text{if sample } j \text{ is correct} \\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+Then the Count@n value for instance $i$ is:
+
+\[
+\text{Count@n}(i) = \sum_{j=1}^{n} c_i^{(j)}
+\]
+
+Aggregated across $N$ instances:
+
+\[
+\text{Count@n} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{n} c_i^{(j)}
+\]
+
+This expresses how often the model produces at least some correct attempts within multiple samples, crucial for evaluating nondeterministic LLMs.
+
+\textbf{Token Count} \\
+Token Count measures the \textit{length} of the generated output.
+For a generated artifact $y$:
+
+\[
+\text{TokenCount}(y) = \text{number of tokens in } y
+\]
+
+In iterative or evolutionary systems (as in \cite{Hemberg2024EvolvingCodeLLM}), Token Count can help:
+\begin{itemize}
+    \item constrain the search space,
+    \item penalize overly verbose solutions,
+    \item select minimal or efficient variants.
+\end{itemize}
+
+A dataset-level average is:
+
+\[
+\text{Average Token Count} = \frac{1}{N} \sum_{i=1}^{N} \text{TokenCount}(y_i)
+\]
+
+\subsubsection{Variants}
+
+\textbf{Count@n Variants} \\
+Count@n belongs to the family of \textit{execution-based count metrics}, which includes:
+\begin{itemize}
+    \item \textit{Pass@k} — probability that at least one of $k$ samples passes tests.
+    \item \textit{n@k} — number of correct solutions among $k$.
+    \item \textit{Multiple-sample execution metrics}.
+\end{itemize}
+
+In \cite{Chen2024SurveyCodeGen}, Count@n is listed alongside these standard metrics, showing it belongs to a well-established toolkit.
+
+Count@n is often used with:
+\begin{itemize}
+    \item sampling strategies (temperature, top-$k$, nucleus sampling),
+    \item multi-attempt generation,
+    \item stochastic performance analysis,
+    \item correctness distribution assessments.
+\end{itemize}
+
+\textbf{Token Count Variants} \\
+Common variations include:
+\begin{itemize}
+    \item \textit{Input Token Count}
+    \item \textit{Output Token Count}
+    \item \textit{Total Token Usage}
+    \item \textit{Token Count per generation step} (evolutionary workflows)
+\end{itemize}
+
+Paper \cite{Hemberg2024EvolvingCodeLLM} uses Token Count specifically in \textit{code evolution}, where shorter solutions may improve:
+\begin{itemize}
+    \item readability,
+    \item execution simplicity,
+    \item evolutionary fitness.
+\end{itemize}
+
+Token Count is also relevant to real-world cost, as token-based pricing directly ties resource usage to token length.
+
+\subsubsection{Applications in Software Engineering}
+
+\textbf{Count@n} \\
+Used in:
+\begin{itemize}
+    \item code generation tasks with multiple samples,
+    \item multimodal or multi-solution benchmarks like HumanEval,
+    \item debugging assistants with iterative sampling,
+    \item regression calls or multi-candidate synthesis.
+\end{itemize}
+Count@n highlights how often an LLM can produce some correct solution given multiple attempts, supporting scenarios like test-driven development, interactive code refinement, and synthesis workflows with sampling loops.
+
+\textbf{Token Count} \\
+Used in:
+\begin{itemize}
+    \item evolutionary code generation \cite{Hemberg2024EvolvingCodeLLM},
+    \item verbosity and efficiency analysis,
+    \item detecting model drift (abnormally long generations),
+    \item token-cost estimation in practical deployments.
+\end{itemize}
+In SE contexts, Token Count often correlates with maintainability, structural complexity, readability, and suitability for evolutionary selection schemes.
+
+\subsubsection{Interpretation}
+
+\textbf{High Count@n} \\
+Indicates:
+\begin{itemize}
+    \item reliable production of correct samples,
+    \item effective use of multiple attempts,
+    \item robustness across random seeds and sampling strategies.
+\end{itemize}
+Limitations: does not describe quality of correct outputs; high Count@n may require excessive sampling.
+
+\textbf{Low Count@n} \\
+Indicates:
+\begin{itemize}
+    \item low probability of correctness even with multiple attempts,
+    \item high variance or systematic misinterpretation of the task.
+\end{itemize}
+
+\textbf{High Token Count} \\
+Indicates:
+\begin{itemize}
+    \item verbose or bloated code,
+    \item potentially unnecessary complexity,
+    \item higher inference cost,
+    \item maintainability burden.
+\end{itemize}
+But may sometimes reflect detailed comments or boilerplate required by the task.
+
+\textbf{Low Token Count} \\
+Indicates:
+\begin{itemize}
+    \item concise, readable code,
+    \item efficient or minimal implementations,
+    \item lower inference cost.
+\end{itemize}
+But may also imply missing logic or incomplete implementations.

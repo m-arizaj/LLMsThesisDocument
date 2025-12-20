@@ -1,0 +1,89 @@
+\subsection{Reasoning Depth}
+
+\subsubsection{Introduction}
+
+Reasoning Depth in software engineering evaluation refers to an LLM’s ability to understand and reason about relationships that span multiple files within a codebase. In long-context development settings, many tasks require models to track interactions, dependencies, and abstractions distributed across several modules . The Cross-File Reasoning Depth (CFRD) metric, introduced in LoCoBench, formalizes this type of reasoning by quantifying how deeply and accurately an LLM captures semantic and structural interactions between pairs of files \cite{Qiu2025LoCoBench}.
+
+CFRD is motivated by the observation that existing benchmarks focus on single-file reasoning and therefore fail to measure the multi-file, architecture-level reasoning skills required in realistic software engineering. By evaluating semantic reasoning and interaction complexity across file boundaries, CFRD offers a direct assessment of long-context reasoning capabilities \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Formula}
+
+Given a set of files
+\[
+F=\{f_1, f_2, \ldots, f_n\},
+\]
+and a cross-file interaction matrix $R \in \mathbb{R}^{n \times n}$, Cross-File Reasoning Depth is defined as:
+
+\[
+\text{CFRD}(F)
+=
+\frac{1}{n(n-1)}
+\sum_{i=1}^{n}
+\sum_{\substack{j=1 \\ j\neq i}}^{n}
+\rho(f_i, f_j) \cdot \iota(f_i, f_j)
+\]
+
+where:
+\begin{itemize}
+    \item $\rho(f_i, f_j) \in [0,1]$ measures \textit{reasoning depth} between files $f_i$ and $f_j$, capturing semantic understanding and cross-reference accuracy.
+    \item $\iota(f_i, f_j) \in [0,1]$ measures \textit{interaction complexity}, based on coupling strength, interface dependencies, and shared abstractions.
+\end{itemize}
+
+This definition appears in the LoCoBench metric description, which states that CFRD is proposed to measure “LLMs’ understanding of multi-file relationships and interactions” \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Variants}
+
+The paper does not define explicit variants of CFRD, but the formulation implies natural extensions \cite{Qiu2025LoCoBench}:
+\begin{itemize}
+    \item \textit{Weighted CFRD}: Adjusting interaction weights based on architectural roles (e.g., core modules vs. helper modules).
+    \item \textit{Filtered CFRD}: Computing reasoning depth only for files with known interactions or dependency edges.
+    \item \textit{Hierarchical CFRD}: Applying CFRD separately at module, package, or subsystem granularity.
+\end{itemize}
+All remain consistent with the base metric but segment or reweight the file-pair interactions.
+
+\subsubsection{Applications in Software Engineering}
+
+CFRD applies to SE scenarios where understanding multi-file context is essential:
+\begin{itemize}
+    \item Large codebase navigation (e.g., frameworks, layered architectures).
+    \item Refactoring and design tasks, which require cross-file dependency tracking.
+    \item Bug fixing, where root causes span multiple modules.
+    \item Long-context code synthesis, such as implementing changes across several files.
+    \item Documentation, comments, or architectural reasoning tasks requiring global context.
+\end{itemize}
+
+By evaluating how well an LLM reasons across file boundaries, CFRD directly measures suitability for realistic software engineering workflows that involve large, interconnected codebases \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Interpretation}
+
+\textbf{High CFRD} \\
+Indicates:
+\begin{itemize}
+    \item Strong cross-file semantic reasoning
+    \item Correct understanding of coupling and interfaces
+    \item Ability to maintain architectural context
+    \item Robustness in long-context tasks and multi-module workflows
+\end{itemize}
+
+\textbf{Low CFRD} \\
+Indicates:
+\begin{itemize}
+    \item Poor multi-file reasoning
+    \item Difficulty tracking interactions across modules
+    \item Weak understanding of cross-file dependencies
+    \item Failures that surface in integration-level tasks
+\end{itemize}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Directly targets long-context reasoning
+    \item Captures inter-file complexity beyond single-file benchmarks
+    \item Highly relevant to real-world SE tasks
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item Requires detailed file-level interaction annotations
+    \item Can be sensitive to how interactions are defined
+    \item Measures reasoning depth indirectly via proxy components ($\rho$ and $\iota$)
+\end{itemize}

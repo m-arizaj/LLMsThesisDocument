@@ -1,0 +1,111 @@
+\subsection{Reliability}
+
+\subsubsection{Introduction}
+
+Reliability is one of the core evaluation dimensions discussed in \textit{Overview of the Comprehensive Evaluation of Large Language Models}. The paper defines reliability as a multi-component quality that determines whether a model can be trusted to produce stable, accurate, and faithful outputs under repeated or slightly varied conditions \cite{Lin2024SWC}.
+
+The authors describe Reliability as the integration of five critical sub-qualities:
+
+\begin{quote}
+“Reliability… including accuracy, hallucination, consistency, interpretability, and calibration error.” \cite{Lin2024SWC}
+\end{quote}
+
+This definition positions Reliability as a composite behavioral property, capturing both correctness and stability of a model's outputs. It evaluates whether the model behaves predictably, avoids fabrications, maintains coherence, and expresses its confidence appropriately.
+
+\subsubsection{Formula}
+
+The paper does not define a formal mathematical formula or quantitative scoring method for Reliability. It is presented as a \textit{conceptual evaluation dimension}, composed of five qualitative components \cite{Lin2024SWC}:
+\begin{itemize}
+    \item \textit{Accuracy}
+    \item \textit{Hallucination}
+    \item \textit{Consistency}
+    \item \textit{Interpretability}
+    \item \textit{Calibration Error}
+\end{itemize}
+
+Thus, Reliability can be expressed conceptually as:
+
+\[
+\text{Reliability} = f(\text{Accuracy},\;
+\text{Hallucination},\;
+\text{Consistency},\;
+\text{Interpretability},\;
+\text{CalibrationError})
+\]
+
+However, no operationalization or normalization procedure is provided in the paper. There is no weighting scheme, no aggregation function, and no dataset-specific evaluation rubric. Reliability functions as a high-level diagnostic dimension, not a precise metric.
+
+\subsubsection{Variants}
+
+While the paper does not define separate variants of Reliability, its five components act as \textit{internal sub-metrics} with distinct conceptual roles \cite{Lin2024SWC}:
+
+\textbf{1. Accuracy} \\
+Measures factual or task-specific correctness.
+
+\textbf{2. Hallucination} \\
+Represents fabricated or unsupported output. Lower hallucination improves Reliability.
+
+\textbf{3. Consistency} \\
+Defined explicitly as:
+\begin{quote}
+“Consistency measures the stability and predictability of a model’s output under the same or similar conditions.” \cite{Lin2024SWC}
+\end{quote}
+Consistency ensures the model produces repeatable responses across identical prompts.
+
+\textbf{4. Interpretability} \\
+Relates to how understandable or explainable the model’s reasoning or response is.
+
+\textbf{5. Calibration Error} \\
+Concerns whether the model’s confidence reflects actual correctness.
+
+These components do not constitute variants but rather \textit{dimensions inside the Reliability umbrella}.
+
+\subsubsection{Applications in Software Engineering}
+
+Reliability is critically important in software engineering contexts because:
+
+\textbf{1. Reproducibility of results} \\
+Developers expect stable outputs across repeated prompts. High consistency prevents “prompt drift” in iterative workflows.
+
+\textbf{2. Safety and correctness} \\
+Reducing hallucination is necessary to avoid generating invalid APIs, unsafe code patterns, or nonexistent library functions.
+
+\textbf{3. Trust and debugging} \\
+Predictable model behavior improves trust during:
+\begin{itemize}
+    \item unit test generation,
+    \item code explanation,
+    \item refactoring,
+    \item bug detection.
+\end{itemize}
+
+\textbf{4. Confidence alignment} \\
+Proper calibration helps developers interpret the model's likelihood of correctness, crucial when models propose:
+\begin{itemize}
+    \item complex patches,
+    \item architectural designs,
+    \item migration strategies.
+\end{itemize}
+
+Although the paper does not provide software-specific examples, Reliability maps cleanly onto SE tasks where stability and correctness are non-negotiable.
+
+\subsubsection{Interpretation}
+
+\textbf{High Reliability indicates:}
+\begin{itemize}
+    \item Stable outputs across identical prompts (high consistency).
+    \item Accurate responses with low factual and code hallucination.
+    \item Explanations that users can understand (interpretability).
+    \item Confidence expressions that match correctness likelihood (calibration).
+    \item Predictable behavior across contexts.
+\end{itemize}
+
+\textbf{Low Reliability indicates:}
+\begin{itemize}
+    \item Different answers to the same query (low consistency).
+    \item Fabricated facts or invalid code suggestions (hallucination).
+    \item Confusing or opaque reasoning (low interpretability).
+    \item Overconfident or underconfident predictions (calibration error).
+\end{itemize}
+
+Because Reliability aggregates multiple sub-qualities, it reflects the model’s overall trustworthiness \cite{Lin2024SWC}.

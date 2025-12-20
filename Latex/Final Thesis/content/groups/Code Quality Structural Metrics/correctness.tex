@@ -1,0 +1,193 @@
+\subsection{Correctness}
+
+\subsubsection{Introduction}
+
+In software engineering evaluation, correctness captures whether an LLM-produced artifact (code, repair, selection, or workflow) satisfies its required specification. Across the analysed papers, correctness consistently appears as:
+\begin{itemize}
+    \item LLM-as-judge functional correctness scoring
+    \item Empirical correct / partially correct / incorrect percentages
+    \item Task-driven correctness rates (Correct Outcome Ratio, Correct Selection Rate)
+    \item Multi-sample correctness such as Correct@k
+    \item General correctness evaluation frameworks (e.g., SE-Jury)
+\end{itemize}
+Correctness is the foundational dimension for evaluating code-generating LLMs, forming the core target in almost every SE-related study.
+
+\subsubsection{Formula}
+
+At the highest level, correctness is binary per instance:
+
+Let
+\[
+c_i =
+\begin{cases}
+1 & \text{if the produced artifact for instance } i \text{ is correct} \\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+Then the basic correctness rate is:
+
+\[
+\text{Correctness Rate} = \frac{1}{N}\sum_{i=1}^{N} c_i
+\]
+
+Different papers instantiate this core notion in domain-specific ways.
+
+\subsubsection{Variants}
+
+\textbf{1. Functional Correctness Score (ICE-Score)} \cite{Zhuo2023ICEScore} \\
+ICE-Score evaluates Local Functional Correctness using an LLM prompted as a judge.
+
+The scoring prompt instructs the LLM to evaluate:
+\begin{quote}
+“Functional correctness: execution-based quality of the code snippet… Your task is to rate the code snippet… Assign a score for functional correctness.” (ICE-Score, prompt excerpt) \cite{Zhuo2023ICEScore}
+\end{quote}
+
+The resulting score:
+
+\[
+\text{FCS}(x,y,r)\in\{0,1,2,3,4\}
+\]
+
+This yields a graded correctness signal rather than a binary one, and the work evaluates its correlation with true execution-based correctness on HumanEval/HumanEval-X.
+
+\textbf{2. SE-Jury Correctness Framework (LLM-as-Judge)} \cite{Zhou2025LLMAsJudge} \\
+SE-Jury enhances correctness assessment by combining multiple evaluator strategies:
+\begin{itemize}
+    \item direct correctness judgment
+    \item self-reflection
+    \item criteria-based evaluation
+    \item reference-equivalence checking
+\end{itemize}
+
+The ensemble metric $E(x,y,r)$ approximates human correctness judgements.
+
+Although no explicit formula is given, conceptually:
+
+\[
+E(x,y,r)=f(\text{multiple LLM-judge signals})
+\]
+
+This increases robustness to single-model biases \cite{Zhou2025LLMAsJudge}.
+
+\textbf{3. Correct / Partially Correct / Incorrect Percentages} \cite{Anand2024AnalysisLLMCode} \\
+In code synthesis productivity studies, correctness is labeled manually:
+\begin{itemize}
+    \item Correct (\%)
+    \item Partially Correct (\%)
+    \item Incorrect (\%)
+\end{itemize}
+
+Let:
+\begin{itemize}
+    \item $n_{\text{corr}}$ = fully correct outputs
+    \item $n_{\text{part}}$ = partially correct outputs
+    \item $n_{\text{inc}}$ = incorrect outputs
+\end{itemize}
+
+Then:
+
+\[
+\text{Correct (\%)} = \frac{n_{\text{corr}}}{N}\times100
+\]
+
+\[
+\text{Partially Correct (\%)} = \frac{n_{\text{part}}}{N}\times100
+\]
+
+\[
+\text{Incorrect (\%)} = \frac{n_{\text{inc}}}{N}\times100
+\]
+
+This gives a categorical correctness distribution \cite{Anand2024AnalysisLLMCode}.
+
+\textbf{4. Correct Selection Rate (CSR)} \cite{Xu2025LLMAgentsToolLearning} \\
+In tool-learning contexts, correctness is applied to decision quality:
+
+\[
+\text{CSR} = \frac{\text{\# of instructions where the correct tool is chosen}}{\text{\# of instructions evaluated}}
+\]
+
+This is a correctness measure of tool choice, not code \cite{Xu2025LLMAgentsToolLearning}.
+
+\textbf{5. Correct Outcome Ratio (COR)} \cite{Le2024OneShotCorrection} \\
+For one-shot correction workflows:
+
+\[
+\text{COR} = \frac{\text{\# of tasks whose final outcome is correct}}{\text{\# of tasks evaluated}}
+\]
+
+COR measures how often the final (potentially corrected) code is correct, allowing comparisons between:
+\begin{itemize}
+    \item baseline LLM output
+    \item corrected output after applying the one-shot correction method
+\end{itemize}
+
+\textbf{6. Correct@k} \cite{Alhanahnah2025FormalSpecRepair} \\
+For formal specification repair, correctness is strict: either a repair makes the specification valid, or it does not. Correct@k asks:
+\begin{quote}
+“Is at least one of the top-k candidate repairs correct?”
+\end{quote}
+
+Formally:
+
+\[
+\text{Correct@k} = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\left[\exists j\le k:\text{is\_correct}(y_i^{(j)})=1\right]
+\]
+
+Correct@k captures benefits from diverse sampling \cite{Alhanahnah2025FormalSpecRepair}.
+
+\subsubsection{Applications in Software Engineering}
+
+Correctness metrics drive evaluation in:
+
+\textbf{Code Generation} \\
+ICE-Score and SE-Jury evaluate functional correctness without requiring execution. This is crucial for languages without safe execution or tasks requiring heavy dependencies \cite{Zhuo2023ICEScore, Zhou2025LLMAsJudge}.
+
+\textbf{Formal Methods} \\
+Correct@k evaluates whether spec-repair suggestions satisfy logical soundness when checked by a solver \cite{Alhanahnah2025FormalSpecRepair}.
+
+\textbf{Tool-Using Agents} \\
+CSR evaluates correctness of action selection in agent pipelines \cite{Xu2025LLMAgentsToolLearning}.
+
+\textbf{Code Correction Workflows} \\
+COR measures improvement after feedback-based correction \cite{Le2024OneShotCorrection}.
+
+\textbf{Code Synthesis Studies} \\
+Correct/Partially Correct/Incorrect (\%) quantify productivity impacts and model failure modes \cite{Anand2024AnalysisLLMCode}.
+
+Across all, correctness remains the most essential indicator of SE task success.
+
+\subsubsection{Interpretation}
+
+\textbf{High Correctness indicates:}
+\begin{itemize}
+    \item Solutions satisfy required behavior
+    \item High agreement with human or oracle judgments
+    \item Reliable tool selection or repair strategies
+    \item Effective correction pipelines
+\end{itemize}
+
+\textbf{Low Correctness indicates:}
+\begin{itemize}
+    \item Functional errors or broken behavior
+    \item Misunderstanding of problem constraints
+    \item Invalid repairs in formal specifications
+    \item Incorrect agent tool-choice behavior
+\end{itemize}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item High interpretability (“did it work?”)
+    \item Strong alignment with human goals
+    \item Executable or solvable in most SE settings
+    \item Flexible across domains (code, tools, formal specs)
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item Some variants require expensive oracles like solvers and tests
+    \item LLM-as-judge variants may inherit biases
+    \item Partially Correct classification is subjective
+    \item Correct@k may inflate perceived performance via many samples
+\end{itemize}

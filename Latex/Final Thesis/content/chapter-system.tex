@@ -25,11 +25,7 @@ These queries were executed across multiple academic repositories and digital li
 
 After retrieving the initial sets of results, each paper underwent a relevance screening process. This involved keyword-based filtering and rapid skimming of abstracts, introductions, and methodology sections to verify that the article contained substantive content related to LLM evaluation metrics. Only papers that explicitly discussed metrics, evaluation frameworks, benchmark designs, or methodological considerations for assessing LLM performance were retained for full analysis.
 
-Through this search and filtering process, a total of 68 primary sources were selected as foundational to the construction of the LLMs Metrics Catalog. These references are publicly documented and accessible on the project website at:
-
-\begin{center}
-\url{https://m-arizaj.github.io/LLMs-metrics-catalog/references}
-\end{center}
+Through this search and filtering process, a total of 68 primary sources were selected as foundational to the construction of the LLMs Metrics Catalog. These references are documented and accessible on the bibliography (\ref{sec:bibliography}) section of this thesis, along with additional references for every metric.
 
 This curated set of sources forms the theoretical backbone of the catalog and provides comprehensive coverage of both software engineering--oriented evaluation practices and general-purpose LLM assessment methodologies.
 
@@ -131,9 +127,9 @@ To manage the high volume of raw metrics found in the literature, we initially e
 
 To address this dispersion and reduce redundancy, we moved to a structured manual refinement process defined by two hierarchical levels:
 
-Metric Clusters (N=128): We define a "cluster" as a specific evaluation method that joins all its naming variants and specific implementations. For example, pass@1, pass@10, and pass@k were grouped into a single cluster named Pass@k. This process allowed us to reduce the initial 300 into 128 distinct metric clusters.
+Metric Clusters: We define a "cluster" as a specific evaluation method that joins all its naming variants and specific implementations. For example, pass@1, pass@10, and pass@k were grouped into a single cluster named Pass@k. This process allowed us to reduce the initial 300 into 128 distinct metric clusters.
 
-Taxonomy Categories (N=13): These represent high-level quality dimensions. Each category groups multiple Metric Clusters that share similar characteristics or goals. To make an example, all clusters relying on computational efficiency are grouped under Efficiency \& Resource Usage.
+Taxonomy Categories: These represent high-level quality dimensions. Each category groups multiple Metric Clusters that share similar characteristics or goals. To make an example, all clusters relying on computational efficiency are grouped under Efficiency \& Resource Usage.
 \subsection{The 13 Quality Categories}
 
 Based on the 128 defined clusters, we established a taxonomy consisting of 13 categories as follows:
@@ -158,11 +154,7 @@ This taxonomy gives us a systematic organization and an effective filtering mech
 
 \section{Implementation of the Web-Based Metric Catalog}
 
-To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. This final product can be found in the following link:
-
-\begin{center}
-\url{https://m-arizaj.github.io/LLMs-metrics-catalog/}
-\end{center}
+To make this unified metric catalog accessible to the community, we decided to create a web-based platform using Docusaurus. This technology allows us to create modern static web pages with the ability to render Markdown documents into a high-performance single-page application, making it easy to maintain and deploy using the standard Node.js environment. 
 
 The structure of the web platform is simple and easy to understand, it was designed to function as a comprehensive knowledge base, similar to a wiki. It has a left sidebar that contains the metrics grouped by their corresponding taxonomy as defined in the previous section. This structure makes it simple for users to quickly access a certain group or a specific metric according to their needs.
 
@@ -182,15 +174,15 @@ All the documentation, source files, and development process for the platform ar
 
 \section{Enrichment and Validation via Primary Sources}
 
-During the previous steps, we initially identified metrics in the context of Software Engineering. This was done with papers that addressed metrics for LLM evaluation. These papers were the foundation of our project. However, relying only on secondary sources can be a risk, since definitions are often adapted to the specific needs of the author. So, to make sure this catalog has the most accurate definitions, an additional validation step was performed.
+During the previous steps, we identified metrics within the context of Software Engineering based on literature regarding LLM evaluation. While these papers served as the foundation of our project, relying solely on broad sources can lead to ambiguity, as definitions are often tailored to specific experimental contexts. Consequently, to ensure the accuracy of this catalog, an additional reference validation step was performed.
 
-This process was applied to widely used metrics such as BLEU, CodeBERTScore, Rouge, or cases where the definition in the secondary source was incomplete or ambiguous. For these cases, we traced the citations back to the seminal work (the original paper where the metric was first proposed or defined).
+This procedure was applied to any metric where the primary source provided an incomplete definition or omitted the mathematical formula. In such instances, we traced citations back to the seminal work—the original publication where the metric was first proposed—to ensure foundational accuracy.
 
-This enrichment allowed us to:
+This enrichment phase enabled us to:
 
 \begin{enumerate}
-	\item Verify information: We compared the information contained in the papers to identify if it was the same or was changed for a specific purpose.
-	\item Enrich Definitions and Metadata: Consulting these primary sources allows us to be more precise with the theoretical foundations, specific usages, advantages, etc., that are often omitted in secondary sources.
-	\item Enhanced Reliability: Provide users with canonical and precise definitions so they can read them directly on the webpage or consult the original citation to verify the information.
-	\item Reference: Create a link for each metric on the webpage to its primary source reference, ensuring users can easily access the original or complementary papers for deeper investigation.
+    \item \textbf{Cross-Verification:} We contrasted the definitions found in survey papers against the original literature to determine if the concepts remained consistent or were modified for specific experimental contexts.
+    \item \textbf{Content Enrichment:} By consulting seminal works, we recovered precise theoretical foundations, mathematical formalizations, and intended usages that are frequently omitted in broader surveys.
+    \item \textbf{Reliability Assurance:} We provide canonical definitions, enabling users to rely on the thesis as an accurate source while retaining the ability to verify details against the original citations.
+    \item \textbf{Traceability:} We established direct links between each metric and its primary source, facilitating access to the foundational research for deeper investigation.
 \end{enumerate}

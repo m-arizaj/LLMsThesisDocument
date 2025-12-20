@@ -1,0 +1,81 @@
+\subsection{CT Score}
+
+\subsubsection{Introduction}
+
+The CT Score was introduced in \textit{Exposing Flaws of Generative Model Evaluation Metrics and Their Unfair Treatment of Diffusion Models} (Stein et al., 2023) as a three-sample non-parametric statistical test designed to detect memorization in generative models \cite{Stein2023MetricFlaws}.
+Unlike metrics such as FID or IS, which primarily measure sample fidelity and diversity, the CT Score evaluates whether generated samples are disproportionately close to training samples compared to unseen test samples. If generated data lie closer to the training distribution than test data do, this may indicate that the model has memorized parts of its training set.
+
+The CT Score is not a contrastive-learning metric; it is a distance-comparison hypothesis test based on Mann-Whitney U-style rank statistics applied across many train/test/generated triplets .
+
+\subsubsection{Formula and Computation}
+
+Although the paper does not provide a single closed-form equation, the computation is explicitly described \cite{Stein2023MetricFlaws}:
+
+\begin{enumerate}
+    \item Embed training samples ($T$), test samples ($S$), and generated samples ($G$) into a feature space.
+    \item Partition the embedded data into clusters (e.g., via k-means).
+    \item For each cluster, compare the distances:
+    \begin{itemize}
+        \item $d(G, T)$ — distance from generated $\to$ training
+        \item $d(S, T)$ — distance from test $\to$ training
+    \end{itemize}
+    \item Using a Mann-Whitney U hypothesis test, compute how often generated samples are closer to training samples than test samples are.
+\end{enumerate}
+
+A conceptual representation of the CT statistic for a cluster is:
+
+\[
+CT = \frac{1}{N} \sum_{i=1}^{N}
+\mathbb{I}\big[ d(G_i, T_i) < d(S_i, T_i) \big]
+\]
+
+where:
+\begin{itemize}
+    \item $d(\cdot,\cdot)$ is a distance in embedding space,
+    \item $T_i$ is a nearby training sample,
+    \item $S_i$ is a nearby test sample,
+    \item $\mathbb{I}[\cdot]$ is the indicator function.
+\end{itemize}
+
+The global CT Score is the average over all clusters.
+
+\textbf{Interpretation of Values}
+\begin{itemize}
+    \item \textit{Positive CT} $\to$ generated samples are not unusually close to training data (no memorization).
+    \item \textit{Negative CT} $\to$ generated samples are \textit{closer to training data} than test data are (possible memorization).
+    \item \textit{Highly negative CT} $\to$ strong signal of memorization (or other confounding behaviors such as mode shrinkage).
+\end{itemize}
+
+\subsubsection{Key Findings}
+
+Based strictly on Stein et al. (2023) \cite{Stein2023MetricFlaws}:
+\begin{itemize}
+    \item The CT Score can detect strong memorization in controlled settings.
+    \item However, it is not reliable as a general-purpose memorization metric.
+    \item CT frequently confuses mode shrinkage with memorization, producing false positives.
+    \item CT’s behavior is influenced by image fidelity and representation artifacts, not just memorization.
+    \item CT scores computed against the test set track closely with those computed against the training set, showing it is dominated by non-memorization factors.
+    \item The authors propose a modified CT ($CT_m$) that swaps input roles, which mitigates some failures but still does not fully resolve reliability issues.
+\end{itemize}
+
+In short, CT does not provide a robust or noise-free estimate of memorization.
+
+\subsubsection{Interpretation}
+
+The CT Score is best understood as a rank-based distance comparison test, not a contrastive or semantic metric.
+
+\textbf{What CT can do}
+\begin{itemize}
+    \item Identify extreme cases of memorization when the model directly reproduces training samples.
+    \item Provide insight into how tightly generated samples cluster around training data.
+\end{itemize}
+
+\textbf{What CT cannot do (based on paper findings)}
+\begin{itemize}
+    \item Reliably distinguish memorization from mode shrinkage, over-regularization, or fidelity differences.
+    \item Provide a semantically meaningful quality score.
+    \item Serve as a fair or reliable substitute for FID/IS.
+    \item Offer a stable evaluation of diffusion models or any generative architecture.
+\end{itemize}
+
+The authors conclude that CT should be used with caution, and not as a standalone or definitive memorization metric \cite{Stein2023MetricFlaws}.

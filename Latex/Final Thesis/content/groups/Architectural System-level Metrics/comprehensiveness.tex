@@ -1,0 +1,128 @@
+\subsection{Comprehensiveness Score (CS)}
+
+\subsubsection{Introduction}
+
+The Comprehensiveness Score (CS) is one of the eight metrics in the Software Engineering Excellence dimension of LoCoBench. It evaluates how complete, thorough, and requirement-aligned an LLM’s solution is when performing complex software engineering tasks. The authors define CS as:
+
+\begin{quote}
+“Comprehensiveness Score (CS): Derived from software completeness metrics in quality assurance literature (Kan, 2002), assessing solution coverage, documentation quality, and requirement fulfillment.” \cite{Qiu2025LoCoBench}
+\end{quote}
+
+This makes CS a high-level semantic metric that captures not only whether a solution works, but whether it fully satisfies all instructions, produces complete code artifacts, and includes adequate explanation or documentation. Unlike correctness-oriented metrics that focus on execution, CS evaluates holistic completeness.
+
+\subsubsection{Formula}
+
+The LoCoBench paper does not provide a specific numerical formula for Comprehensiveness Score. Instead, the metric is conceptual and grounded in classical software completeness theory. The authors clearly present CS as a qualitative measure:
+
+\begin{quote}
+“Derived from software completeness metrics in quality assurance literature (Kan, 2002).” \cite{Qiu2025LoCoBench}
+\end{quote}
+
+Because CS evaluates aspects like coverage, documentation, and requirement fulfillment, it functions as a holistic completeness metric rather than a strict mathematical one.
+
+A conceptual representation of CS—consistent with its role in LoCoBench’s normalization framework—is:
+
+\[
+CS = f(\text{Coverage},\; \text{Documentation},\; \text{RequirementFulfillment})
+\]
+
+The final contribution of CS to the LoCoBench Score (LCBS) is produced through LoCoBench’s shared normalization function \cite{Qiu2025LoCoBench}:
+
+\[
+N(m_i) = \frac{m_i - \min(m_i)}{\max(m_i) - \min(m_i)}
+\]
+
+and then aggregated within the Software Engineering Excellence dimension.
+
+\subsubsection{Variants}
+
+Although the paper does not define explicit variants of CS, its description implies several operational sub-dimensions aligned with completeness metrics in software quality assurance \cite{Qiu2025LoCoBench}:
+
+\textbf{1. Coverage Completeness} \\
+Evaluates whether the generated solution addresses all required components, such as:
+\begin{itemize}
+    \item implementing all requested features,
+    \item completing all specified files,
+    \item handling expected workflows or interactions.
+\end{itemize}
+
+\textbf{2. Documentation Completeness} \\
+Assesses whether the output includes:
+\begin{itemize}
+    \item comments,
+    \item explanations,
+    \item design rationales,
+    \item API documentation or docstrings.
+\end{itemize}
+This is uncommon among code benchmarks and makes CS uniquely holistic.
+
+\textbf{3. Requirement Fulfillment} \\
+Measures compliance with:
+\begin{itemize}
+    \item task instructions,
+    \item architectural constraints,
+    \item specified behaviors or design conventions,
+    \item boundary conditions or edge-case requirements.
+\end{itemize}
+
+These dimensions are not separately scored but represent the internal structure of comprehensiveness under the LoCoBench framework.
+
+\subsubsection{Applications in Software Engineering}
+
+\textbf{1. Evaluating completeness in long-context tasks} \\
+Large context windows increase the likelihood of missing:
+\begin{itemize}
+    \item cross-file requirements,
+    \item secondary features,
+    \item edge-case handling,
+    \item documentation requirements.
+\end{itemize}
+CS directly measures how well models maintain completeness across sprawling codebases \cite{Qiu2025LoCoBench}.
+
+\textbf{2. Capturing semantic correctness not visible to tests} \\
+Some essential requirements may not be covered by unit or integration tests. CS evaluates whether the model addressed the full intent of the specification, even for:
+\begin{itemize}
+    \item design rationales,
+    \item structural consistency,
+    \item alignment with project requirements,
+    \item comments or documentation.
+\end{itemize}
+
+\textbf{3. Complementing correctness and design metrics} \\
+CS sits between correctness (UTP, ITP, CCS) and design excellence (ACS, CRS, STS). It ensures that:
+\begin{itemize}
+    \item designs are thorough,
+    \item implementations are complete,
+    \item solutions provide full project deliverables.
+\end{itemize}
+This makes it important for evaluating LLMs in tasks that resemble real-world engineering workflows \cite{Qiu2025LoCoBench}.
+
+\subsubsection{Interpretation}
+
+\textbf{What a high CS means} \\
+A high Comprehensiveness Score indicates that the model:
+\begin{itemize}
+    \item covered all required functionality,
+    \item produced all necessary files and components,
+    \item included meaningful documentation,
+    \item met all specified requirements,
+    \item handled edge cases or secondary details.
+\end{itemize}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Captures completeness, which is a core engineering quality.
+    \item Reflects real-world evaluation of developer work.
+    \item Goes beyond execution to evaluate project deliverables.
+    \item Complements both code quality and correctness metrics.
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item No explicit formula is given in the paper.
+    \item Likely dependent on LLM-as-a-judge scoring.
+    \item Some subjectivity may arise in evaluating documentation completeness.
+    \item Completeness may vary by task type and complexity.
+\end{itemize}
+
+Nevertheless, CS fills an important gap by evaluating thoroughness and requirement fulfillment, critical qualities in long-context software development \cite{Qiu2025LoCoBench}.

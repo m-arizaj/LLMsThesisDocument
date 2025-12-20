@@ -1,0 +1,122 @@
+\subsection{Ranked Retrieval Metrics}
+
+\subsubsection{Introduction}
+
+Ranked retrieval metrics evaluate how effectively a model orders a list of candidate items—typically documents, code snippets, or retrieved facts—based on relevance. In LLM evaluation, these metrics quantify ranking quality in tasks where the ordering of outputs matters.
+
+The HELM benchmark defines three key ranking metrics for Information Retrieval (IR) settings \cite{Liang2022HELM}:
+
+\begin{enumerate}
+    \item \textbf{CG@K (Cumulative Gain)} — sum of graded relevance scores for the top-$K$ items.
+    \item \textbf{DCG@K (Discounted Cumulative Gain)} — CG@K with rank-position discounting.
+    \item \textbf{NDCG@K (Normalized Discounted Cumulative Gain)} — DCG@K normalized by the ideal ordering, enabling comparison across systems.
+\end{enumerate}
+
+HELM uses \textit{NDCG@10} as the default accuracy metric for MS MARCO (TREC), making it a central measure for LLM-based retrieval and reranking systems \cite{Liang2022HELM}.
+
+\subsubsection{Formula}
+
+
+
+\textbf{CG@K} \\
+CG@K sums the relevance values of the top-$K$ retrieved items:
+\[
+\text{CG@K}=\sum_{i=1}^{K} \text{rel}(d_i)
+\]
+where $\text{rel}(d_i)$ is the graded relevance of document $d_i$.
+
+\textbf{DCG@K} \\
+DCG@K applies a logarithmic discount to lower-ranked documents:
+\[
+\text{DCG@K} = \sum_{i=1}^{K} \frac{\text{rel}(d_i)}{\log_2(i+1)}
+\]
+
+\textbf{NDCG@K} \\
+NDCG@K normalizes the DCG score using the ideal ranking:
+\[
+\text{NDCG@K} = \frac{\text{DCG@K}}{\text{IDCG@K}}
+\]
+where $\text{IDCG@K}$ is computed by sorting the same set of relevance labels in the best possible order.
+
+HELM explicitly identifies \textit{NDCG@10} as the standard metric for MS MARCO reranking \cite{Liang2022HELM}.
+
+\subsubsection{Variants}
+
+\textbf{CG Variants}
+\begin{itemize}
+    \item \textit{CG@1, CG@3, CG@5}: measure total relevance without discounting.
+    \item Useful predominantly as baseline measures; lack position sensitivity.
+\end{itemize}
+
+\textbf{DCG Variants}
+\begin{itemize}
+    \item \textit{DCG@10, DCG@100}: extend the depth of ranking.
+    \item Discounting base can vary, but HELM uses $\log_2(i+1)$ \cite{Liang2022HELM}.
+\end{itemize}
+
+\textbf{NDCG Variants}
+\begin{itemize}
+    \item \textit{NDCG@10}: core metric for MS MARCO \cite{Liang2022HELM}.
+    \item \textit{NDCG@K (general)}: used when tasks have deeper ranking lists.
+\end{itemize}
+
+NDCG is the most comparable and stable metric across tasks because it is normalized to the ideal ranking.
+
+\subsubsection{Applications in Software Engineering}
+
+\textbf{Code Retrieval} \\
+When LLMs are used to retrieve relevant code snippets or examples, NDCG@K measures how well they rank relevant code above irrelevant code.
+
+\textbf{Documentation Search} \\
+Ranking technical documentation or API references benefits heavily from DCG/NDCG since:
+\begin{itemize}
+    \item early results matter more,
+    \item relevance can be graded (fully relevant, partially relevant, etc.).
+\end{itemize}
+
+\textbf{Tool and Knowledge Retrieval in Agents} \\
+For multi-step tool-using agents, retrieval quality directly impacts subsequent action accuracy. NDCG@K measures the quality of these ranked internal searches.
+
+\textbf{Long-Context Retrieval} \\
+In SE-specific tasks involving long codebases (e.g., retrieving relevant files, modules, or functions), NDCG@K reflects how well LLMs determine importance and relevance in large candidate sets.
+
+\subsubsection{Interpretation}
+
+\textbf{High CG@K}
+\begin{itemize}
+    \item Many retrieved items are relevant.
+    \item Does not guarantee correct ordering.
+\end{itemize}
+
+\textbf{High DCG@K}
+\begin{itemize}
+    \item Relevant items appear early in the ranking.
+    \item Indicates good position-aware retrieval performance.
+\end{itemize}
+
+\textbf{High NDCG@K}
+\begin{itemize}
+    \item Ranking closely matches the ideal ranking.
+    \item Indicates strong retrieval and reranking capability.
+    \item Most robust measure across tasks.
+\end{itemize}
+
+\textbf{Low NDCG@K}
+\begin{itemize}
+    \item Relevant items are misplaced in ranking.
+    \item Indicates weak understanding of query relevance or ranking logic.
+\end{itemize}
+
+\textbf{Strengths}
+\begin{itemize}
+    \item Support graded relevance rather than binary correctness.
+    \item Reward early placement of high-value items.
+    \item NDCG@K enables fair cross-system comparisons.
+\end{itemize}
+
+\textbf{Limitations}
+\begin{itemize}
+    \item Require graded relevance labels.
+    \item Sensitive to annotation quality.
+    \item Small changes at high ranks can disproportionately affect scores.
+\end{itemize}
