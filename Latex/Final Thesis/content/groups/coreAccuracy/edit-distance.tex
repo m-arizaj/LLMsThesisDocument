@@ -1,16 +1,12 @@
 \subsection{Edit Distance}
 
-\subsubsection{Introduction}
-
 Edit Distance (also known as Levenshtein Distance) is a string-based similarity metric that measures how many basic operations are required to transform one sequence into another. These operations typically include insertions, deletions, and substitutions of characters or tokens.
 In Software Engineering contexts, this metric has evolved to capture structural and syntactic differences between code fragments, enabling its use in tasks like code similarity evaluation, bug repair, and program synthesis. The foundational concept was later expanded to Abstract Syntax Tree Edit Distance (AST-ED), which better models code transformations at the structural level rather than pure token sequences \cite{Song2024Revisiting}. 
 This adaptation is described in detail in Song et al. (2024), showing its high correlation with human judgment in code similarity assessments \cite{Song2024Revisiting}.
 
-\subsubsection{Formula}
-
 For two strings (or token sequences) $a$ and $b$ with lengths $|a|$ and $|b|$, the Levenshtein Distance $D(i, j)$ is defined recursively as:
 
-\[
+\begin{equation}
 D(i, j) =
 \begin{cases}
 0 & \text{if } i = 0 \text{ and } j = 0 \\
@@ -23,7 +19,7 @@ D(i, j-1) + 1 \\
 D(i-1, j-1) + [a_i \neq b_j]
 \end{cases}
 \end{cases}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -33,9 +29,9 @@ Where:
 
 To normalize the score for similarity, it is often converted into a similarity ratio \cite{Song2024Revisiting}:
 
-\[
+\begin{equation}
 \text{Similarity} = 1 - \frac{D(a,b)}{\max(|a|, |b|)}
-\]
+\end{equation}
 
 This makes it easier to compare across code samples of different lengths.
 
@@ -56,16 +52,16 @@ Diversity (Levenshtein) & Measures the average pairwise edit distance between mu
 
 These adaptations improve the metric’s ability to assess syntactic correctness, structural similarity, and functional proximity in generated code.
 
-\subsubsection{AST-based Extensions}
+\subsubsection{1. AST-based Extensions}
 
 A major structural adaptation of Edit Distance for code evaluation is the Abstract Syntax Tree Edit Distance (AST-ED), which operates not at the token level but on syntactic structures represented as trees \cite{Song2024Revisiting}.
 Instead of comparing raw text or sequences of tokens, AST-ED analyzes tree transformations required to convert one program’s structure into another, making it better suited for measuring semantic and structural correctness in code. Specifically, tree algorithms allow identifying similar classes or refactorings in projects \cite{Sager2006Detecting}.
 
 Formally, if two programs are represented as trees $T_1$ and $T_2$, the AST Edit Distance is defined as:
 
-\[
+\begin{equation}
 \text{AST-ED}(T_1, T_2) = \min_{\text{operations}} \sum_{k} \text{cost}(op_k)
-\]
+\end{equation}
 
 where each $op_k$ represents an edit operation (insert, delete, rename, or move) applied to nodes in the syntax tree.
 The cost function may assign different weights depending on the operation type, reflecting its syntactic or semantic significance \cite{Sager2006Detecting}.
@@ -87,14 +83,14 @@ Because of this, AST-ED correlates strongly with human judgment when evaluating 
     \item \textbf{Model Evaluation:} Measuring structure-preserving accuracy in LLM-generated code beyond textual overlap.
 \end{itemize}
 
-\subsubsection{Diversity (Levenshtein Distance)}
+\subsubsection{2. Diversity (Levenshtein Distance)}
 
 A specialized variant that quantifies how diverse model outputs are in generation tasks.
 It is defined as the mean pairwise Levenshtein Distance among all generated samples. While metrics like Self-BLEU are often used, pairwise edit distance provides a direct measure of structural variation \cite{Montahaei2019Jointly, Tevet2021Evaluating}:
 
-\[
+\begin{equation}
 \text{Diversity} = \frac{1}{N(N-1)} \sum_{i \neq j} \text{EditDistance}(\text{output}_i, \text{output}_j)
-\]
+\end{equation}
 
 This formulation reflects the Seed Quality or Output Variety, applicable in fuzzing and LLM evaluation contexts where establishing a rigorous evaluation of diversity is critical \cite{Tevet2021Evaluating}.
 A higher diversity score indicates a broader exploration of the solution space.

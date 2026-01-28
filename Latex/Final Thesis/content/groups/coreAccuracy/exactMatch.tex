@@ -1,17 +1,13 @@
 \subsection{Exact Match}
 
-\subsubsection{Introduction}
-
 Exact Match (EM) is a discrete evaluation metric that measures the percentage of model outputs that exactly match a reference target. It is widely used in Software Engineering and code generation benchmarks as a strict indicator of functional or syntactic correctness. A prediction is considered correct only if it is identical to the ground truth, character by character or token by token.
 In code generation, this metric is employed to quantify whether generated code reproduces the same solution as the reference implementation. Although EM provides high interpretability and objectivity, it is highly sensitive to formatting, tokenization, and naming variations that do not affect semantic meaning. \cite{Chen2024SurveyCodeGen}
 
-\subsubsection{Mathematical Definition}
-
 The metric is defined as:
 
-\[
+\begin{equation}
 \text{Exact Match} = \frac{\text{Number of exactly matching predictions}}{\text{Total number of predictions}}
-\]
+\end{equation}
 
 That is, the ratio of predictions that are identical to the reference output among all evaluated samples.
 It yields a binary outcome per instance ($1 =$ exact match, $0 =$ otherwise), averaged over the dataset.
@@ -39,19 +35,25 @@ It is typically weighted alongside data-flow match (which captures semantic equi
 
 \subsubsection{Applications in Software Engineering}
 
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
-\hline
-\textbf{Context} & \textbf{Example Benchmarks/Datasets} & \textbf{Purpose} \\ \hline
-\textbf{Code Generation / Repair} & CodeXGLUE, MBPP, Bugs2Fix & Measures exact correctness of generated or repaired code \\ \hline
-\textbf{Functional Correctness} & HumanEval, CONCODE & Evaluates logical equivalence under strict matching \\ \hline
-\textbf{Reasoning / QA} & GSM8K, Dyck & Evaluates precision in reasoning and problem-solving LLMs \\ \hline
-\textbf{Automatic Evaluation} & OpenAI Evals & Directly computes exact or fuzzy correctness without human intervention \\ \hline
-\textbf{Cross-Modal Similarity} & Plot2Code & Links text-to-code matching quality \\ \hline
-\end{tabularx}
-\caption{Applications of Exact Match in Software Engineering and LLM Evaluation}
-\end{table}
+\begin{longtable}{|p{0.25\textwidth}|p{0.30\textwidth}|p{0.35\textwidth}|}
+    \caption{Applications of Exact Match in Software Engineering and LLM Evaluation} \label{tab:exact_match_apps} \\
+    \hline
+    \textbf{Context} & \textbf{Example Benchmarks} & \textbf{Purpose} \\ \hline
+    \endfirsthead
+    
+    \hline
+    \textbf{Context} & \textbf{Example Benchmarks} & \textbf{Purpose} (cont.) \\ \hline
+    \endhead
+
+    \hline
+    \endfoot
+
+    \textbf{Code Generation / Repair} & CodeXGLUE, MBPP, Bugs2Fix & Measures exact correctness of generated or repaired code \\ \hline
+    \textbf{Functional Correctness} & HumanEval, CONCODE & Evaluates logical equivalence under strict matching \\ \hline
+    \textbf{Reasoning / QA} & GSM8K, Dyck & Evaluates precision in reasoning and problem-solving LLMs \\ \hline
+    \textbf{Automatic Evaluation} & OpenAI Evals & Directly computes exact or fuzzy correctness without human intervention \\ \hline
+    \textbf{Cross-Modal Similarity} & Plot2Code & Links text-to-code matching quality \\ \hline
+\end{longtable}
 
 \subsubsection{Interpretation and Limitations}
 

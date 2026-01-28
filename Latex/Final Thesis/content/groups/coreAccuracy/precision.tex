@@ -1,19 +1,15 @@
 \subsection{Precision}
 
-\subsubsection{Introduction}
-
 Precision is a fundamental metric for evaluating classification and generation tasks, measuring the proportion of correctly predicted positive instances out of all instances predicted as positive. It focuses on minimizing false positives, thus quantifying the model's ability to produce accurate positive outputs.
 In Software Engineering, precision is widely used in defect prediction, bug detection, classification, and security evaluation tasks to assess the reliability of model predictions.
 
 However, it is important to note that Precision is highly sensitive to class skew (prevalence). Unlike metrics based on the confusion matrix columns (like Recall), Precision depends on the row distribution; therefore, all else being equal, precision tends to decrease as the prevalence of the positive class decreases \cite{https://doi.org/10.48550/arxiv.2304.00059}.
 
-\subsubsection{Mathematical Definition}
-
 The mathematical definition of precision is:
 
-\[
+\begin{equation}
 \text{Precision} = \frac{TP}{TP + FP}
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -25,17 +21,27 @@ where:
 
 Based on recent reviews of evaluation metrics in data mining and SE, precision has evolved into several specialized forms:
 
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{|l|X|X|}
-\hline
-\textbf{Variant} & \textbf{Description} & \textbf{Typical Use Cases} \\ \hline
-\textbf{Standard Precision} & Standard metric used in binary classification. Measures the positive patterns correctly predicted from total predicted positive patterns \cite{M2015}. & Bug detection, defect prediction, and security evaluation. \\ \hline
-\textbf{Averaged Precision} & Used for multi-class problems. It computes the average of per-class precision across all classes ($ \sum P_i / L $) \cite{M2015}. & Multi-class defect classification or code categorization. \\ \hline
-\textbf{Optimized Precision (OP)} & A hybrid metric defined as $OP = \text{Accuracy} - \frac{|Sp - Sn|}{Sp + Sn}$. It penalizes the score based on the balance between specificity ($Sp$) and sensitivity ($Sn$) \cite{M2015}. & Optimized heuristic classifiers and imbalanced DNA sequence analysis. \\ \hline
-\textbf{Mean Average Precision (mAP)} & Computes the mean of precision values across multiple recall levels. Often associated with the Area Under the Precision-Recall Curve (AUPRC) \cite{https://doi.org/10.48550/arxiv.2304.00059}. & Retrieval tasks, ranking code clones, and evaluating classifiers on highly skewed datasets. \\ \hline
-\end{tabularx}
-\end{table}
+\begin{longtable}{|p{0.15\textwidth}|p{0.40\textwidth}|p{0.35\textwidth}|}
+    \caption{Variants of Precision in Software Engineering and LLM Evaluation} \label{tab:precision_variants} \\
+    \hline
+    \textbf{Variant} & \textbf{Description} & \textbf{Typical Use Cases} \\ \hline
+    \endfirsthead
+    
+    \hline
+    \textbf{Variant} & \textbf{Description} & \textbf{Typical Use Cases} (cont.) \\ \hline
+    \endhead
+
+    \hline
+    \endfoot
+
+    \textbf{Standard Precision} & Standard metric used in binary classification. Measures the positive patterns correctly predicted from total predicted positive patterns \cite{M2015}. & Bug detection, defect prediction, and security evaluation. \\ \hline
+    
+    \textbf{Averaged Precision} & Used for multi-class problems. It computes the average of per-class precision across all classes ($ \sum P_i / L $) \cite{M2015}. & Multi-class defect classification or code categorization. \\ \hline
+    
+    \textbf{Optimized Precision (OP)} & A hybrid metric defined as $OP = \text{Accuracy} - \frac{|Sp - Sn|}{Sp + Sn}$. It penalizes the score based on the balance between specificity ($Sp$) and sensitivity ($Sn$) \cite{M2015}. & Optimized heuristic classifiers and imbalanced DNA sequence analysis. \\ \hline
+    
+    \textbf{Mean Average Precision (mAP)} & Computes the mean of precision values across multiple recall levels. Often associated with the Area Under the Precision-Recall Curve (AUPRC) \cite{https://doi.org/10.48550/arxiv.2304.00059}. & Retrieval tasks, ranking code clones, and evaluating classifiers on highly skewed datasets. \\ \hline
+\end{longtable}
 
 \subsubsection{Applications in Software Engineering}
 
@@ -51,9 +57,9 @@ Precision is extensively reported across SE benchmarks and studies:
 
 While mAP summarizes the curve, the \textbf{Area Under the Precision-Recall Curve (AUPRC)} provides a threshold-free evaluation. It is mathematically defined by integrating Precision (PPV) as a function of Recall (TPR) \cite{https://doi.org/10.48550/arxiv.2304.00059}:
 
-\[
+\begin{equation}
 \text{AUPRC} = \int_{0}^{1} PPV(TPR) \, dTPR
-\]
+\end{equation}
 
 This formulation is particularly preferred over AUROC when the primary goal is to achieve high performance in the "early retrieval area" (top-ranked predictions) for rare classes \cite{https://doi.org/10.48550/arxiv.2304.00059}.
 

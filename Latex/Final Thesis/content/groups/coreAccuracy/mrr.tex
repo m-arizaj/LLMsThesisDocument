@@ -1,17 +1,13 @@
 \subsection{Mean Reciprocal Rank}
 
-\subsubsection{Introduction}
-
 Mean Reciprocal Rank (MRR) is a ranking-based evaluation metric used to assess how well a model retrieves or ranks relevant results. It measures the position of the first relevant item in a ranked list, emphasizing early retrieval of correct answers.
 In software engineering, MRR is particularly valuable for tasks such as code search, API recommendation, and fault localization, where ranking accuracy directly impacts developer productivity.
 
-\subsubsection{Formula}
-
 The MRR is defined as \cite{HuZhou2024LLMMetrics}:
 
-\[
+\begin{equation}
 \text{MRR} = \frac{1}{|Q|} \sum_{i=1}^{|Q|} \frac{1}{\text{rank}_i}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -25,13 +21,13 @@ This metric rewards systems that place correct results higher in the ranking, wi
 
 \begin{table}[h]
 \centering
+\caption{Variants of Mean Reciprocal Rank (MRR)}
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
 \textbf{Variant} & \textbf{Description} \\ \hline
 \textbf{RR@k (Reciprocal Rank @ k)} & Measures the reciprocal rank of the first relevant answer, but only if it appears within the top $k$ results (otherwise the score is 0). \cite{Liang2022HELM} \\ \hline
 \textbf{Mean Reciprocal Rank (Standard)} & Averages reciprocal ranks across all queries without a cutoff. This is the standard form used to evaluate overall system performance. \cite{HuZhou2024LLMMetrics} \\ \hline
 \end{tabularx}
-\caption{Variants of Mean Reciprocal Rank (MRR)}
 \end{table}
 
 \subsubsection{Interpretation}

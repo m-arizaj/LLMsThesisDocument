@@ -1,23 +1,19 @@
 \subsection{ROUGE}
 
-\subsubsection{Introduction}
-
 ROUGE (Recall-Oriented Understudy for Gisting Evaluation) is a family of metrics used to evaluate the quality of generated text by comparing it to reference outputs. Originally designed for summarization tasks, ROUGE has been adapted for code summarization, documentation generation, and textual similarity evaluation in Software Engineering contexts.
 While BLEU focuses on precision, ROUGE emphasizes recall, measuring how much of the reference is captured by the generated text. However, modern formulations often utilize the F1-score variant to balance both coverage (Recall) and accuracy (Precision).
 
-\subsubsection{Mathematical Definition}
-
 According to Hu \& Zhou (2024) \cite{HuZhou2024LLMMetrics}, ROUGE-N is formally defined as an n-gram level F1 score. First, Precision and Recall are calculated:
 
-\[
+\begin{equation}
 \text{Precision}_n = \frac{\text{Count}_{match}(gram_n)}{\text{Total n-grams in generated text}}, \quad \text{Recall}_n = \frac{\text{Count}_{match}(gram_n)}{\text{Total n-grams in reference text}}
-\]
+\end{equation}
 
 Then, ROUGE-N is computed as the harmonic mean:
 
-\[
+\begin{equation}
 \text{ROUGE-N} = \frac{2 \times \text{Precision}_n \times \text{Recall}_n}{\text{Precision}_n + \text{Recall}_n}
-\]
+\end{equation}
 
 
 Similarly, \textbf{ROUGE-L} is calculated as the F1-score based on the Longest Common Subsequence (LCS) between the candidate and reference, rather than fixed n-grams.

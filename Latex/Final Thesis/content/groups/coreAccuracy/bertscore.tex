@@ -1,24 +1,20 @@
 \subsection{BERTScore}
 
-\subsubsection{Introduction}
-
 BERTScore is an embedding-based evaluation metric that measures the similarity between a generated text and a reference by leveraging contextual embeddings from pretrained models like BERT \cite{Zhang2020BERTScore}.
 Instead of relying on surface-level token overlap (as BLEU or ROUGE do), BERTScore computes semantic similarity between words or code tokens in their contextual vector space.
 
 In Software Engineering, BERTScore and its specialized variant CodeBERTScore are widely used for evaluating code generation, summarization, and translation tasks. These metrics capture semantic correctness, contextual similarity, and embedding-based alignment between generated and reference code.
 
-\subsubsection{Formula}
-
 BERTScore is computed using cosine similarity between contextual embeddings of candidate and reference tokens \cite{Zhang2020BERTScore}:
 
-\[
+\begin{equation}
 \text{BERTScore}_{P,R,F_1} = 
 \begin{cases}
 P = \frac{1}{|X|} \sum_{x \in X} \max_{y \in Y} \cos(e(x), e(y)) \\
 R = \frac{1}{|Y|} \sum_{y \in Y} \max_{x \in X} \cos(e(x), e(y)) \\
 F_1 = \frac{2PR}{P + R}
 \end{cases}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -31,14 +27,14 @@ The metric produces Precision (P), Recall (R), and F1 variants, depending on whe
 
 \subsubsection{Variants}
 
-\textbf{BERTScore (Standard)}
+\textbf{1. BERTScore (Standard)}
 The base version measures token-level embedding similarity using pretrained BERT models. It is often applied in natural language processing (NLP) and natural language generation (NLG) tasks, where meaning preservation is more important than exact lexical matching \cite{Zhang2020BERTScore}.
 
-\textbf{CodeBERTScore}
+\textbf{2. CodeBERTScore}
 An adaptation for programming languages proposed by Zhou et al. (2023) \cite{Zhou2023CodeBERTScore}.
 It employs CodeBERT embeddings trained jointly on natural and programming languages, making it better suited for evaluating code generation, translation, and documentation synthesis tasks. Unlike BLEU or ROUGE, CodeBERTScore captures the semantic consistency and syntactic integrity of the generated code.
 
-\textbf{CodeBERTScore (F1, F3)}
+\textbf{3. CodeBERTScore (F1, F3)}
 These weighted variants balance or prioritize recall:
 \begin{itemize}
     \item \textbf{F1} provides a harmonic balance between precision and recall.
@@ -46,7 +42,7 @@ These weighted variants balance or prioritize recall:
 \end{itemize}
 Such adjustments are particularly relevant in tasks where functional correctness is the main concern.
 
-\textbf{Recall-weighted and LLM-based Extensions}
+\textbf{4. Recall-weighted and LLM-based Extensions}
 Recent studies in LLM evaluation have extended the metric to recall-weighted embedding similarity and LLM-based embedding matching, where embeddings are obtained from large models.
 These approaches aim to align metric behavior more closely with human judgments of functionality and logical soundness.
 

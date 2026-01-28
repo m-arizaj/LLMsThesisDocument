@@ -1,13 +1,9 @@
 \subsection{METEOR}
 
-\subsubsection{Introduction}
-
 METEOR (Metric for Evaluation of Translation with Explicit ORdering) is an automatic evaluation metric originally proposed for machine translation to address weaknesses in BLEU, specifically its lack of recall and insufficient penalty for sentence structure anomalies \cite{banerjee-lavie-2005-meteor}.
 Unlike BLEU, which focuses primarily on precision, METEOR relies on unigram matching (based on surface forms, stemming, and synonymy) to calculate a score that combines both precision and recall, demonstrating a higher correlation with human judgment \cite{banerjee-lavie-2005-meteor}.
 
 In the context of Large Language Models (LLMs), METEOR has been adapted to evaluate various generation tasks, quantifying the semantic alignment between generated text and references \cite{Zhuo2023ICEScore}.
-
-\subsubsection{Formula}
 
 According to Banerjee \& Lavie (2005) \cite{banerjee-lavie-2005-meteor}, METEOR computes a parameterized harmonic mean of unigram precision and recall.
 
@@ -19,25 +15,25 @@ First, unigrams are matched between the candidate and the reference. Then, preci
 
 The harmonic mean $F_{mean}$ emphasizes recall through a weight parameter $\alpha$:
 
-\[
+\begin{equation}
 F_{mean} = \frac{P \cdot R}{\alpha \cdot P + (1 - \alpha) \cdot R}
-\]
+\end{equation}
 
 (Typically, $\alpha = 0.9$ is used, which makes recall 9 times more important than precision).
 
 To account for word order and structure, a fragmentation penalty ($Pen$) is applied. This penalty is based on the number of "chunks" ($ch$)—contiguous sequences of matched unigrams—relative to the total number of matches ($m$):
 
-\[
+\begin{equation}
 Pen = \gamma \cdot \left(\frac{ch}{m}\right)^\beta
-\]
+\end{equation}
 
 (Default values are usually $\gamma = 0.5$ and $\beta = 3$).
 
 The final METEOR score is calculated as \cite{banerjee-lavie-2005-meteor}:
 
-\[
+\begin{equation}
 \text{METEOR} = F_{mean} \cdot (1 - Pen)
-\]
+\end{equation}
 
 \subsubsection{Interpretation}
 

@@ -1,14 +1,8 @@
 \subsection{BLEU}
 
-\subsubsection{Introduction}
-
 BLEU (\textit{Bilingual Evaluation Understudy}) is one of the most influential automatic evaluation metrics in Natural Language Processing (NLP). Introduced by \textbf{Papineni et al. (2002)} \cite{10.3115/1073083.1073135}, it provided a scalable and reproducible way to compare system outputs with human references using \textit{n-gram overlap} rather than subjective human scoring. Since its publication, BLEU has become a cornerstone for evaluating not only machine translation and text generation, but also code generation and other software engineering tasks, as Large Language Models began producing structured, programmatic outputs.
 
 Its core idea, precision over short token sequences, has inspired several specialized variants such as CodeBLEU, CrystalBLEU, Smoothed BLEU, and WeightBLEU, each adapting the metric to better capture syntactic and semantic aspects of specific domains.
-
-\subsubsection{BLEU (Bilingual Evaluation Understudy)}
-
-\subsubsection{Definition} 
 
 BLEU \cite{10.3115/1073083.1073135} measures the correspondence between a candidate text (or code) and one or more reference texts using modified n-gram precision and a brevity penalty:
 
@@ -43,7 +37,7 @@ BLEU appears across multiple contexts:
     \item Requires multiple references for robust correlation with human judgment.
 \end{itemize}
 
-\subsubsection{CodeBLEU}
+\subsubsection{1. CodeBLEU}
 
 \subsubsection{Definition}
 
@@ -69,7 +63,7 @@ CodeBLEU = \alpha P_{ng} + \beta P_{wng} + \gamma P_{ast} + \delta P_{df}
 
 CodeBLEU is used extensively in code generation, translation, and summarization tasks where both syntax and semantics are critical.
 
-\subsubsection{CrystalBLEU}
+\subsubsection{2. CrystalBLEU}
 
 \subsubsection{Definition}
 
@@ -86,7 +80,7 @@ CodeBLEU is used extensively in code generation, translation, and summarization 
 
 CrystalBLEU is applied in the evaluation of model-generated code similarity and variant synthesis.
 
-\subsubsection{Smoothed BLEU / Smoothed 4-gram BLEU}
+\subsubsection{3. Smoothed BLEU / Smoothed 4-gram BLEU}
 
 \subsubsection{Definition}
 
@@ -96,7 +90,7 @@ Smoothed BLEU variants modify the computation of higher-order n-gram precision v
 
 These variants are particularly useful for code summarization, short documentation generation, and low-resource text generation scenarios.
 
-\subsubsection{WeightBLEU}
+\subsubsection{4. WeightBLEU}
 
 \subsubsection{Definition}
 
@@ -106,10 +100,11 @@ WeightBLEU reweights n-gram or token contributions based on their importance in 
 
 WeightBLEU is commonly applied in code migration and generation tasks where token significance varies across contexts.
 
-\subsubsection{Comparative Summary}
+\subsubsection{5. Comparative Summary}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
+\caption{Comparison of BLEU and its main variants}
 \begin{tabularx}{\textwidth}{l l X X l}
 \hline\hline
 \textbf{Metric} & \textbf{Based on} & \textbf{Extension Goal} & \textbf{Added Features} & \textbf{Domain} \\
@@ -121,7 +116,6 @@ Smoothed BLEU & BLEU & Stabilize short outputs & Smoothing of higher-order n-gra
 WeightBLEU & BLEU & Token importance weighting & Variable n-gram and token weights & SE \\
 \hline\hline
 \end{tabularx}
-\caption{Comparison of BLEU and its main variants}
 \end{table}
 
 \subsubsection{Additional References}

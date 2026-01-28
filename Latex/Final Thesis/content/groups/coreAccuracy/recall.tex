@@ -1,14 +1,12 @@
 \subsection{Recall}
 
-\subsubsection{Introduction}
-
 Recall (also known as Sensitivity or True Positive Rate) measures the proportion of relevant instances that are successfully retrieved by a model. It is particularly important in contexts where false negatives are costly, such as defect detection, security vulnerability identification, or code correctness prediction in software engineering.
 
 The general formula is:
 
-\[
+\begin{equation}
 \text{Recall} = \frac{TP}{TP + FN}
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -17,8 +15,6 @@ where:
 \end{itemize}
 
 Recall emphasizes the completeness of a model's predictions, how well it captures all relevant items, rather than just the precision of those retrieved.
-
-\subsubsection{Theoretical Context}
 
 In software engineering, recall has become a fundamental measure for evaluating model performance in bug detection, defect prediction, classification robustness, and code understanding.
 It helps determine whether a model can identify as many true issues or relevant entities as possible, which is critical when omissions (false negatives) are more harmful than false alarms (false positives).
@@ -31,7 +27,7 @@ It helps determine whether a model can identify as many true issues or relevant 
     \item \textbf{Díaz, Ekstrand \& Mitra (2023)} discuss recall from a broader evaluation theory perspective, connecting it to robustness and lexicographic evaluation in large-scale model assessment. They propose that recall is not only a detection measure but also a lens to evaluate models' stability and reliability across edge cases, which aligns with LLM robustness testing in software engineering and NLP. \cite{https://doi.org/10.48550/arxiv.2302.11370}
 \end{itemize}
 
-\subsubsection{Variants of Recall}
+\subsubsection{Variants}
 
 Across software engineering benchmarks and LLM evaluations, Recall appears in multiple specialized forms to adapt to context-specific needs:
 
@@ -40,9 +36,9 @@ In the context of \emph{EvoCodeBench}, this metric does not measure functional c
 
 Specifically, for a given requirement, the model generates $k$ programs. A parser extracts the set of dependencies $\mathbb{P}_i$ for each generated program $i$. These are compared against the ground truth reference dependencies $\mathbb{R}$. The metric calculates the maximum proportion of reference dependencies captured by any of the $k$ generations:
 
-\[
+\begin{equation}
 \text{Recall@k} := \mathbb{E}_{\text{Requirements}} \left[ \max_{i \in [1, k]} \frac{|\mathbb{R} \cap \mathbb{P}_i|}{|\mathbb{R}|} \right]
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -64,9 +60,9 @@ It calculates the recall of necessary and unique dependencies found in the canon
 
 Formally, for a set of generated dependencies $G_i$ and actual dependencies in the canonical solution $S_i$, the metrics are defined as:
 
-\[
+\begin{equation}
 \text{DEP}(M) = \frac{\sum_{i=1}^{n} G_i(M)}{\sum_{i=1}^{n} S_i(M)}, \quad \text{DEP}(F) = \frac{\sum_{i=1}^{n} G_i(F)}{\sum_{i=1}^{n} S_i(F)}
-\]
+\end{equation}
 
 Note that redundant calls are counted only once to ensure values fall within $[0, 1]$. \cite{Du2024ClassLevelCodeGen}
 

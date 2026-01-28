@@ -1,17 +1,13 @@
 \subsection{SE-Jury Score}
 
-\subsubsection{Introduction}
-
 SE-Jury Score is an LLM-as-an-Ensemble-Judge evaluation metric introduced by Zhou et al. (2025) \cite{Zhou2025LLMAsJudge} to bridge the gap between human evaluation and automatic metrics in software engineering tasks such as code generation, automatic program repair, and code summarization. 
 Unlike surface-level metrics like BLEU and ROUGE or execution-based ones like Pass@k, SE-Jury employs an ensemble of reasoning-based LLM evaluators to assess generated artifacts in terms of semantic correctness, functionality, and alignment with human expectations.
 
-\subsubsection{Formula}
-
 The SE-Jury score is defined as:
 
-\[
+\begin{equation}
 \text{SE-Jury}(x, y, r) = \frac{1}{|T|} \sum_{p_i \in T} LLM_{p_i}(x, y, r)
-\]
+\end{equation}
 
 Where:
 \begin{itemize}

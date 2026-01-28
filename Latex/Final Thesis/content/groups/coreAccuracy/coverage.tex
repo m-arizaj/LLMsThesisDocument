@@ -1,18 +1,14 @@
 \subsection{Coverage}
 
-\subsubsection{Introduction}
-
 Coverage is a metric used to evaluate how thoroughly a system, model, or set of test cases explores a given space—most commonly code, input conditions, or tasks. In software engineering, code coverage quantifies the proportion of code elements (statements, branches, or functions) executed by test cases. High coverage indicates better validation and testing completeness, while low coverage reveals untested or unreachable code.
 Recent work (Tufano et al., 2023) \cite{tufano2023predictingcodecoverageexecution} extends this concept to predict coverage without executing code, proposing machine learning approaches that estimate coverage based on static or semantic representations.
 This evolution makes coverage relevant not only for software testing, but also for LLM-based code generation and evaluation of AI systems that produce executable artifacts.
 
-\subsubsection{Formula}
-
 Coverage is typically computed as a ratio:
 
-\[
+\begin{equation}
 \text{Coverage} = \frac{\text{Number of elements covered}}{\text{Total number of elements}} \times 100
-\]
+\end{equation}
 
 Where “elements” can refer to lines, statements, branches, methods, or any unit of analysis depending on the coverage type.
 Coverage values range from 0\% (no coverage) to 100\% (full coverage).

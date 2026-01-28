@@ -1,20 +1,16 @@
 \subsection{Pass@k}
 
-\subsubsection{Introduction}
-
 Pass@k is a functional correctness metric widely used to evaluate code generation models.
 It measures the probability that at least one out of $k$ generated code samples for a given problem passes all predefined unit tests.
 This metric is now standard in many benchmarks, providing a robust estimate of how effectively models can produce correct programs.
 Pass@k captures a model's ability to generate a functionally correct solution rather than a textually similar one, making it a fundamental metric for assessing code intelligence, reasoning, and software reliability. \cite{lyu2024passimprovecodegeneration}
 
-\subsubsection{Mathematical Definition}
-
 Formally, for a dataset with $N$ tasks, where each task $i$ has $n_i$ generated samples,
 and $c_i$ of them pass all test cases, the unbiased estimator of Pass@k is given by:
 
-\[
+\begin{equation}
 \text{Pass@k} = \frac{1}{N} \sum_{i=1}^{N} \left[ 1 - \frac{\binom{n_i - c_i}{k}}{\binom{n_i}{k}} \right]
-\]
+\end{equation}
 
 where:
 \begin{itemize}
