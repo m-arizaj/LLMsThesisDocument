@@ -1,24 +1,20 @@
 \subsection{Bias Metrics}
 
-\subsubsection{Introduction}
-
 Bias metrics quantify systematic differences in how a model represents, associates, or describes different social groups. Unlike fairness metrics that measure disparities in task accuracy, bias metrics focus on asymmetries in language behavior, internal representations, or generated text \cite{Liang2022HELM}. 
 The four papers emphasize that bias arises from social and historical inequalities and may surface in embeddings, probability distributions, or text produced by the model \cite{Gallegos2024BiasFairness, Mehrabi2021SurveyBias}. Although these works focus on NLP, the same metrics extend naturally to software-engineering contexts such as code-comment generation, documentation synthesis, developer Q\&A, and issue summarization.
-
-\subsubsection{Formula}
 
 \textbf{1. Demographic Representation Bias} \\
 HELM defines demographic representation bias by comparing the observed distribution of group references in model outputs with a reference (usually uniform) distribution \cite{Liang2022HELM}.
 
 Observed distribution:
-\[
+\begin{equation}
 P_{\text{obs}}(i) = \frac{C(i)}{\sum_j C(j)}
-\]
+\end{equation}
 
 Bias score (Total Variation Distance):
-\[
+\begin{equation}
 \text{RepresentationBias} = \frac{1}{2} \sum_i \left| P_{\text{obs}}(i) - P_{\text{ref}}(i) \right|
-\]
+\end{equation}
 
 Higher scores indicate uneven representation of demographic groups in generations.
 
@@ -26,20 +22,20 @@ Higher scores indicate uneven representation of demographic groups in generation
 For each target concept $t$ (e.g., a profession), the model’s distribution of demographic group mentions is compared to a reference distribution \cite{Liang2022HELM}.
 
 Per-target association:
-\[
+\begin{equation}
 \text{Assoc}_t = \frac{1}{2} \sum_i \left| P_{\text{obs}}^{t}(i) - P_{\text{ref}}(i) \right|
-\]
+\end{equation}
 
 Overall association:
-\[
+\begin{equation}
 \text{StereotypicalAssociation} = \frac{1}{|T|} \sum_{t \in T} \text{Assoc}_t
-\]
+\end{equation}
 
 \textbf{3. Embedding-Based Bias (WEAT, CEAT, etc.)} \\
 Embedding-level bias measures asymmetric associations between group-word sets and attribute-word sets \cite{Gallegos2024BiasFairness}.
 
 WEAT effect size:
-\[
+\begin{equation}
 f(A,W) =
 \frac{
 \operatorname{mean}_{a \in A_1}s(a,W_1,W_2)
@@ -48,76 +44,76 @@ f(A,W) =
 }{
 \operatorname{std}_{a \in A_1 \cup A_2}s(a,W_1,W_2)
 }
-\]
+\end{equation}
 
 Meta-analytic CEAT:
-\[
+\begin{equation}
 \text{CEAT} =
 \frac{
 \sum_{i=1}^{N} v_i \cdot \text{WEAT}_i
 }{
 \sum_{i=1}^{N} v_i
 }
-\]
+\end{equation}
 
 Sentence-level embedding bias:
-\[
+\begin{equation}
 \text{SentenceBias}(S) =
 \sum_{s \in S}
 \left| \cos(s, v_{\text{gender}}) \cdot \alpha_s \right|
-\]
+\end{equation}
 
 \textbf{4. Probability-Based Bias} \\
 These metrics compare likelihoods assigned to stereotypical vs. counter-stereotypical sentence pairs \cite{Gallegos2024BiasFairness}.
 
 Directional preference:
-\[
+\begin{equation}
 \text{bias}(S_1,S_2) = \mathbf{I}\left(f(S_1) > f(S_2)\right)
-\]
+\end{equation}
 
 Language Model Bias (LMB) uses a t-statistic over perplexities:
-\[
+\begin{equation}
 \text{LMB} = t\big(\text{PP}(S_{\text{stereotype}}), \text{PP}(S_{\text{anti}})\big)
-\]
+\end{equation}
 
 \textbf{5. Generated-Text Bias Metrics (Gallegos et al., 2024)}
 
 \textit{HONEST (hurtful completions):}
-\[
+\begin{equation}
 \text{HONEST} =
 \frac{
 \displaystyle \sum_{\hat y \in \hat Y} \mathbf{I}_{\text{HurtLex}}(\hat y)
 }{
 |\hat Y|
 }
-\]
+\end{equation}
 
 \textit{Psycholinguistic norms:}
-\[
+\begin{equation}
 \text{PsychNorms} =
 \frac{
 \sum_{\hat y} \text{sign}(\text{affect}(\hat y))\,\text{affect}(\hat y)^2
 }{
 \sum_{\hat y} |\text{affect}(\hat y)|
 }
-\]
+\end{equation}
 
 \textit{Gender polarity:}
-\[
+\begin{equation}
 \text{GenderPolarity} =
 \frac{
 \sum_{\hat y} \text{sign}(\text{bias}(\hat y))\,\text{bias}(\hat y)^2
 }{
 \sum_{\hat y} |\text{bias}(\hat y)|
 }
-\]
+\end{equation}
 
 \textbf{6. Word-Level Language Model Bias} \\
 Mehrabi et al. (2019) measure directional bias using log-odds under different demographic conditions \cite{Mehrabi2021SurveyBias}:
 
-\[
+\begin{equation}
 \text{bias}(w) = \log \frac{P(w \mid \text{female})}{P(w \mid \text{male})}
-\]
+\end{equation}
 
 Aggregate statistics (mean, variance) provide corpus-level bias.
 

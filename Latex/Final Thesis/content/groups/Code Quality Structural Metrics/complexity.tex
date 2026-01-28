@@ -1,7 +1,5 @@
 \subsection{Complexity Metrics}
 
-\subsubsection{Introduction}
-
 Complexity metrics evaluate how difficult code is to understand, maintain, or modify.
 They play a central role in software engineering and LLM-based code generation evaluation, as they correlate with defect proneness, maintainability, debugging effort, and reasoning difficulty \cite{Chen2024SurveyCodeGen}.
 
@@ -12,12 +10,12 @@ Across the sources analyzed, complexity appears through three main metric famili
     \item \textbf{Hybrid Cyclomatic Complexity (HCC)} - a metric designed for object-oriented systems that integrates inherited complexity into the assessment.
 \end{enumerate}
 
-\subsubsection{Cyclomatic Complexity (McCabe, 1976)}
+\subsubsection{1. Cyclomatic Complexity (McCabe, 1976)}
 Cyclomatic Complexity measures the number of linearly independent execution paths in a program.
 
-\[
+\begin{equation}
 M = E - N + 2P
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -28,8 +26,8 @@ Where:
 
 In SWE-bench, cyclomatic complexity is used to profile the structural difficulty of code snippets associated with real-world bugs \cite{Jimenez2023SWEBench}.
 
-\subsubsection{Halstead Complexity Metrics}
-Halstead’s metrics evaluate program complexity through operators and operands.
+\subsubsection{2. Halstead Complexity Metrics}
+Halstead's metrics evaluate program complexity through operators and operands.
 They originate from the seminal work where Halstead introduced the Software Science metrics, defining vocabulary, length, volume, difficulty, and effort as core measures of code complexity.
 
 Let:
@@ -41,40 +39,40 @@ Let:
 \end{itemize}
 
 \textbf{Vocabulary}
-\[
+\begin{equation}
 n = n_1 + n_2
-\]
+\end{equation}
 
 \textbf{Length}
-\[
+\begin{equation}
 N = N_1 + N_2
-\]
+\end{equation}
 
 \textbf{Volume}
-\[
+\begin{equation}
 V = N \cdot \log_2(n)
-\]
+\end{equation}
 
 \textbf{Difficulty}
-\[
+\begin{equation}
 D = \frac{n_1}{2} \cdot \frac{N_2}{n_2}
-\]
+\end{equation}
 
 \textbf{Effort}
-\[
+\begin{equation}
 E = D \cdot V
-\]
+\end{equation}
 
 Halstead metrics are referenced in \textit{SWE-bench (2023)} as part of the complexity characterization for GitHub issues resolution \cite{Jimenez2023SWEBench}.
 
-\subsubsection{Hybrid Cyclomatic Complexity (HCC)}
+\subsubsection{3. Hybrid Cyclomatic Complexity (HCC)}
 \textit{Unveiling Hybrid Cyclomatic Complexity} (Cernău, Dioșan \& Șerban, 2025) introduces HCC as a metric tailored for object-oriented programming, addressing the limitation that traditional metrics often ignore inherited complexity \cite{Cernau2025HybridComplexity}.
 
 Unlike previous definitions, HCC defines the total complexity of a class as the sum of its own complexity and the complexities of its parent classes:
 
-\[
+\begin{equation}
 HCC = WMC + IWMC
-\]
+\end{equation}
 
 Where:
 \begin{itemize}

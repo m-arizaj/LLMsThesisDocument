@@ -1,20 +1,16 @@
 \subsection{Human Metrics}
 
-\subsubsection{Introduction}
-
 Human metrics refer to evaluation methods that rely on human judgment to assess the quality, correctness, and usefulness of model-generated outputs. They are considered the gold standard for evaluating complex aspects that automatic metrics cannot fully capture, such as semantic adequacy, clarity, usefulness, and naturalness \cite{Liu2022RevisitingGoldStandard}.
 
 In software engineering, these metrics are used to evaluate LLM-generated code, explanations, summaries, and documentation, ensuring that automated systems align with human standards of reasoning and readability.
-
-\subsubsection{Formula and Structure}
 
 Unlike quantitative metrics, human metrics are qualitative or semi-quantitative. They generally rely on rating scales, comparative judgments, or ranking procedures.
 
 A typical evaluation setup involves $n$ human raters providing scores for one or more criteria \cite{Liu2022RevisitingGoldStandard}:
 
-\[
+\begin{equation}
 H = \frac{1}{n} \sum_{i=1}^{n} s_i
-\]
+\end{equation}
 
 Where:
 \begin{itemize}

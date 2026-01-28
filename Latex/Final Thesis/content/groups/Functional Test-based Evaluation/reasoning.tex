@@ -1,27 +1,23 @@
 \subsection{Reasoning Depth}
 
-\subsubsection{Introduction}
-
 Reasoning Depth in software engineering evaluation refers to an LLM’s ability to understand and reason about relationships that span multiple files within a codebase. In long-context development settings, many tasks require models to track interactions, dependencies, and abstractions distributed across several modules . The Cross-File Reasoning Depth (CFRD) metric, introduced in LoCoBench, formalizes this type of reasoning by quantifying how deeply and accurately an LLM captures semantic and structural interactions between pairs of files \cite{Qiu2025LoCoBench}.
 
 CFRD is motivated by the observation that existing benchmarks focus on single-file reasoning and therefore fail to measure the multi-file, architecture-level reasoning skills required in realistic software engineering. By evaluating semantic reasoning and interaction complexity across file boundaries, CFRD offers a direct assessment of long-context reasoning capabilities \cite{Qiu2025LoCoBench}.
 
-\subsubsection{Formula}
-
 Given a set of files
-\[
+\begin{equation}
 F=\{f_1, f_2, \ldots, f_n\},
-\]
+\end{equation}
 and a cross-file interaction matrix $R \in \mathbb{R}^{n \times n}$, Cross-File Reasoning Depth is defined as:
 
-\[
+\begin{equation}
 \text{CFRD}(F)
 =
 \frac{1}{n(n-1)}
 \sum_{i=1}^{n}
 \sum_{\substack{j=1 \\ j\neq i}}^{n}
 \rho(f_i, f_j) \cdot \iota(f_i, f_j)
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -56,7 +52,7 @@ By evaluating how well an LLM reasons across file boundaries, CFRD directly meas
 
 \subsubsection{Interpretation}
 
-\textbf{High CFRD} \\
+\textbf{1. High CFRD} \\
 Indicates:
 \begin{itemize}
     \item Strong cross-file semantic reasoning
@@ -65,7 +61,7 @@ Indicates:
     \item Robustness in long-context tasks and multi-module workflows
 \end{itemize}
 
-\textbf{Low CFRD} \\
+\textbf{2. Low CFRD} \\
 Indicates:
 \begin{itemize}
     \item Poor multi-file reasoning
@@ -74,14 +70,14 @@ Indicates:
     \item Failures that surface in integration-level tasks
 \end{itemize}
 
-\textbf{Strengths}
+\textbf{3. Strengths} \\
 \begin{itemize}
     \item Directly targets long-context reasoning
     \item Captures inter-file complexity beyond single-file benchmarks
     \item Highly relevant to real-world SE tasks
 \end{itemize}
 
-\textbf{Limitations}
+\textbf{4. Limitations} \\
 \begin{itemize}
     \item Requires detailed file-level interaction annotations
     \item Can be sensitive to how interactions are defined

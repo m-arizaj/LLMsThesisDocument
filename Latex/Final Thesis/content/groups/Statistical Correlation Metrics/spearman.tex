@@ -1,17 +1,13 @@
 \subsection{Spearman's \texorpdfstring{$\rho$}{rho}}
 
-\subsubsection{Introduction}
-
 Spearman's $\rho$ (rho), also referred to as Spearman's rank correlation coefficient ($r_s$), is a non-parametric statistical measure used to evaluate the strength and direction of a monotonic relationship between two ranked variables. Unlike Pearson's $r$, it does not assume linearity, normality, or equal variances, making it suitable for ordinal data and non-linear relationships.
 In software engineering and LLM evaluation, Spearman's $\rho$ is widely used to measure how consistently automatic metrics rank model outputs compared with human judgments. A high $\rho$ value indicates that two rankings (human preference vs. metric-based ordering) follow the same relative order.
 
-\subsubsection{Formula}
-
 For data without significant ties, Spearman's $\rho$ is computed as:
 
-\[
+\begin{equation}
 \rho = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n(n^2 - 1)}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -21,24 +17,24 @@ Where:
 
 When ties are present, Spearman's $\rho$ is defined as the Pearson correlation coefficient between the \textit{rank-transformed variables}:
 
-\[
+\begin{equation}
 \rho = \frac{\mathrm{cov}(rg_X,\, rg_Y)}{\sigma_{rg_X}\,\sigma_{rg_Y}}
-\]
+\end{equation}
 
-This formulation, also discussed in Xu et al. (2010), generalizes Spearman’s $\rho$ to datasets where ranks are not strictly unique \cite{Xu2010SpearmanKendall}.
+This formulation, also discussed in Xu et al. (2010), generalizes Spearman's $\rho$ to datasets where ranks are not strictly unique \cite{Xu2010SpearmanKendall}.
 
 \subsubsection{Variants}
 
 \begin{itemize}
-    \item \textbf{Spearman’s $r_s$:} Traditional notation for the coefficient based on ranked data.
-    \item \textbf{Spearman’s $\rho$:} Formal statistical notation used interchangeably with $r_s$ in empirical evaluation studies.
+    \item \textbf{Spearman's $r_s$:} Traditional notation for the coefficient based on ranked data.
+    \item \textbf{Spearman's $\rho$:} Formal statistical notation used interchangeably with $r_s$ in empirical evaluation studies.
 \end{itemize}
 
 Both formulations refer to the same underlying measure.
 
 \subsubsection{Applications in Software Engineering}
 
-Spearman’s $\rho$ has been used across multiple SE and LLM evaluation benchmarks to examine the \textit{rank-level agreement} between automated metrics and human evaluators.
+Spearman's $\rho$ has been used across multiple SE and LLM evaluation benchmarks to examine the \textit{rank-level agreement} between automated metrics and human evaluators.
 Within the broader SE literature \cite{Zhou2025LLMAsJudge, Zhuo2023ICEScore, Zhou2023CodeBERTScore, Dong2023CodeScore, Tong2024CodeJudge}, it is applied to:
 
 \begin{itemize}

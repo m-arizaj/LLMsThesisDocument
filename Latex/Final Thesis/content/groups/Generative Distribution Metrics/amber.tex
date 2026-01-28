@@ -1,7 +1,5 @@
 \subsection{AMBER Score}
 
-\subsubsection{Introduction}
-
 The AMBER Score is a composite metric designed to evaluate hallucination behavior in Multi-modal Large Language Models (MLLMs).
 It was introduced by Wang et al. (2023) in the benchmark \textit{AMBER: An LLM-Free Multi-dimensional Benchmark for MLLMs Hallucination Evaluation}, providing a unified and low-cost method for assessing hallucinations in both generative and discriminative multimodal tasks \cite{Wang2023AMBER}. Unlike previous evaluation methods that rely on large models or human raters, AMBER provides an LLM-free, automatic, and multidimensional approach.
 
@@ -14,13 +12,11 @@ It measures hallucinations across three key dimensions:
 
 AMBER integrates generative hallucination detection metrics (e.g., CHAIR) and classification metrics (Precision, Recall, F1) into a single interpretable score that reflects the overall reliability of a multimodal model \cite{Wang2023AMBER}.
 
-\subsubsection{Formula and Structure}
-
 The AMBER Score combines generative and discriminative evaluations into a single metric:
 
-\[
+\begin{equation}
 \text{AMBER Score} = \frac{1}{2} \times (1 - \text{CHAIR} + \text{F1})
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -36,31 +32,31 @@ The final score ranges from 0 to 1, where higher values indicate fewer hallucina
 The benchmark defines additional metrics to decompose hallucination performance before aggregation into the AMBER Score \cite{Wang2023AMBER}:
 
 \textbf{1. CHAIR (Object Hallucination Rate)}
-\[
+\begin{equation}
 \text{CHAIR}(R) = 1 - \frac{\text{len}(R'_{\text{obj}} \cap A_{\text{obj}})}{\text{len}(R'_{\text{obj}})}
-\]
+\end{equation}
 Measures the proportion of objects in a model’s description that do not exist in the reference annotation.
 
 \textbf{2. Cover (Object Coverage)}
-\[
+\begin{equation}
 \text{Cover}(R) = \frac{\text{len}(R'_{\text{obj}} \cap A_{\text{obj}})}{\text{len}(A_{\text{obj}})}
-\]
+\end{equation}
 Indicates how well the response covers true objects present in the image.
 
 \textbf{3. Hal (Hallucination Ratio)}
-\[
+\begin{equation}
 \text{Hal}(R) =
 \begin{cases}
 1, & \text{if } \text{CHAIR}(R) \neq 0 \\
 0, & \text{otherwise}
 \end{cases}
-\]
+\end{equation}
 Reports whether a response contains any hallucination at all.
 
 \textbf{4. Cog (Cognitive Hallucination Likelihood)}
-\[
+\begin{equation}
 \text{Cog}(R) = \frac{\text{len}(R'_{\text{obj}} \cap H_{\text{obj}})}{\text{len}(R'_{\text{obj}})}
-\]
+\end{equation}
 Quantifies the extent to which generated hallucinations align with common human perceptual errors.
 
 \subsubsection{Variants and Dimensions}

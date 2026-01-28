@@ -1,7 +1,5 @@
 \subsection{Reliability}
 
-\subsubsection{Introduction}
-
 Reliability is one of the core evaluation dimensions discussed in \textit{Overview of the Comprehensive Evaluation of Large Language Models}. The paper defines reliability as a multi-component quality that determines whether a model can be trusted to produce stable, accurate, and faithful outputs under repeated or slightly varied conditions \cite{Lin2024SWC}.
 
 The authors describe Reliability as the integration of five critical sub-qualities:
@@ -11,8 +9,6 @@ The authors describe Reliability as the integration of five critical sub-qualiti
 \end{quote}
 
 This definition positions Reliability as a composite behavioral property, capturing both correctness and stability of a model's outputs. It evaluates whether the model behaves predictably, avoids fabrications, maintains coherence, and expresses its confidence appropriately.
-
-\subsubsection{Formula}
 
 The paper does not define a formal mathematical formula or quantitative scoring method for Reliability. It is presented as a \textit{conceptual evaluation dimension}, composed of five qualitative components \cite{Lin2024SWC}:
 \begin{itemize}
@@ -25,13 +21,13 @@ The paper does not define a formal mathematical formula or quantitative scoring 
 
 Thus, Reliability can be expressed conceptually as:
 
-\[
+\begin{equation}
 \text{Reliability} = f(\text{Accuracy},\;
 \text{Hallucination},\;
 \text{Consistency},\;
 \text{Interpretability},\;
 \text{CalibrationError})
-\]
+\end{equation}
 
 However, no operationalization or normalization procedure is provided in the paper. There is no weighting scheme, no aggregation function, and no dataset-specific evaluation rubric. Reliability functions as a high-level diagnostic dimension, not a precise metric.
 
@@ -91,7 +87,7 @@ Although the paper does not provide software-specific examples, Reliability maps
 
 \subsubsection{Interpretation}
 
-\textbf{High Reliability indicates:}
+\textbf{1. High Reliability indicates:}
 \begin{itemize}
     \item Stable outputs across identical prompts (high consistency).
     \item Accurate responses with low factual and code hallucination.
@@ -100,7 +96,7 @@ Although the paper does not provide software-specific examples, Reliability maps
     \item Predictable behavior across contexts.
 \end{itemize}
 
-\textbf{Low Reliability indicates:}
+\textbf{2. Low Reliability indicates:}
 \begin{itemize}
     \item Different answers to the same query (low consistency).
     \item Fabricated facts or invalid code suggestions (hallucination).

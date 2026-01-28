@@ -1,20 +1,16 @@
 \subsection{CPU Utilization}
 
-\subsubsection{Introduction}
-
 CPU Utilization is a performance and efficiency metric that quantifies how effectively the computational resources of a Central Processing Unit (CPU) are used during Large Language Model inference or code execution.
 In the context of LLM evaluation, it measures the percentage of CPU cycles actively processing tokens versus idle or waiting states, serving as a critical indicator of inference throughput, latency, and energy efficiency.
 
 This metric was emphasized by Chen et al. (2025) in \textit{A Survey on Evaluating Large Language Models in Code Generation Tasks}, where CPU utilization, execution time, and energy consumption were introduced as part of performance and efficiency evaluation metrics within EffiBench and Mercury frameworks \cite{Chen2024SurveyCodeGen, Huang2024EffiBench, Du2024Mercury}.
 Ditto et al. (2024) later operationalized this metric in \textit{Inference Acceleration for Large Language Models on CPUs}, demonstrating its role in optimizing LLM inference performance through parallelization, batching, and NUMA node isolation \cite{Ditto2024InferenceAcceleration}.
 
-\subsubsection{Formula and Computation}
-
 CPU utilization is defined as the proportion of time the CPU spends executing active processes relative to the total available processing time:
 
-\[
+\begin{equation}
 \text{CPU Utilization} (\%) = \frac{T_{\text{active}}}{T_{\text{total}}} \times 100
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -36,14 +32,16 @@ These metrics together describe both computational efficiency and environmental 
 
 CPU-based inference metrics are typically integrated into \textit{EffiBench} and \textit{Mercury}, two major benchmarking frameworks for LLM-generated code efficiency:
 
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{CPU Utilization Metrics in LLM Efficiency Benchmarks}
 \begin{tabularx}{\textwidth}{X X X}
 \hline
 \textbf{Benchmark} & \textbf{Metric Components} & \textbf{Description} \\ \hline
 \textit{EffiBench} (Huang et al., 2024) \cite{Huang2024EffiBench} & Execution Time, Memory Usage, CPU Utilization, Code Complexity & Assesses code efficiency and runtime behavior of LLM outputs in standardized environments. \\ \hline
 \textit{Mercury} (Du et al., 2024) \cite{Du2024Mercury} & Execution Time, Memory Usage, Energy Consumption, CPU Utilization & Focuses on real execution performance, measuring total compute and energy cost. \\ \hline
 \end{tabularx}
-\end{center}
+\end{table}
 
 Both frameworks use CPU utilization as a measure of how efficiently LLM-generated code or inference processes use available computational resources.
 
@@ -53,7 +51,9 @@ Ditto et al. (2024) propose a practical implementation for CPU-based inference m
 Their study introduced the Bud Inference Engine, a parallelized framework achieving up to \textit{22× improvement} in generated tokens/sec on CPUs compared to baseline runs, with \textit{~49\% lower power consumption} versus GPU-based inference.
 
 \textbf{Example Metrics (4th Gen Intel Xeon Scalable Processor)}
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{CPU Utilization and Throughput for LLM Inference on CPUs \cite{Ditto2024InferenceAcceleration}}
 \begin{tabularx}{\textwidth}{l X X X X X}
 \hline
 \textbf{Model} & \textbf{vCPU} & \textbf{Proc. Tok/s} & \textbf{Gen. Tok/s} & \textbf{CPU Util} & \textbf{Power (1k tok)} \\ \hline
@@ -61,7 +61,7 @@ bigcode/starcoderbase-3B & 32 & 992.36 & 167.58 & $\approx 85\%$ & 613 W \\ \hli
 CodeLlama-7B (hf) & 32 & 593.74 & 93.69 & $\approx 82\%$ & — \\ \hline
 LLaMA-2-7B (hf) & NUMA $\times$ 4 & 1852.32 & 305.30 & $> 90\%$ & — \\ \hline
 \end{tabularx}
-\end{center}
+\end{table}
 
 Higher CPU utilization correlates with improved throughput and reduced latency, particularly when inference workloads are distributed across NUMA nodes and optimized with AVX/AMX instructions \cite{Ditto2024InferenceAcceleration}.
 
@@ -78,7 +78,9 @@ However, over-utilization ($>95\%$) may indicate CPU saturation, potentially cau
 
 \subsubsection{Relation to Other Metrics}
 
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{Relationship Between CPU Utilization and Other Efficiency Metrics}
 \begin{tabularx}{\textwidth}{X X X}
 \hline
 \textbf{Metric} & \textbf{Focus} & \textbf{Relationship to CPU Utilization} \\ \hline
@@ -87,7 +89,7 @@ However, over-utilization ($>95\%$) may indicate CPU saturation, potentially cau
 \textit{Energy Consumption} & Power cost per operation & Positively correlated; higher utilization can mean better performance per watt \\ \hline
 \textit{Throughput (tokens/s)} & Number of tokens processed per second & Directly proportional; core efficiency indicator \\ \hline
 \end{tabularx}
-\end{center}
+\end{table}
 
 \subsubsection{Advantages}
 \begin{itemize}

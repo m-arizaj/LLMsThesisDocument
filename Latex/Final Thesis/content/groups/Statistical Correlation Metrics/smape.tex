@@ -1,24 +1,20 @@
 \subsection{SMAPE}
 
-\subsubsection{Introduction}
-
 Symmetric Mean Absolute Percentage Error (SMAPE) is a scale-independent regression metric used to evaluate the relative difference between predicted and actual values. It was introduced as a modification of Mean Absolute Percentage Error (MAPE) to address two major issues: (i) MAPE becomes infinite or undefined when actual values approach zero, and (ii) MAPE is asymmetric, penalizing overestimation differently from underestimation \cite{Chen2017NewAccuracyMeasure}.
 SMAPE replaces the absolute actual value in the denominator with the average of the absolute actual and predicted values, which prevents infinite values and reduces extreme distortions \cite{Kreinovich2014ForecastingQuality}.
 It is widely used in forecasting competitions and appears in regression-based evaluation pipelines, including modern SE/LLM benchmarking tasks where normalized, scale-robust errors are essential.
 
-\subsubsection{Formula}
-
 Two equivalent standard definitions appear in the literature:
 
 \textbf{Similarity-Measure Form (Kreinovich et al., 2014)} \cite{Kreinovich2014ForecastingQuality}
-\[
+\begin{equation}
 \text{SMAPE} = \frac{|x - y|}{(|x| + |y|)/2}
-\]
+\end{equation}
 
 \textbf{Mean Forecasting-Error Form}
-\[
+\begin{equation}
 \text{SMAPE} = \frac{1}{n} \sum_{t=1}^{n} \frac{2\,|Y_t - F_t|}{|Y_t| + |F_t|}
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -33,13 +29,13 @@ Both definitions are mathematically equivalent for non-negative values and bound
 
 \textbf{1. Denominator Convention Differences} \\
 Some formulations use:
-\[
+\begin{equation}
 |Y_t| + |F_t|
-\]
+\end{equation}
 while others use:
-\[
+\begin{equation}
 (|Y_t| + |F_t|)/2
-\]
+\end{equation}
 The summed-denominator version is exactly twice the averaged-denominator version; both remain equivalent.
 
 \textbf{2. Modified SMAPE (msMAPE)} \\
@@ -57,9 +53,9 @@ A variant that adds a small constant to the denominator to reduce instability wh
 SMAPE applies to software engineering tasks involving regression outputs, including estimation of continuous software metrics, resource consumption prediction, and latency or performance modeling.
 It is also used in LLM-based SE evaluation where heterogeneous magnitude scales require normalized error metrics.
 The SELU benchmark for non-code SE tasks uses SMAPE and inverts its values using:
-\[
+\begin{equation}
 1 - \text{SMAPE}
-\]
+\end{equation}
 to align regression performance with higher-is-better scoring conventions.
 
 \subsubsection{Interpretation}

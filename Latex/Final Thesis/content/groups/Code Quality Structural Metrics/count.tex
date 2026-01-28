@@ -1,7 +1,5 @@
 \subsection{Count-based Metrics}
 
-\subsubsection{Introduction}
-
 Count-based metrics evaluate Large Language Models (LLMs) in software engineering by measuring \textit{quantities} of outputs rather than their semantic quality. These metrics focus on \textit{how many} of a model’s generated artifacts meet specific criteria or \textit{how large} the generated artifacts are.
 
 Two commonly used count-oriented metrics appear in recent LLM evaluation literature:
@@ -13,42 +11,40 @@ Two commonly used count-oriented metrics appear in recent LLM evaluation literat
 
 Together, these metrics help capture performance in stochastic generation settings and provide insight into verbosity, efficiency, and structural characteristics of generated code.
 
-\subsubsection{Formula}
-
-\textbf{Count@n} \\
+\textbf{1. Count@n} \\
 Count@n measures how many out of $n$ samples produced by the model pass a correctness criterion, such as execution tests.
 
 Let the model generate $n$ samples for task instance $i$. Define:
 
-\[
+\begin{equation}
 c_i^{(j)} =
 \begin{cases}
 1 & \text{if sample } j \text{ is correct} \\
 0 & \text{otherwise}
 \end{cases}
-\]
+\end{equation}
 
 Then the Count@n value for instance $i$ is:
 
-\[
+\begin{equation}
 \text{Count@n}(i) = \sum_{j=1}^{n} c_i^{(j)}
-\]
+\end{equation}
 
 Aggregated across $N$ instances:
 
-\[
+\begin{equation}
 \text{Count@n} = \frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{n} c_i^{(j)}
-\]
+\end{equation}
 
 This expresses how often the model produces at least some correct attempts within multiple samples, crucial for evaluating nondeterministic LLMs.
 
-\textbf{Token Count} \\
+\textbf{2. Token Count} \\
 Token Count measures the \textit{length} of the generated output.
 For a generated artifact $y$:
 
-\[
+\begin{equation}
 \text{TokenCount}(y) = \text{number of tokens in } y
-\]
+\end{equation}
 
 In iterative or evolutionary systems (as in \cite{Hemberg2024EvolvingCodeLLM}), Token Count can help:
 \begin{itemize}
@@ -59,13 +55,13 @@ In iterative or evolutionary systems (as in \cite{Hemberg2024EvolvingCodeLLM}), 
 
 A dataset-level average is:
 
-\[
+\begin{equation}
 \text{Average Token Count} = \frac{1}{N} \sum_{i=1}^{N} \text{TokenCount}(y_i)
-\]
+\end{equation}
 
 \subsubsection{Variants}
 
-\textbf{Count@n Variants} \\
+\textbf{1. Count@n Variants} \\
 Count@n belongs to the family of \textit{execution-based count metrics}, which includes:
 \begin{itemize}
     \item \textit{Pass@k} — probability that at least one of $k$ samples passes tests.
@@ -83,7 +79,7 @@ Count@n is often used with:
     \item correctness distribution assessments.
 \end{itemize}
 
-\textbf{Token Count Variants} \\
+\textbf{2. Token Count Variants} \\
 Common variations include:
 \begin{itemize}
     \item \textit{Input Token Count}
@@ -103,7 +99,7 @@ Token Count is also relevant to real-world cost, as token-based pricing directly
 
 \subsubsection{Applications in Software Engineering}
 
-\textbf{Count@n} \\
+\textbf{1. Count@n} \\
 Used in:
 \begin{itemize}
     \item code generation tasks with multiple samples,
@@ -113,7 +109,7 @@ Used in:
 \end{itemize}
 Count@n highlights how often an LLM can produce some correct solution given multiple attempts, supporting scenarios like test-driven development, interactive code refinement, and synthesis workflows with sampling loops.
 
-\textbf{Token Count} \\
+\textbf{2. Token Count} \\
 Used in:
 \begin{itemize}
     \item evolutionary code generation \cite{Hemberg2024EvolvingCodeLLM},
@@ -125,7 +121,7 @@ In SE contexts, Token Count often correlates with maintainability, structural co
 
 \subsubsection{Interpretation}
 
-\textbf{High Count@n} \\
+\textbf{1. High Count@n} \\
 Indicates:
 \begin{itemize}
     \item reliable production of correct samples,
@@ -134,14 +130,14 @@ Indicates:
 \end{itemize}
 Limitations: does not describe quality of correct outputs; high Count@n may require excessive sampling.
 
-\textbf{Low Count@n} \\
+\textbf{2. Low Count@n} \\
 Indicates:
 \begin{itemize}
     \item low probability of correctness even with multiple attempts,
     \item high variance or systematic misinterpretation of the task.
 \end{itemize}
 
-\textbf{High Token Count} \\
+\textbf{3. High Token Count} \\
 Indicates:
 \begin{itemize}
     \item verbose or bloated code,
@@ -151,7 +147,7 @@ Indicates:
 \end{itemize}
 But may sometimes reflect detailed comments or boilerplate required by the task.
 
-\textbf{Low Token Count} \\
+\textbf{4. Low Token Count} \\
 Indicates:
 \begin{itemize}
     \item concise, readable code,

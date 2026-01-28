@@ -1,26 +1,22 @@
 \subsection{MoverScore}
 
-\subsubsection{Introduction}
-
 MoverScore is a semantic similarity metric designed to evaluate the quality of generated text by comparing it with reference outputs using contextualized embeddings and Earth Mover’s Distance (EMD) \cite{Zhao2019MoverScore}. Unlike lexical metrics such as BLEU or ROUGE, MoverScore captures deeper semantic and contextual relationships by modeling the minimal “transport cost” required to align semantic content between texts.
 It has demonstrated strong correlation with human judgments across natural language generation tasks including summarization, machine translation, and captioning. MoverScore and its sentence-level extensions have also been adopted in software engineering contexts to assess semantic similarity between generated and reference code snippets or documentation, where surface-form differences are common.
 
-\subsubsection{Formula and Structure}
-
-MoverScore is rooted in Word Mover’s Distance (WMD), extended to contextualized embeddings (e.g., BERT, ELMo) \cite{Zhao2019MoverScore}.
+MoverScore is rooted in Word Mover's Distance (WMD), extended to contextualized embeddings (e.g., BERT, ELMo) \cite{Zhao2019MoverScore}.
 For a candidate text $x$ and reference text $y$, let $\{w_i\}$ and $\{v_j\}$ denote their contextual token embeddings, and let $p_i$ and $q_j$ denote their normalized IDF-based weights.
 
 The semantic transport cost is computed via:
 
-\[
+\begin{equation}
 \min_{T \ge 0} \sum_{i,j} T_{ij}\,c(w_i, v_j)
-\]
+\end{equation}
 
 subject to:
 
-\[
+\begin{equation}
 \sum_j T_{ij} = p_i, \qquad \sum_i T_{ij} = q_j
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -31,9 +27,9 @@ where:
 
 MoverScore converts this distance into a similarity measure, commonly implemented as \cite{Zhao2019MoverScore}:
 
-\[
+\begin{equation}
 \text{MoverScore}(x,y) = 1 - \text{EMD}(x,y)
-\]
+\end{equation}
 
 with scores in $[0,1]$, where larger values indicate stronger semantic alignment.
 
@@ -53,21 +49,21 @@ The widely used weighting scheme where token importance is normalized via invers
 
 \subsubsection{Application in Software Engineering}
 
-MoverScore has practical utility in SE-related LLM evaluation, where semantic similarity often matters more than syntactic matching. Applications include:
+MoverScore has practical utility in SE-related LLM evaluation, where semantic similarity often matters more than syntactic matching \cite{Zhao2019MoverScore}. Applications include:
 \begin{itemize}
-    \item evaluating similarity of generated and reference code summaries,
-    \item comparing documentation or comment generation outputs,
-    \item assessing functional equivalence between code snippets expressed with different naming conventions or structures,
-    \item measuring semantic adequacy in requirement rewriting or issue summarization tasks.
+    \item Evaluating similarity of generated and reference code summaries,
+    \item Comparing documentation or comment generation outputs,
+    \item Assessing functional equivalence between code snippets expressed with different naming conventions or structures,
+    \item Measuring semantic adequacy in requirement rewriting or issue summarization tasks.
 \end{itemize}
 
-By operating on contextualized embeddings rather than token surface forms, MoverScore provides a semantically grounded signal useful for analyzing the quality of generative models applied to software artifacts.
+By operating on contextualized embeddings rather than token surface forms, MoverScore provides a semantically grounded signal useful for analyzing the quality of generative models applied to software artifacts \cite{Zhao2019MoverScore}.
 
 \subsubsection{Interpretation}
 
 A higher MoverScore indicates stronger semantic and contextual correspondence between generated and reference outputs. Its use of contextual embeddings and optimal transport enables the metric to capture deep semantic relationships, making it robust to rephrasing, stylistic variation, token ordering differences, and syntactic divergence \cite{Zhao2019MoverScore}.
 
-MoverScore is therefore particularly valuable in settings where semantic fidelity is more important than literal string overlap—both in natural language generation and in code-oriented or documentation-oriented software engineering evaluations.
+MoverScore is therefore particularly valuable in settings where semantic fidelity is more important than literal string overlap, both in natural language generation and in code-oriented or documentation-oriented software engineering evaluations.
 
 \subsubsection{Additional References}
 This metric and its variants are referenced and/or used in the following papers:

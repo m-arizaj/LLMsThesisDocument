@@ -1,18 +1,14 @@
 \subsection{Rate-based Metrics}
 
-\subsubsection{Introduction}
-
 Rate-based metrics capture how frequently a model achieves success, correctness, or completion relative to the total number of attempts or evaluations. They provide a clear, interpretable measure of task-level performance across diverse evaluation contexts in software engineering, including functional correctness, vulnerability detection, compilation, and efficiency.
 
 In LLM and software engineering evaluation, these metrics serve as general-purpose indicators of both accuracy and reliability in generated artifacts or agentic workflows. Because rates are normalized (ranging from 0 to 1, or 0–100\%), they allow direct comparisons across tasks, datasets, and experimental setups.
 
-\subsubsection{Formula and General Definition}
-
 The general formulation for a rate metric is:
 
-\[
+\begin{equation}
 \text{Rate} = \frac{N_{\text{successful outcomes}}}{N_{\text{total outcomes}}}
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -27,9 +23,9 @@ This formulation underlies a family of specialized metrics, each adapting the de
 \textbf{1. Success Rate} \\
 Measures the proportion of model outputs that meet functional or syntactic correctness criteria. It is one of the most universal metrics in both LLM and software-engineering contexts.
 
-\[
+\begin{equation}
 \text{Success Rate} = \frac{N_{\text{passed tasks}}}{N_{\text{total tasks}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Reflects general correctness and execution reliability.
@@ -41,9 +37,9 @@ Measures the proportion of model outputs that meet functional or syntactic corre
 \textbf{2. Acceptance Rate} \\
 Quantifies the proportion of generated outputs that are \textit{accepted} by a downstream validator, reviewer, or automated test pipeline.
 
-\[
+\begin{equation}
 \text{Acceptance Rate} = \frac{N_{\text{accepted outputs}}}{N_{\text{submitted outputs}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Serves as a proxy for productivity and quality of code suggestions or patches.
@@ -54,9 +50,9 @@ Quantifies the proportion of generated outputs that are \textit{accepted} by a d
 \textbf{3. Insecure Code Detection Rate} \\
 Evaluates how effectively a system identifies insecure or vulnerable code snippets.
 
-\[
+\begin{equation}
 \text{Detection Rate} = \frac{N_{\text{correctly detected insecure samples}}}{N_{\text{total insecure samples}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Analogous to recall for the “insecure” class; high values indicate strong detection coverage.
@@ -67,9 +63,9 @@ Evaluates how effectively a system identifies insecure or vulnerable code snippe
 \textbf{4. Parsing Success Rate} \\
 Determines the proportion of generated code files that compile or parse successfully.
 
-\[
+\begin{equation}
 \text{Parsing Success Rate} = \frac{N_{\text{syntactically valid files}}}{N_{\text{generated files}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} A structural correctness measure capturing syntactic validity independently of semantic correctness.
@@ -79,15 +75,15 @@ Determines the proportion of generated code files that compile or parse successf
 \textbf{5. Speedup Rate} \\
 Measures performance improvement in execution time or resource usage relative to a baseline model or method.
 
-\[
+\begin{equation}
 \text{Speedup Rate} = \frac{T_{\text{baseline}}}{T_{\text{method}}}
-\]
+\end{equation}
 
 Alternatively expressed as percentage improvement:
 
-\[
+\begin{equation}
 \text{Improvement Rate} = \frac{T_{\text{baseline}} - T_{\text{method}}}{T_{\text{baseline}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Quantifies runtime efficiency gains; higher values indicate faster or more efficient computation.
@@ -98,9 +94,9 @@ Alternatively expressed as percentage improvement:
 \textbf{6. Synthesis Success Rate} \\
 Applies primarily to hardware or compiled code generation tasks, measuring how often generated artifacts successfully synthesize or compile.
 
-\[
+\begin{equation}
 \text{Synthesis Success Rate} = \frac{N_{\text{synthesized and valid outputs}}}{N_{\text{attempted outputs}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Combines both functional and hardware correctness; crucial for evaluating domain-specific synthesis tasks (e.g., VerilogEval).
@@ -111,9 +107,9 @@ Applies primarily to hardware or compiled code generation tasks, measuring how o
 \textbf{7. Win Rate} \\
 Quantifies how often an agent or model outperforms a baseline or achieves a successful outcome in interactive or competitive tasks.
 
-\[
+\begin{equation}
 \text{Win Rate} = \frac{N_{\text{wins}}}{N_{\text{total interactions}}}
-\]
+\end{equation}
 
 \begin{itemize}
     \item \textit{Interpretation:} Used in multi-agent and tool-use settings to measure task completion, decision accuracy, or reward-based performance.

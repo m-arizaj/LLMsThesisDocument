@@ -1,7 +1,5 @@
 \subsection{Cohesion and Decoupling}
 
-\subsubsection{Introduction}
-
 Cohesion and Decoupling are foundational principles for assessing the structural quality of software designs. In DevEval, these principles are explicitly used to evaluate LLM-generated software design artifacts — including UML class diagrams, sequence diagrams, and architecture designs. The authors describe these principles as core criteria shared across all design subtasks:
 
 \begin{quote}
@@ -9,8 +7,6 @@ Cohesion and Decoupling are foundational principles for assessing the structural
 \end{quote}
 
 Cohesion measures how well the responsibilities within a module belong together, while decoupling (low coupling) measures the independence of modules from one another. Together, they form a structural assessment of how well a model can produce modular, maintainable, and well-organized designs during the early phases of the software development lifecycle \cite{Li2024FullSDLC}.
-
-\subsubsection{Formula}
 
 DevEval does not introduce explicit numerical formulas for cohesion or coupling. Instead, these principles function as qualitative evaluation criteria used by an LLM-as-a-judge framework to compare design quality \cite{Li2024FullSDLC}. The paper clarifies that these principles guide structural reasoning. Because DevEval uses pairwise LLM-based judgments rather than static numerical computation, the metric is conceptual rather than algebraic.
 
@@ -22,9 +18,9 @@ However, cohesion and coupling can be understood using traditional software engi
 
 A conceptual normalized structural quality score could therefore be represented as:
 
-\[
+\begin{equation}
 \text{DesignStructuralQuality} = f(\text{Cohesion}, \text{Coupling})
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -85,7 +81,7 @@ Thus, cohesion and decoupling indirectly support later DevEval tasks (implementa
 
 \subsubsection{Interpretation}
 
-\textbf{What a high cohesion score means}
+\textbf{1. What a high cohesion score means}
 \begin{itemize}
     \item Classes and modules each have a focused, unified purpose.
     \item Responsibilities are not scattered.
@@ -93,7 +89,7 @@ Thus, cohesion and decoupling indirectly support later DevEval tasks (implementa
     \item Architectural layouts reflect logical groupings.
 \end{itemize}
 
-\textbf{What a high decoupling score means}
+\textbf{2. What a high decoupling score means}
 \begin{itemize}
     \item Classes and modules are independent.
     \item Few unnecessary dependencies.
@@ -101,7 +97,7 @@ Thus, cohesion and decoupling indirectly support later DevEval tasks (implementa
     \item Architecture avoids entanglement.
 \end{itemize}
 
-\textbf{Advantages}
+\textbf{3. Advantages}
 \begin{itemize}
     \item Reflects human-understandable design quality \cite{Li2024FullSDLC}.
     \item Connects closely with classic SE metrics.
@@ -109,7 +105,7 @@ Thus, cohesion and decoupling indirectly support later DevEval tasks (implementa
     \item Effective at evaluating long-context LLM capabilities.
 \end{itemize}
 
-\textbf{Limitations}
+\textbf{4. Limitations}
 \begin{itemize}
     \item DevEval uses qualitative LLM-as-a-judge scoring, not numerical formulas \cite{Li2024FullSDLC}.
     \item Evaluating cohesion and coupling can involve subjective judgment.
