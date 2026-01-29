@@ -1,19 +1,15 @@
 \subsection{Pearson's r}
 
-\subsubsection{Introduction}
-
 Pearson's $r$ is a statistical correlation metric that quantifies the linear relationship between two continuous variables.
 In the context of software engineering and large language model evaluation, it measures how strongly a model's predictions or metric scores align with human judgments or ground-truth references.
 A Pearson coefficient close to $+1$ indicates a strong positive correlation (both values increase together), $-1$ a strong negative correlation, and $0$ no linear relationship.
 
-\subsubsection{Formula}
-
 The coefficient is defined as:
 
-\[
+\begin{equation}
 r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}
 {\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}

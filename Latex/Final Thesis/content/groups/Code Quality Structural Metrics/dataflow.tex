@@ -1,7 +1,5 @@
 \subsection{Data-Flow Match}
 
-\subsubsection{Introduction}
-
 Data-Flow Match evaluates how closely the semantic data-flow structure of generated code aligns with a reference implementation. Unlike surface-level similarity metrics (BLEU, ROUGE) or pure syntactic metrics (AST match), data-flow match analyzes how variables are defined, propagate, and interact across operations.
 
 Loosely, it measures whether the generated program preserves the logical computation performed by the reference program.
@@ -20,8 +18,6 @@ Additionally, the one-shot correction study emphasizes that correct repairs must
 
 Together, these show that Data-Flow Match acts as a static semantic metric approximating functional correctness.
 
-\subsubsection{Formula}
-
 The CodeBLEU framework does not publish a single closed-form formula specifically named “Data-Flow Match,” but its computation is conceptually defined as comparing the sets of data-flow edges (definition–use relations) extracted from reference code $C_{\text{ref}}$ and generated code $C_{\text{gen}}$ \cite{Chen2024SurveyCodeGen}.
 
 Let:
@@ -32,13 +28,13 @@ Let:
 
 A common abstract formulation is:
 
-\[
+\begin{equation}
 \text{DataFlowMatch}(C_{\text{gen}}, C_{\text{ref}})
 =
 \frac{| DF(C_{\text{gen}}) \cap DF(C_{\text{ref}}) |}
 {| DF(C_{\text{ref}}) |}
-\]
-
+\end{equation}
+        
 This captures:
 \begin{itemize}
     \item how many reference data-flow relations appear in generated code,
@@ -81,21 +77,21 @@ While not formalized as a separate metric there, it supports using Data-Flow Mat
 
 \subsubsection{Applications in Software Engineering}
 
-\textbf{Code Generation Evaluation} \\
+\textbf{1. Code Generation Evaluation} \\
 Data-Flow Match helps detect incorrect variable propagation, missing or extraneous assignments, swapped or inverted computation steps, and dead or unused variable patterns. This is especially important where two pieces of code may look similar (tokens/AST) but implement different logic \cite{Chen2024SurveyCodeGen}.
 
-\textbf{Code Repair Validation} \\
+\textbf{2. Code Repair Validation} \\
 Data-flow preservation ensures the fixed code maintains the intended logic, variables are neither dropped nor misused, and the repair does not introduce hidden semantic regressions. One-shot correction approaches explicitly call out bridging “data-flow gaps” as necessary for correct repairs \cite{Le2024OneShotCorrection}.
 
-\textbf{Repository-Level Reasoning} \\
+\textbf{3. Repository-Level Reasoning} \\
 On larger projects, data-flow mismatch across functions or modules can cause integration bugs, wrong state propagation, or API misuse. Data-flow–based metrics can therefore support repository-level evaluation.
 
-\textbf{Program Understanding \& Refactoring} \\
+\textbf{4. Program Understanding \& Refactoring} \\
 Data-flow analysis naturally supports semantic clone detection, behavior-preserving refactor checks, and semantic search (e.g., “find code that computes this thing similarly”). Data-Flow Match can underlie these evaluations as a quantitative metric.
 
 \subsubsection{Interpretation}
 
-\textbf{High Data-Flow Match} \\
+\textbf{1. High Data-Flow Match} \\
 Indicates:
 \begin{itemize}
     \item strong semantic preservation
@@ -104,7 +100,7 @@ Indicates:
     \item faithful reproduction of the underlying logic
 \end{itemize}
 
-\textbf{Low Data-Flow Match} \\
+\textbf{2. Low Data-Flow Match} \\
 Indicates:
 \begin{itemize}
     \item incorrect semantics despite surface similarity
@@ -113,14 +109,14 @@ Indicates:
     \item logical errors hidden behind valid syntax
 \end{itemize}
 
-\textbf{Strengths}
+\textbf{3. Strengths}
 \begin{itemize}
     \item Captures semantic similarity beyond tokens/AST \cite{Chen2024SurveyCodeGen}.
     \item Aligns more closely with human judgments of correctness than n-gram metrics.
     \item Language-general in principle, if parsers/data-flow tools exist.
 \end{itemize}
 
-\textbf{Limitations}
+\textbf{4. Limitations}
 \begin{itemize}
     \item Requires reliable parsing and data-flow extraction (tooling heavy).
     \item Cannot be computed if code does not parse or is incomplete.

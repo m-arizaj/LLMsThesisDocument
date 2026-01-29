@@ -1,19 +1,15 @@
 \subsection{Error Metrics}
 
-\subsubsection{Introduction}
-
 Error metrics quantify the deviation between predicted or generated outputs and their expected or reference values.
 In software engineering and LLM evaluation, these metrics are used to assess reliability, calibration, robustness, and the degree of correctness in model predictions or code outputs. They encompass measures such as Expected Calibration Error (ECE), Mean Absolute Error (MAE), Error Rate, and Human Error Rate, each focusing on a different aspect of model performance and reliability.
-
-\subsubsection{Formula and Structure}
 
 \textbf{1. Expected Calibration Error (ECE)}
 ECE measures how well a model's predicted confidence aligns with actual correctness \cite{Lin2024SWC, Liang2022HELM, Chang2023SurveyLLMs, Srivastava2022BeyondImitation}.
 For a model partitioned into $M$ bins based on confidence scores:
 
-\[
+\begin{equation}
 \text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{n} \, |\text{acc}(B_m) - \text{conf}(B_m)|
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -28,18 +24,18 @@ A lower ECE indicates better calibration between model confidence and accuracy.
 \textbf{2. Mean Absolute Error (MAE)}
 MAE measures the average magnitude of errors between predicted and actual values, without considering direction \cite{Yang2024CodeScoreR, Dong2023CodeScore}:
 
-\[
+\begin{equation}
 \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y_i}|
-\]
+\end{equation}
 
 It is widely used in \textit{Fit-to-Pass} evaluations and \textit{consistency checks} for LLM-based code generation.
 
 \textbf{3. Error Rate}
 Error Rate quantifies the proportion of incorrect predictions or generated outputs relative to the total \cite{Hemberg2024EvolvingCodeLLM}:
 
-\[
+\begin{equation}
 \text{ErrorRate} = \frac{N_{\text{errors}}}{N_{\text{total}}}
-\]
+\end{equation}
 
 This metric may be applied at the operator, token, or program level, depending on the evaluation task.
 

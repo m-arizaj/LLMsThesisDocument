@@ -1,7 +1,5 @@
 \subsection{Correctness}
 
-\subsubsection{Introduction}
-
 In software engineering evaluation, correctness captures whether an LLM-produced artifact (code, repair, selection, or workflow) satisfies its required specification. Across the analysed papers, correctness consistently appears as:
 \begin{itemize}
     \item LLM-as-judge functional correctness scoring
@@ -12,24 +10,22 @@ In software engineering evaluation, correctness captures whether an LLM-produced
 \end{itemize}
 Correctness is the foundational dimension for evaluating code-generating LLMs, forming the core target in almost every SE-related study.
 
-\subsubsection{Formula}
-
 At the highest level, correctness is binary per instance:
 
 Let
-\[
+\begin{equation}
 c_i =
 \begin{cases}
 1 & \text{if the produced artifact for instance } i \text{ is correct} \\
 0 & \text{otherwise}
 \end{cases}
-\]
+\end{equation}
 
 Then the basic correctness rate is:
 
-\[
+\begin{equation}
 \text{Correctness Rate} = \frac{1}{N}\sum_{i=1}^{N} c_i
-\]
+\end{equation}
 
 Different papers instantiate this core notion in domain-specific ways.
 
@@ -45,9 +41,9 @@ The scoring prompt instructs the LLM to evaluate:
 
 The resulting score:
 
-\[
+\begin{equation}
 \text{FCS}(x,y,r)\in\{0,1,2,3,4\}
-\]
+\end{equation}
 
 This yields a graded correctness signal rather than a binary one, and the work evaluates its correlation with true execution-based correctness on HumanEval/HumanEval-X.
 
@@ -64,9 +60,9 @@ The ensemble metric $E(x,y,r)$ approximates human correctness judgements.
 
 Although no explicit formula is given, conceptually:
 
-\[
+\begin{equation}
 E(x,y,r)=f(\text{multiple LLM-judge signals})
-\]
+\end{equation}
 
 This increases robustness to single-model biases \cite{Zhou2025LLMAsJudge}.
 
@@ -87,35 +83,35 @@ Let:
 
 Then:
 
-\[
+\begin{equation}
 \text{Correct (\%)} = \frac{n_{\text{corr}}}{N}\times100
-\]
+\end{equation}
 
-\[
+\begin{equation}
 \text{Partially Correct (\%)} = \frac{n_{\text{part}}}{N}\times100
-\]
+\end{equation}
 
-\[
+\begin{equation}
 \text{Incorrect (\%)} = \frac{n_{\text{inc}}}{N}\times100
-\]
+\end{equation}
 
 This gives a categorical correctness distribution \cite{Anand2024AnalysisLLMCode}.
 
 \textbf{4. Correct Selection Rate (CSR)} \cite{Xu2025LLMAgentsToolLearning} \\
 In tool-learning contexts, correctness is applied to decision quality:
 
-\[
+\begin{equation}
 \text{CSR} = \frac{\text{\# of instructions where the correct tool is chosen}}{\text{\# of instructions evaluated}}
-\]
+\end{equation}
 
 This is a correctness measure of tool choice, not code \cite{Xu2025LLMAgentsToolLearning}.
 
 \textbf{5. Correct Outcome Ratio (COR)} \cite{Le2024OneShotCorrection} \\
 For one-shot correction workflows:
 
-\[
+\begin{equation}
 \text{COR} = \frac{\text{\# of tasks whose final outcome is correct}}{\text{\# of tasks evaluated}}
-\]
+\end{equation}
 
 COR measures how often the final (potentially corrected) code is correct, allowing comparisons between:
 \begin{itemize}
@@ -131,9 +127,9 @@ For formal specification repair, correctness is strict: either a repair makes th
 
 Formally:
 
-\[
+\begin{equation}
 \text{Correct@k} = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\left[\exists j\le k:\text{is\_correct}(y_i^{(j)})=1\right]
-\]
+\end{equation}
 
 Correct@k captures benefits from diverse sampling \cite{Alhanahnah2025FormalSpecRepair}.
 
@@ -160,7 +156,7 @@ Across all, correctness remains the most essential indicator of SE task success.
 
 \subsubsection{Interpretation}
 
-\textbf{High Correctness indicates:}
+\textbf{1. High Correctness indicates:}
 \begin{itemize}
     \item Solutions satisfy required behavior
     \item High agreement with human or oracle judgments
@@ -168,7 +164,7 @@ Across all, correctness remains the most essential indicator of SE task success.
     \item Effective correction pipelines
 \end{itemize}
 
-\textbf{Low Correctness indicates:}
+\textbf{2. Low Correctness indicates:}
 \begin{itemize}
     \item Functional errors or broken behavior
     \item Misunderstanding of problem constraints
@@ -176,7 +172,7 @@ Across all, correctness remains the most essential indicator of SE task success.
     \item Incorrect agent tool-choice behavior
 \end{itemize}
 
-\textbf{Strengths}
+\textbf{3. Strengths}
 \begin{itemize}
     \item High interpretability (“did it work?”)
     \item Strong alignment with human goals
@@ -184,7 +180,7 @@ Across all, correctness remains the most essential indicator of SE task success.
     \item Flexible across domains (code, tools, formal specs)
 \end{itemize}
 
-\textbf{Limitations}
+\textbf{4. Limitations}
 \begin{itemize}
     \item Some variants require expensive oracles like solvers and tests
     \item LLM-as-judge variants may inherit biases

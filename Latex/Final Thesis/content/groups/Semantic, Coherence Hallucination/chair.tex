@@ -1,22 +1,19 @@
 \subsection{CHAIR}
 
-\subsubsection{Introduction}
-
 CHAIR is a visual-textual consistency metric designed to quantify object hallucination, cases where a model mentions objects that are not present in an image . Introduced by Rohrbach et al. (2018) in \textit{Object Hallucination in Image Captioning} (EMNLP 2018), it evaluates the alignment between generated captions and ground-truth visual object annotations, thus measuring how faithful the description is to the image content \cite{Rohrbach2018ObjectHallucination}.
 Unlike traditional captioning metrics such as CIDEr or SPICE, which only assess textual similarity to reference captions, CHAIR measures the semantic accuracy of image grounding.
 In 2024, the AMBER benchmark (Wang et al., 2024) extended CHAIR as part of a multi-dimensional hallucination evaluation suite for Multimodal Large Language Models (MLLMs), integrating it into the AMBER Score for combined generative and discriminative assessment \cite{Wang2023AMBER}.
 
-\subsubsection{Formula}
 
 CHAIR has two primary variants \cite{Rohrbach2018ObjectHallucination}:
 
-\[
+\begin{equation}
 \text{CHAIR}_i = \frac{|H|}{|M|}
-\]
+\end{equation}
 
-\[
+\begin{equation}
 \text{CHAIR}_s = \frac{|S_H|}{|S|}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -33,9 +30,9 @@ In practice, object presence is validated against ground-truth labels from datas
 
 Within AMBER, CHAIR is computed on generated MLLM responses as follows \cite{Wang2023AMBER}:
 
-\[
+\begin{equation}
 \text{CHAIR}(R) = 1 - \frac{\text{len}(R'_{\text{obj}} \cap A_{\text{obj}})}{\text{len}(R'_{\text{obj}})}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -45,9 +42,9 @@ Where:
 
 CHAIR forms part of the AMBER Score, a composite evaluation integrating CHAIR for generative hallucination and $F_1$ for discriminative performance:
 
-\[
+\begin{equation}
 \text{AMBER Score} = \frac{1}{2}\,(1 - \text{CHAIR} + F_1)
-\]
+\end{equation}
 
 This unified formulation rewards models that both minimize hallucinations and maintain high discriminative accuracy \cite{Wang2023AMBER}.
 

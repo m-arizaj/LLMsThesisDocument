@@ -1,32 +1,28 @@
 \subsection{Coherence}
 
-\subsubsection{Introduction}
-
 Coherence measures the internal consistency and logical organization of model outputs. In natural language processing, it evaluates how smoothly sentences or ideas connect to form a unified text \cite{Sheng2023BBScore}. In software engineering, coherence captures the consistency of architectural principles and dependencies across complex systems.
 The Architectural Coherence Score (ACS), introduced in LoCoBench (Qiu et al., 2025), extends this concept to large-scale code reasoning and design evaluation, assessing how well a model preserves architectural integrity throughout long-context scenarios \cite{Qiu2025LoCoBench}.
 
-\subsubsection{Formula and Estimation}
-
 Coherence does not have a single analytical formula, but several frameworks approximate it through statistical or embedding-based similarity between adjacent or related units.
 
-\textbf{Linguistic Coherence} \\
+\textbf{1. Linguistic Coherence} \\
 Embedding-based methods compute pairwise similarity between sentence or paragraph representations:
-\[
+\begin{equation}
 \text{Coherence} = \frac{1}{N-1} \sum_{i=1}^{N-1} \cos(E_i, E_{i+1})
-\]
+\end{equation}
 where $E_i$ represents the embedding vector of the $i$-th sentence.
 Higher cosine similarity indicates smoother semantic transitions.
 
 Discourse-aware models (e.g., DiscoScore) enhance this by incorporating discourse relations and entity tracking, improving alignment with human perception of coherence \cite{Zhao2023DiscoScore}.
 
-\textbf{Architectural Coherence Score (ACS)} \\
+\textbf{2. Architectural Coherence Score (ACS)} \\
 In software engineering evaluation, the \textit{Architectural Coherence Score (ACS)} quantifies how consistently a codebase adheres to established architectural principles and patterns over large contexts \cite{Qiu2025LoCoBench}.
 
 Formally, given a code system $C$ and a set of architectural patterns $P$, the ACS is defined as:
 
-\[
+\begin{equation}
 \text{ACS}(C) = \frac{1}{|P|} \sum_{p \in P} \frac{w(p) \cdot \alpha(p, C)}{\kappa(p) + \epsilon}
-\]
+\end{equation}
 
 where:
 \begin{itemize}
@@ -48,7 +44,7 @@ This metric complements others in LoCoBench:
 ACS, instead, captures global architectural consistency, serving as a top-level indicator of Software Engineering Excellence and contributing 40\% of the overall LoCoBench Score (LCBS) \cite{Qiu2025LoCoBench}.
 
 \subsubsection{Variants and Contexts of Use}
-
+    
 \begin{itemize}
     \item \textbf{Textual Coherence:} Evaluates the fluency and logical progression of text (General LLM Evaluation) \cite{Sheng2023BBScore}.
     \item \textbf{Architectural Coherence Score (ACS):} Measures structural and design consistency in code systems (LoCoBench, 2025) \cite{Qiu2025LoCoBench}.

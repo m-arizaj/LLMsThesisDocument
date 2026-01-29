@@ -1,15 +1,11 @@
 \subsection{Code Style Adherence}
 
-\subsubsection{Introduction}
-
 Code Style Adherence (CSA) is one of the three Code Quality Assessment metrics in LoCoBench. It evaluates whether code produced by a model follows the conventions and best practices expected in professional software engineering \cite{Qiu2025LoCoBench}. The authors explicitly define CSA as:
 \begin{quote}
 “Style guide compliance measurement based on coding standards literature (Kernighan and Pike, 1999) and automated linting frameworks, evaluating naming conventions, formatting consistency, and language-specific best practices.” \cite{Qiu2025LoCoBench}
 \end{quote}
 
 Within the LoCoBench Score (LCBS), CSA contributes to the Code Quality dimension, which holds a 20\% weight in the final composite score \cite{Qiu2025LoCoBench}.
-
-\subsubsection{Formula}
 
 The paper does not provide a standalone raw formula for CSA, because its computation depends on the underlying language-specific style tools. However, the authors explain that CSA is one of the metrics included in the Code Quality set:
 
@@ -19,21 +15,21 @@ The paper does not provide a standalone raw formula for CSA, because its computa
 
 While the raw CSA score is tool-dependent, LoCoBench provides a unified normalization function used for all metrics, including CSA:
 
-\[
+\begin{equation}
 N(m_i) = \frac{m_i - \min(m_i)}{\max(m_i) - \min(m_i)}
-\]
+\end{equation}
 
 The normalized metrics are then aggregated into the Code Quality score:
 
-\[
+\begin{equation}
 CQ = \frac{1}{3}\left(N(\text{SAS}) + N(\text{AIF}) + N(\text{CSA})\right)
-\]
+\end{equation}
 
 And the Code Quality dimension contributes to the LoCoBench Score via \cite{Qiu2025LoCoBench}:
 
-\[
+\begin{equation}
 \text{LCBS} = 5\,(0.4\,\text{SE} + 0.3\,\text{FC} + 0.2\,\text{CQ} + 0.1\,\text{LCU})
-\]
+\end{equation}
 
 \subsubsection{Applications in Software Engineering}
 
@@ -59,7 +55,7 @@ Together, these three measures provide a multi-dimensional view of code quality 
 \subsubsection{Interpretation}
 
 \textbf{What a high CSA score means} \\
-A high CSA score indicates that the model’s output:
+A high CSA score indicates that the model's output:
 \begin{itemize}
     \item follows standard naming and formatting conventions,
     \item adheres to established best practices for the language,

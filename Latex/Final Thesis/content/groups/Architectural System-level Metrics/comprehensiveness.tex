@@ -1,7 +1,5 @@
 \subsection{Comprehensiveness Score (CS)}
 
-\subsubsection{Introduction}
-
 The Comprehensiveness Score (CS) is one of the eight metrics in the Software Engineering Excellence dimension of LoCoBench. It evaluates how complete, thorough, and requirement-aligned an LLM’s solution is when performing complex software engineering tasks. The authors define CS as:
 
 \begin{quote}
@@ -9,8 +7,6 @@ The Comprehensiveness Score (CS) is one of the eight metrics in the Software Eng
 \end{quote}
 
 This makes CS a high-level semantic metric that captures not only whether a solution works, but whether it fully satisfies all instructions, produces complete code artifacts, and includes adequate explanation or documentation. Unlike correctness-oriented metrics that focus on execution, CS evaluates holistic completeness.
-
-\subsubsection{Formula}
 
 The LoCoBench paper does not provide a specific numerical formula for Comprehensiveness Score. Instead, the metric is conceptual and grounded in classical software completeness theory. The authors clearly present CS as a qualitative measure:
 
@@ -22,15 +18,15 @@ Because CS evaluates aspects like coverage, documentation, and requirement fulfi
 
 A conceptual representation of CS—consistent with its role in LoCoBench’s normalization framework—is:
 
-\[
+\begin{equation}
 CS = f(\text{Coverage},\; \text{Documentation},\; \text{RequirementFulfillment})
-\]
+\end{equation}
 
 The final contribution of CS to the LoCoBench Score (LCBS) is produced through LoCoBench’s shared normalization function \cite{Qiu2025LoCoBench}:
 
-\[
+\begin{equation}
 N(m_i) = \frac{m_i - \min(m_i)}{\max(m_i) - \min(m_i)}
-\]
+\end{equation}
 
 and then aggregated within the Software Engineering Excellence dimension.
 
@@ -99,7 +95,7 @@ This makes it important for evaluating LLMs in tasks that resemble real-world en
 
 \subsubsection{Interpretation}
 
-\textbf{What a high CS means} \\
+\textbf{1. What a high CS means} \\
 A high Comprehensiveness Score indicates that the model:
 \begin{itemize}
     \item covered all required functionality,
@@ -109,7 +105,7 @@ A high Comprehensiveness Score indicates that the model:
     \item handled edge cases or secondary details.
 \end{itemize}
 
-\textbf{Strengths}
+\textbf{2. Strengths}
 \begin{itemize}
     \item Captures completeness, which is a core engineering quality.
     \item Reflects real-world evaluation of developer work.
@@ -117,7 +113,7 @@ A high Comprehensiveness Score indicates that the model:
     \item Complements both code quality and correctness metrics.
 \end{itemize}
 
-\textbf{Limitations}
+\textbf{3. Limitations}
 \begin{itemize}
     \item No explicit formula is given in the paper.
     \item Likely dependent on LLM-as-a-judge scoring.

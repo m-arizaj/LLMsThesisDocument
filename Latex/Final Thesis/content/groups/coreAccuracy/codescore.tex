@@ -1,12 +1,8 @@
 \subsection{CodeScore}
 
-\subsubsection{Introduction}
-
 CodeScore is an execution-informed evaluation metric designed to measure the functional correctness of generated code without requiring direct code execution. It was introduced in the paper \textit{CodeScore: Evaluating Code Generation by Learning Code Execution} (Dong et al., 2023) \cite{Dong2023CodeScore} as a learned model-based proxy for traditional execution-based metrics. Unlike BLEU or CodeBLEU, which rely on textual overlap, CodeScore uses a trained model to infer how well generated code would perform on hidden test cases by learning representations of execution behavior \cite{Dong2023CodeScore}.
 
 The metric outputs a continuous score between 0 and 1 that reflects both executability and behavioral similarity between generated and reference code. It has been widely adopted in software engineering evaluation benchmarks, offering a balance between reliability and computational efficiency.
-
-\subsubsection{Formula and Structure}
 
 The CodeScore model (implemented within the UniCE framework) predicts two key quantities \cite{Dong2023CodeScore}:
 \begin{itemize}
@@ -16,9 +12,9 @@ The CodeScore model (implemented within the UniCE framework) predicts two key qu
 
 The training loss is defined as:
 
-\[
+\begin{equation}
 L = L_C + L_E
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -28,9 +24,9 @@ Where:
 
 The model outputs a scalar CodeScore value:
 
-\[
+\begin{equation}
 \text{CodeScore} = f(\text{generated\_code}, \text{reference\_code}, \text{task\_description})
-\]
+\end{equation}
 
 which approximates the true execution-based correctness without actually executing the code.
 

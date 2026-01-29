@@ -1,20 +1,16 @@
 \subsection{chrF}
 
-\subsubsection{Introduction}
-
 chrF is a character-level evaluation metric proposed to assess text similarity between system outputs and human references \cite{Popovic2017ChrFPlus}.
 It is based on the F-score computed over the overlap of character n-grams, combining precision and recall.
 Unlike word-based metrics such as BLEU, chrF is less sensitive to tokenization and more robust across morphologically rich languages \cite{Popovic2017ChrFPlus}.
 In software engineering, chrF is used to measure similarity between generated and reference code snippets, summaries, or documentation, capturing how closely a model’s output aligns at the subword or character level.
 
-\subsubsection{Formula}
-
 chrF is calculated as the F$\beta$-score between character-level n-gram precision and recall \cite{Popovic2017ChrFPlus}:
 
-\[
+\begin{equation}
 \text{chrF}_{\beta} = \frac{(1 + \beta^2) \cdot (\text{Precision} \times \text{Recall})}
 {(\beta^2 \cdot \text{Precision}) + \text{Recall}}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}

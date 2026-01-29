@@ -1,12 +1,8 @@
 \subsection{Bug Metrics}
 
-\subsubsection{Introduction}
-
 Bug Metrics, in the context of this study, refer to software attributes used to predict whether a class will contain defects. Rather than capturing detection or localization accuracy, the paper used as reference evaluates a set of static source-code metrics that statistically correlate with defect occurrence in large software systems \cite{Rebro2023SourceCodeMetrics}.
 These metrics quantify class characteristics such as size (LOC), complexity (WMC, NLE), inheritance structure (DIT, NOC), data and method exposure (NPA, NPM), coupling (CBO, CBOI), cohesion (LCOM5), and documentation quality (CD).
 The authors analyze 12 such metrics over 275 versions of 39 Java projects, linking them to class-level defect labels extracted from GitHub commits. Together, these metrics serve as bug metrics in the sense that they help identify which classes are most defect-prone \cite{Rebro2023SourceCodeMetrics}.
-
-\subsubsection{Formula and Structure}
 
 The paper does not define a general mathematical formula. Instead, each metric is computed directly from its structural definition. For example:
 

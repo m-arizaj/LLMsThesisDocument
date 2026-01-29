@@ -1,11 +1,7 @@
 \subsection{CodeJudge}
 
-\subsubsection{Introduction}
-
 CodeJudge is an LLM-based evaluation framework designed to assess the semantic correctness of machine-generated code without relying on test cases. Proposed by Tong \& Zhang (2024) \cite{Tong2024CodeJudge}, CodeJudge introduces a “slow thinking” process that enables large language models to reason through code step by step, improving alignment with human judgment in code evaluation tasks.
 Traditional test-based metrics like Pass@k depend on unit tests, while token-based metrics like BLEU, ROUGE-L and CodeBLEU fail to capture semantic equivalence when code differs syntactically but behaves correctly \cite{Evtikhiev2023OutOfBLEU}. CodeJudge addresses these limitations by using structured reasoning prompts and error taxonomies to judge correctness and quality, even in the absence of reference implementations.
-
-\subsubsection{Formula and Scoring Mechanism}
 
 CodeJudge introduces two main evaluation procedures:
 
@@ -25,18 +21,19 @@ The binary decision $f(c, t) \in \{0, 1\}$ depends on whether all task requireme
 
 Formally:
 
-\[
+\begin{equation}
 f(c, t) =
 \begin{cases}
 1, & \text{if all required functionalities are correctly implemented,} \\
 0, & \text{otherwise.}
 \end{cases}
-\]
+\end{equation}
 
 \textbf{2. Taxonomy-Guided Fault Localization} \\
 For tasks requiring graded correctness (partial or incomplete code), CodeJudge provides a taxonomy of inconsistencies with corresponding severities:
 
 \begin{center}
+\captionof{table}{CodeJudge Inconsistency Taxonomy}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Severity} & \textbf{Type of Inconsistency} & \textbf{Description} \\ \hline
@@ -49,23 +46,23 @@ Fatal & Undefined variables, incomplete code & Cause crashes or total failure \\
 
 Each detected inconsistency contributes a penalty based on severity weights:
 
-\[
+\begin{equation}
 \begin{aligned}
 S &= \text{Num}_{\text{small}} \times 5 \\
 M &= \text{Num}_{\text{major}} \times 50 \\
 F &= \text{Num}_{\text{fatal}} \times 100
 \end{aligned}
-\]
+\end{equation}
 
 Then, the penalty and final CodeJudge Score are computed as:
 
-\[
+\begin{equation}
 \text{Penalty} = \max(-100, -(S + M + F))
-\]
+\end{equation}
 
-\[
+\begin{equation}
 \text{Score} = 1 - \frac{\text{Penalty}}{100}
-\]
+\end{equation}
 
 The score ranges from 0 to 1, where 1 indicates a fully correct solution and values below 1 reflect increasing degrees of error severity.
 

@@ -1,25 +1,21 @@
 \subsection{Kendall's \texorpdfstring{$\tau$}{tau}}
 
-\subsubsection{Introduction}
-
 Kendall's $\tau$ (Kendall's tau) is a rank correlation coefficient that measures the degree of agreement between two ranked variables. It evaluates how consistently two sets of rankings (for example, human judgments and automatic metric scores) order the same items. 
 In software engineering evaluation, it is widely applied to assess how well an automatic metric correlates with human or functional correctness evaluations, particularly in code generation, metric validation, and LLM-based assessments.
-
-\subsubsection{Formula and Structure}
 
 Kendall's $\tau$ compares all possible pairs of items to determine whether their relative orderings are consistent (concordant) or inconsistent (discordant). 
 
 Formally, given $C$ concordant pairs and $D$ discordant pairs:
 
-\[
+\begin{equation}
 \tau = \frac{C - D}{\frac{1}{2}n(n-1)}
-\]
+\end{equation}
 
 Alternatively, to handle ties in ranking values—a critical issue in modern metric evaluation—the more robust variant \textit{Kendall's $\tau_b$} is used \cite{Deutsch2023TiesMatter}:
 
-\[
+\begin{equation}
 \tau_b = \frac{C - D}{\sqrt{(C + D + T_h)(C + D + T_m)}}
-\]
+\end{equation}
 
 Where:
 \begin{itemize}
@@ -38,9 +34,9 @@ The resulting value of $\tau$ ranges from $-1$ to $+1$:
 
 If an automatic code quality metric and human evaluations order 100 solutions similarly, and 70 pairs are concordant while 30 are discordant:
 
-\[
+\begin{equation}
 \tau = \frac{70 - 30}{100} = 0.4
-\]
+\end{equation}
 
 This indicates a moderate positive correlation between the automatic metric and human judgment.
 
@@ -63,4 +59,4 @@ This makes Kendall's $\tau$ a benchmark correlation measure for assessing reliab
 \subsubsection{Additional References}
 This metric and its variants are referenced and/or used in the following papers:
 
-\cite{Zhou2025LLMAsJudge, Zhuo2023ICEScore, Zhou2023CodeBERTScore, Dong2023CodeScore, Tong2024CodeJudge}
+\cite{Zhou2025LLMAsJudge, Zhuo2023ICEScore, Dong2023CodeScore, Tong2024CodeJudge, Zhou2023CodeBERTScore}
