@@ -1,6 +1,5 @@
 \subsection{User-Related Metrics (Rating \& Satisfaction)}
 
-\subsubsection*{Introduction}
 In the evaluation of code generation models, \textbf{User-Related Metrics} are a class of \textbf{feedback-based evaluation} methods. These metrics are essential for assessing the practical quality of generated code by incorporating human judgment and expertise.
 
 Unlike automated metrics that check for correctness or similarity, user-related metrics focus on the practical \textbf{usability, helpfulness, and overall experience} of a developer using an LLM as a tool. This approach helps evaluate aspects like readability, maintainability, and real-world effectiveness.
@@ -23,20 +22,32 @@ Developers used Copilot within Visual Studio Code to complete tasks (code genera
 \textbf{Purpose} \\
 This metric aims to comprehensively evaluate a model's performance in a real-world development environment, assessing its practical applicability and efficiency gains by directly polling developers.
 
-\subsubsection*{Comparative Summary}
-\begin{center}
-\begin{tabular}{|p{3cm}|p{4.5cm}|c|p{3.5cm}|}
-\hline
-\textbf{Metric} & \textbf{Definition} & \textbf{Scale} & \textbf{Benchmark} \\
-\hline
-User Rating & Measures the ``usability and helpfulness'' of generated code. & 1 to 5 & RealHumanEval \\
-\hline
-User Satisfaction & Measures the ``overall experience'' of using the LLM tool. & 1 to 5 & Copilot Evaluation Harness \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of User-Centric Evaluation Metrics}
+    \label{tab:user_metrics}
+    \begin{tabular}{|p{3cm}|p{4.5cm}|c|p{3.5cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Definition} & \textbf{Scale} & \textbf{Benchmark} \\
+    \hline
+    User Rating & Measures the ``usability and helpfulness'' of generated code. & 1 to 5 & RealHumanEval \\
+    \hline
+    User Satisfaction & Measures the ``overall experience'' of using the LLM tool. & 1 to 5 & Copilot Evaluation Harness \\
+    \hline
+    \end{tabular}
+\end{table}
 
+\subsubsection{Applications in Software Engineering}
 
+According to the survey on evaluating LLMs in code generation, User-Related Metrics are applied in software engineering to bridge the gap between automated correctness (e.g., unit tests) and the actual utility of the tool for developers \cite{Chen2024SurveyCodeGen}.
+
+\begin{itemize}
+    \item \textbf{Benchmarking in Real-World Scenarios}: These metrics are used to evaluate models in realistic programming environments rather than isolated leetcode-style problems. For instance, the \textbf{RealHumanEval} benchmark applies User Ratings to assess how helpful a model is when a programmer is performing actual tasks like auto-completion or refactoring \cite{Chen2024SurveyCodeGen}.
+
+    \item \textbf{Evaluation of Integrated Developer Experience (DX)}: Beyond code syntax, these metrics are applied to assess the full interaction within an IDE (e.g., Visual Studio Code). The \textbf{Copilot Evaluation Harness} uses User Satisfaction to measure the success of the model across diverse activities such as bug fixing, test generation, and documentation, ensuring the tool effectively streamlines the software development lifecycle \cite{Chen2024SurveyCodeGen}.
+
+    \item \textbf{Complementing Automated Metrics}: They are applied to identify discrepancies where automated metrics (like Pass@k) might fail. A model might generate correct code that is difficult to read or integrate; User-Related Metrics capture these nuances (readability, maintainability), driving "user-centric" optimizations in model design \cite{Chen2024SurveyCodeGen}.
+\end{itemize}
 \subsubsection{Additional References}
 
 This metric is referenced and/or used in the following paper(s):

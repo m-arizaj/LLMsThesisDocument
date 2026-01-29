@@ -39,26 +39,41 @@ The GPT-4V Overall Rating is a metric used within the \textbf{Plot2Code} benchma
 \textbf{Purpose} \\
 To serve as a ``key metric for assessing the overall quality'' of generated code in a complex, multimodal, image-to-code task. It acts as a scalable, automated alternative to expensive human evaluation for this specific domain.
 
-\textbf{Applications} \\
+\subsubsection{Applications}
+
+Based on recent surveys and evaluation frameworks \cite{Lin2024SWC, Chen2024SurveyCodeGen}, the application of GPT-based metrics (LLM-as-a-Judge) has expanded into Software Engineering (SE) to address the limitations of static analysis and functional testing metrics (e.g., Pass@k).
+
 \begin{itemize}
-    \item Software Engineering / Code Generation
-    \item Human Evaluation / Multimodal Quality
+    \item \textbf{Automated Evaluation of Instruction Tuning (PandaLM):} 
+    Traditional metrics cannot easily evaluate if a model followed complex, non-functional constraints in coding tasks (e.g., "write efficient python code"). \textbf{PandaLM} \cite{Chen2024SurveyCodeGen} is a specialized judge model trained to distinguish superior instruction-following capabilities in LLMs, providing a reproducible and automated alternative to human evaluation for tuning code models.
+    
+    \item \textbf{Multi-turn Coding Dialogue Assessment (MT-Bench):}
+    In interactive software engineering scenarios (e.g., debugging or iterative code refinement), static metrics fail to capture context retention. Benchmarks like \textbf{MT-Bench} \cite{Chen2024SurveyCodeGen} utilize GPT-4 as a judge to grade multi-turn conversations, specifically assessing the model's ability to maintain logic and correct errors across sequential coding prompts.
+    
+    \item \textbf{Reference-free Quality Estimation (GPTScore):}
+    For code explanation and documentation tasks, ground truth references are often unavailable or varied. \textbf{GPTScore} \cite{Lin2024SWC} enables reference-free evaluation by using the probabilities of a pre-trained model to assess the fluency, coherence, and consistency of generated technical text, offering a proxy for "readability" and "explainability" in software documentation.
+    
+    \item \textbf{Subjective Code Quality Analysis:}
+    Unlike functional correctness (which is binary), code quality attributes such as \textit{conciseness}, \textit{clarity}, and \textit{modularity} are subjective. LLM-as-a-judge approaches allow for the evaluation of these subjective qualities by prompting the judge model with specific rubrics, bridging the gap between automated metrics and human code review standards \cite{Chen2024SurveyCodeGen}.
 \end{itemize}
 
 \subsubsection*{Comparative Summary}
 Below is a comparison of these LLM-as-a-Judge approaches:
 
-\begin{center}
-\begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
-\hline
-\textbf{Metric} & \textbf{Base Model} & \textbf{Input Modality} & \textbf{Task Domain} \\
-\hline
-GPTScore & LLM (e.g., GPT-3, GPT-4) & Text-only (Context, Reference, Candidate) & General Text Generation (NLP) \\
-\hline
-GPT-4V Overall Rating & Multimodal LLM (GPT-4V) & Multimodal (Image + Code) & Code Generation from Plots \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of LLM-as-a-Judge Approaches}
+    \label{tab:llm_judge_approaches}
+    \begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Base Model} & \textbf{Input Modality} & \textbf{Task Domain} \\
+    \hline
+    GPTScore & LLM (e.g., GPT-3, GPT-4) & Text-only (Context, Reference, Candidate) & General Text Generation (NLP) \\
+    \hline
+    GPT-4V Overall Rating & Multimodal LLM (GPT-4V) & Multimodal (Image + Code) & Code Generation from Plots \\
+    \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Additional References}

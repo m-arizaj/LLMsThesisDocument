@@ -1,6 +1,5 @@
 \subsection{Semantic Metrics}
 
-\subsubsection*{Introduction}
 In the context of code generation and evaluation, \textbf{semantic metrics} and techniques move beyond assessing surface-level syntax (i.e., ``is this valid code?'') to evaluate the underlying \textbf{meaning, logic, and intent} of the code or the problem description.
 
 This category includes metrics that evaluate the ``semantic quality'' of a generated output (like a fuzzing seed) as well as benchmark techniques designed to \textit{test} a model's semantic understanding by intentionally altering a problem's meaning.
@@ -35,17 +34,20 @@ To assess an LLM's robustness and its ability to handle nuanced changes in a pro
 \end{itemize}
 
 \subsubsection*{Comparative Summary}
-\begin{center}
-\begin{tabular}{|p{3.5cm}|p{2.5cm}|p{5cm}|p{2cm}|}
-\hline
-\textbf{Metric / Technique} & \textbf{Type} & \textbf{Measures} & \textbf{Domain} \\
-\hline
-Semantic Correctness & Output Metric & The structural and logical validity of generated data (e.g., fuzz seeds). & Fuzzing, Security \\
-\hline
-Semantic Perturbation & Eval Technique & A model's robustness by altering the \textit{meaning} of a problem's prompt. & Benchmark Robustness \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Semantic Correctness and Perturbation Metrics}
+    \label{tab:semantic_metrics}
+    \begin{tabular}{|p{3.5cm}|p{2.5cm}|p{5cm}|p{2cm}|}
+    \hline
+    \textbf{Metric / Technique} & \textbf{Type} & \textbf{Measures} & \textbf{Domain} \\
+    \hline
+    Semantic Correctness & Output Metric & The structural and logical validity of generated data (e.g., fuzz seeds). & Fuzzing, Security \\
+    \hline
+    Semantic Perturbation & Eval Technique & A model's robustness by altering the \textit{meaning} of a problem's prompt. & Benchmark Robustness \\
+    \hline
+    \end{tabular}
+\end{table}
 
 \subsubsection{Additional References}
 

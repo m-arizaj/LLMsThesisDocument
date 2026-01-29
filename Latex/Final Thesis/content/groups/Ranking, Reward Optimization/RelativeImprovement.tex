@@ -1,11 +1,9 @@
 \subsection{Relative Improvement (RImp)}
 
-\subsubsection*{Definition}
 \textbf{Relative Improvement (RImp)} is an evaluation metric used in Fault Localization (FL) to assess the effectiveness of a specific FL technique.
 
 It is calculated by comparing the total number of statements a developer would need to examine to find all faults \textit{using} a specific FL approach versus the total number of statements they would need to examine \textit{without} using that approach (the baseline).
 
-\subsubsection*{Formula}
 Although often described qualitatively as a comparison of effort, the standard calculation for relative improvement can be expressed as:
 
 \begin{equation}
@@ -21,11 +19,16 @@ Although often described qualitatively as a comparison of effort, the standard c
 \subsubsection*{Purpose}
 The purpose of RImp is to quantify the \textbf{practical benefit or efficiency gain} provided by a fault localization technique. It directly measures the reduction in developer effort (in terms of code statements to review) required to locate all faults, providing a clear indicator of a technique's value.
 
-\subsubsection*{Domains}
+
+\subsubsection{Applications}
+
+In the context of modern \textbf{Software Engineering} research, particularly within Deep Learning-based Fault Localization (DLFL), RImp is a critical metric for validating the superiority of neural models over traditional statistical approaches. Based on \cite{Chen2024DLBasedSE, zhang2017deep}, its primary applications include:
+
 \begin{itemize}
-    \item Software Engineering
-    \item Fault Localization (FL)
-    \item Deep-Learning-based Fault Localization (DLFL)
+    \item \textbf{Benchmarking Neural vs. Statistical Models}: RImp is extensively used to demonstrate the "percent effort saved" by using deep neural networks (such as CNNs or MLPs) compared to standard Spectrum-Based Fault Localization (SBFL) formulas like Ochiai or Tarantula. For instance, studies on CNN-based localization utilize RImp to report exactly how much less code a developer reads when the model automatically learns feature representations \cite{Zhang2019CNNFL}.
+    \item \textbf{Evaluating Context-Awareness Efficiency}: In techniques that integrate code semantics (such as control flow or data dependency graphs), RImp is applied to measure the incremental benefit of adding "context" to the model. It quantifies the specific improvement gained by analyzing the surrounding code structure rather than treating statements in isolation \cite{zhang2023context}.
+    \item \textbf{Assessing Robustness in Imbalanced Data}: RImp serves as a key performance indicator when evaluating techniques designed to handle class imbalance or data scarcity in testing suites. It helps verify if mitigation strategies (like resampling or specialized loss functions) translate into actual debugging time reduction \cite{Lei2023Mitigating, Zhang2024Influential}.
+    \item \textbf{Cluster-Based Fault Isolation}: In scenarios involving multiple faults or complex software architectures, RImp is used to evaluate clustering algorithms that group suspicious statements, determining if these groupings allow developers to isolate bugs faster than linear search methods \cite{Yu2022ClusterFL}.
 \end{itemize}
 
 \subsubsection*{Advantages}

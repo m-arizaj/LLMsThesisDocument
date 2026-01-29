@@ -1,6 +1,5 @@
 \subsection{Language Model Score (lms)}
 
-\subsubsection*{Introduction}
 The \textbf{Language Model Score (lms)} is a metric used within the evaluation framework of the \textbf{StereoSet} benchmark. Unlike bias metrics, it is not a direct measure of social prejudice itself, but rather a measure of a model's basic language understanding and coherence.
 
 It specifically calculates the percentage of instances where a model prefers a meaningful sentence option over a meaningless (unrelated) one. This score is then used as a component to calculate the \textbf{Idealized CAT (iCAT) Score}, which balances the model's language capability ($lms$) against its stereotyping tendencies ($ss$).
@@ -8,7 +7,6 @@ It specifically calculates the percentage of instances where a model prefers a m
 \subsubsection*{Definition}
 The metric evaluates the model's fundamental capability to distinguish coherent text from nonsense. In the StereoSet dataset, each example provides three options: a stereotype, an anti-stereotype, and a meaningless option. The $lms$ focuses solely on the comparison between the meaningful options (stereotype or anti-stereotype) and the meaningless ones.
 
-\subsubsection*{Formula}
 The $lms$ is calculated as the percentage of times the model assigns a higher probability (e.g., via pseudo-log-likelihood) to a meaningful sentence than to the meaningless one.
 
 \begin{equation}
@@ -28,10 +26,16 @@ The primary purpose of the $lms$ is to \textbf{evaluate a model's fundamental la
 
 An ``idealized language model'' is defined as having an $lms$ of 100 (always prefers meaningful text). If a model's $lms$ is low (e.g., near 50\%), it implies the model is choosing randomly, rendering its stereotype score ($ss$) meaningless as an indicator of bias.
 
-\subsubsection*{Domains \& Benchmarks}
+\subsection{Applications}
+
+While the \textbf{Language Model Score (lms)} is primarily a metric for Natural Language Processing (NLP), it has specific applications in the domain of Software Engineering, particularly in the evaluation of Foundation Models used for SE-related tasks:
+
 \begin{itemize}
-    \item \textbf{Domains}: Fairness / Bias Evaluation, Natural Language Understanding (NLU).
-    \item \textbf{Benchmark}: StereoSet (key component of the evaluation metric).
+    \item \textbf{Benchmarking Language Understanding of SE Roles}:
+    The $lms$ is explicitly applied to evaluate how well language models understand the context of software engineering professions. In the StereoSet benchmark, ``software developer'' is a specific target term within the profession domain \cite{nadeem2021stereoset}. The metric measures the model's ability to distinguish meaningful contexts regarding developers from nonsensical ones, acting as a prerequisite before analyzing stereotypes (e.g., determining if the model excessively associates developers with terms like ``geek'' or ``nerd'') \cite{nadeem2021stereoset}.
+
+    \item \textbf{Validation for Automated Recruitment Tools}:
+    In the context of algorithmic fairness for hiring, LLMs are increasingly used for resume screening and job description generation, where allocational harms can occur \cite{Gallegos2024BiasFairness}. The $lms$ serves as a ``sanity check'' \cite{nadeem2021stereoset} to ensure that the underlying model generates coherent text about technical roles. A low $lms$ in this domain would indicate that the model's representations of software engineers are random or meaningless, making it unsuitable for deployment in automated hiring pipelines regardless of its bias score.
 \end{itemize}
 
 \subsubsection*{Advantages}

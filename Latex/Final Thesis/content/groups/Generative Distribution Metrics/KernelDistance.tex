@@ -1,11 +1,9 @@
 \subsection{Kernel Distance (KD / KID)}
 
-\subsubsection*{Introduction}
 The \textbf{Kernel Distance (KD)}, often referred to as the \textbf{Kernel Inception Distance (KID)} when used with the Inception-V3 network, is a metric for evaluating generative models. Introduced by Bińkowski et al. (2018), it was designed as an alternative to the Fréchet Inception Distance (FID).
 
 Unlike FID, which only compares the first two moments (mean and covariance) of the real and generated distributions, KD aims to be a proper distance between the entire distributions. It does this by using an unbiased estimate of the \textit{Maximum Mean Discrepancy} (MMD).
 
-\subsubsection*{Formula}
 The Kernel Distance is calculated as an unbiased estimate of the MMD between the sets of real ($r$) and generated ($g$) samples (after being passed through an encoder):
 
 \begin{equation}
@@ -22,10 +20,14 @@ The Kernel Distance is calculated as an unbiased estimate of the MMD between the
 \subsubsection*{Purpose}
 The primary purpose of KD/KID is to serve as a \textbf{ranking metric} for the overall quality of generative models. It overcomes a key limitation of FID by providing a metric that is a proper distance between distributions, not just a comparison of their first two moments.
 
-\subsubsection*{Domains}
+\subsubsection{Applications in Model Engineering}
+
+While primarily established as an evaluation metric for image generation, the Kernel Distance (specifically KID) has been applied to automated software engineering tasks within the machine learning development lifecycle, particularly in training stability and hyperparameter optimization.
+
 \begin{itemize}
-    \item Generative Models / Image Generation
-    \item Ranking / Overall Quality
+    \item \textbf{Automated Learning Rate Adaptation}: In the engineering of GAN training pipelines, selecting learning rate schedules usually requires manual tuning. Bińkowski et al. (2018) propose using KID as a real-time monitoring signal to automate this process. By performing a relative similarity test on KID scores between iterations, the training loop can statistically detect convergence stagnation and trigger an automatic decay of the learning rate, removing the need for pre-defined schedules \cite{binkowski2018demystifying}.
+
+    \item \textbf{Benchmarking and Regression Testing}: For the iterative development of generative software, reliable metrics are required to validate new model versions (regression testing). Stein et al. (2023) highlight that while traditional metrics like FID can misalign with human perception (penalizing diffusion models unfairly), KD/KID—especially when paired with modern encoders like DINOv2—provides a more robust distance measure for ranking disparate model architectures (e.g., Diffusion vs. GANs). This robustness makes it suitable for automated benchmarking pipelines where "ground truth" human evaluation is not feasible for every iteration \cite{Stein2023MetricFlaws}.
 \end{itemize}
 
 \subsubsection*{Advantages}

@@ -1,11 +1,9 @@
 \subsection{Fairness}
 
-\subsubsection*{Introduction}
 Fairness is a critical category of ethical evaluation for Large Language Models (LLMs). It is concerned with assessing whether a model's outputs and behaviors result in disparate treatment or outcomes between different social groups.
 
 This evaluation is essential as LLMs, typically trained on massive, uncurated Internet-scale data, can learn, perpetuate, and even amplify harmful social biases. These biases include stereotypes, misrepresentations, and derogatory language that disproportionately affect marginalized communities.
 
-\subsubsection*{Definition}
 In the context of LLMs, fairness is often operationalized into two main concepts:
 
 \begin{itemize}
@@ -52,6 +50,25 @@ Major benchmarks used for fairness evaluation include:
     \item \textbf{General}: HELM, Chatbot Arena, HolisticBias.
     \item \textbf{Specific}: BBQ (Bias Benchmark for QA), CrowS-Pairs, StereoSet, BOLD, RealToxicityPrompts, Winogender, WinoBias.
 \end{itemize}
+
+\subsection{Applications}
+
+Fairness metrics are increasingly integrated into the software development lifecycle (SDLC) to ensure that systems do not perpetuate historical power asymmetries or inflict harm on specific social groups. These metrics are applied primarily to mitigate two types of harms: \textbf{allocational harms} (unfair distribution of resources or opportunities) and \textbf{representational harms} (stereotyping, erasure, or demeaning portrayals) \cite{blodgett2020language, Gallegos2024BiasFairness}.
+
+Key domains where fairness metrics are actively applied include:
+
+\begin{itemize}
+    \item \textbf{Algorithmic Hiring and Recruitment}: Fairness metrics are used to audit resume screening tools and automated interview systems. The goal is to prevent \textit{allocational harms}, such as the disparate exclusion of candidates based on gender, ethnicity, or names, ensuring that qualified individuals are not systematically denied employment opportunities \cite{Gallegos2024BiasFairness, blodgett2020language}.
+
+    \item \textbf{Content Moderation and Safety}: In the development of toxicity detection systems, fairness metrics are essential to ensure that dialectal variations (e.g., African-American English) are not unfairly flagged as toxic or offensive. This prevents the silencing of marginalized voices and ensures equitable user safety \cite{blodgett2020language, Gallegos2024BiasFairness}.
+
+    \item \textbf{Healthcare and Clinical Decision Support}: Developers apply fairness evaluations to medical diagnostic models and chatbots to prevent bias in patient care. This helps ensure that medical advice or resource allocation is not skewed by demographic proxies, which could lead to severe health disparities \cite{Chang2023SurveyLLMs, Gallegos2024BiasFairness}.
+
+    \item \textbf{Machine Translation}: Metrics are applied to detect and mitigate gender bias in translation software, specifically to prevent systems from defaulting to masculine forms for professional roles (e.g., translating "doctor" as male) and feminine forms for others, thereby enforcing exclusionary norms \cite{Gallegos2024BiasFairness, blodgett2020language}.
+
+    \item \textbf{Search and Information Retrieval}: Fairness metrics evaluate ranking algorithms to ensure that the visibility of information does not reinforce stereotypes or erase specific social groups from search results \cite{Chang2023SurveyLLMs, Gallegos2024BiasFairness}.
+\end{itemize}
+
 
 \subsubsection*{Advantages}
 \begin{itemize}

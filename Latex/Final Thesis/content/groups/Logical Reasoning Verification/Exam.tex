@@ -1,28 +1,29 @@
-\subsection{EXAM (Explainable Automated Debugging)}
+\subsection{EXAM (Expected Maximum Fault Localization)}
 
-\subsubsection*{Introduction}
-EXAM (Explainable Automated Debugging) is an evaluation benchmark used in software engineering to measure a model's capability in \textit{Fault Localization}. Introduced by Tran et al. (2022), it provides a standardized framework for assessing how well a model can debug code, specifically its ability to ``identify the buggy code lines.''
+Based on the survey by Chen et al., EXAM stands for \textbf{Expected Maximum Fault Localization}. It is a evaluation metric used in the field of software engineering, specifically for the task of \textbf{Fault Localization (FL)}.
 
-Unlike metrics that evaluate code generation (like BLEU), EXAM focuses on code \textbf{verification} and \textbf{augmentation}, specifically debugging. To quantify performance on this task, the benchmark utilizes specific ranking metrics.
-
-\subsubsection*{Definition}
-EXAM is a benchmark consisting of a set of ``288 Python programs with 12 error types.'' The primary task for a model evaluated on this benchmark is \textbf{fault localization}: the model must correctly identify the specific lines of code containing errors within these programs.
+In contrast to benchmarks or datasets, EXAM is a scoring mechanism used to assess the effectiveness of deep learning-based fault localization (DLFL) techniques.
 
 \subsubsection*{Purpose}
-The purpose of EXAM is to evaluate models' capabilities in \textbf{code debugging}. It is used to quantitatively measure performance in localizing errors in Python programs, moving beyond simple generation correctness to understanding code logic and flaws.
+The purpose of EXAM is to quantitatively evaluate how effective a model is at locating bugs in source code. Specifically, it measures the ``expected rank of the first correct fault location in a ranked list of code elements''. This helps researchers understand the effort required by a developer to find the first bug when inspecting the code elements ranked by the model.
 
-\subsubsection*{Metrics Used within EXAM}
-The EXAM benchmark uses the following metrics to score a model's performance:
+\subsubsection*{Metrics Used within EXAM Context}
+In the context of Fault Localization, EXAM is often used alongside other ranking metrics to make a score a model's performance. The provided text highlights the following frequently used metrics:
 
 \begin{itemize}
-    \item \textbf{Top-N Accuracy}: Measures if the correct buggy line is found among the model's Top-N most likely predictions.
-    \item \textbf{Mean Average Rank (MAR)}: Measures the average rank (position) of the correct buggy line in the model's prediction list. A lower MAR indicates better performance.
+    \item \textbf{EXAM}: Measures the expected rank of the first correct fault location in a ranked list of code elements.
+    \item \textbf{Top-N}: Measures the number of times the model identifies the correct faulty code element within the top-N ranked elements.
+    \item \textbf{MAR (Mean Average Rank)}: Measures the mean of the average rank of the faults.
+    \item \textbf{MFR (Mean First Rank)}: Measures the mean of the first faulty statement's rank for all faults using a localization approach.
 \end{itemize}
 
-\subsubsection{Additional References}
+\subsubsection{Applications}
 
-This metric is referenced and/or used in the following paper(s):
+Based on the provided survey, the EXAM metric is applied in the following area of software engineering:
 
+\begin{itemize}
+    \item \textbf{Fault Localization (FL)}: EXAM metric is extensively used to evaluate the effectivity of automated fault localization techniques. In this context, it serves as a proxy for ``developer effort'' by estimatin the percentage of code a developer would need to inspect to find the first bug in a ranked list of suspicious code elements \cite{Chen2024DLBasedSE}.
+\end{itemize}
 
 \sloppy
 \cite{

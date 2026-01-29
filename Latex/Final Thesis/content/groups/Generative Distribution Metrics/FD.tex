@@ -1,6 +1,5 @@
 \subsection{Fréchet Distance (FD)}
 
-\subsubsection*{Introduction}
 The \textbf{Fréchet Distance (FD)} is one of the most widely used metrics for evaluating the quality of generative models, particularly in the generation of images. It is designed to measure the similarity between the distribution of generated samples and the distribution of real samples.
 
 The metric follows a two-step process:
@@ -65,20 +64,36 @@ Developed to capture more spatial or textural features rather than the high-leve
 \subsubsection*{Comparative Summary}
 Below is a comparison of the key FD variants:
 
-\begin{center}
-\begin{tabular}{|p{2cm}|p{2cm}|p{4cm}|p{4cm}|}
-\hline
-\textbf{Metric} & \textbf{Based on} & \textbf{Extension Goal} & \textbf{Key Feature(s)} \\
-\hline
-FD / FID & FD & Baseline metric for overall quality (fidelity + diversity). & $W_2$ distance between Gaussian moments. FID uses Inception-V3. \\
-\hline
-FD$\infty$ & FD & Remove finite-sample bias from the FD calculation. & Extrapolates FD value to $N=\infty$ using a linear fit. \\
-\hline
-sFID & FD / FID & Evaluate on spatial features, not just semantic features. & Uses an intermediate layer (\texttt{mixed\_6/conv}) of Inception-V3. \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Fréchet Distance (FD) Variants}
+    \label{tab:fid_variants}
+    \begin{tabular}{|p{2cm}|p{2cm}|p{4cm}|p{4cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Based on} & \textbf{Extension Goal} & \textbf{Key Feature(s)} \\
+    \hline
+    FD / FID & FD & Baseline metric for overall quality (fidelity + diversity). & $W_2$ distance between Gaussian moments. FID uses Inception-V3. \\
+    \hline
+    FD$\infty$ & FD & Remove finite-sample bias from the FD calculation. & Extrapolates FD value to $N=\infty$ using a linear fit. \\
+    \hline
+    sFID & FD / FID & Evaluate on spatial features, not just semantic features. & Uses an intermediate layer (\texttt{mixed\_6/conv}) of Inception-V3. \\
+    \hline
+    \end{tabular}
+\end{table}
 
+\subsubsection{Applications}
+
+The Fréchet Distance and its variants constitute the standard toolkit for automated model validation. Each variant is applied to address specific engineering challenges in the training and selection of generative models.
+
+\begin{itemize}
+    \item \textbf{Convergence Monitoring and Mode Collapse Detection}: Heusel et al. (2017) introduced the standard FID specifically to overcome the limitations of the Inception Score in detecting "intra-class mode dropping" (a form of mode collapse). In modern training pipelines, FID is applied as the primary feedback signal to monitor the convergence of the generator distribution towards the real data distribution, particularly when tuning complex update rules like TTUR (Two Time-Scale Update Rule) \cite{heusel2017gans}.
+
+    \item \textbf{Unbiased Comparative Benchmarking}: Standard FID allows models to "game" the metric simply by generating more samples (since bias decreases with $N$). Chong and Forsyth (2020) apply the $\text{FD}_\infty$ variant to remove this finite-sample bias. This allows engineers to fairly rank models that were evaluated with different batch sizes or computational constraints, ensuring that improvements in the score reflect true gains in model quality rather than statistical artifacts \cite{chong2020effectively}.
+
+    \item \textbf{Diagnostic of Spatial Structure}: Standard FID can sometimes be "fooled" by models that generate realistic textures but incoherent shapes. Nash et al. (2021) utilize sFID (Spatial FID) as a secondary diagnostic metric. By inspecting the intermediate layers of the network, this application verifies that the generative model preserves the global spatial layout and structure of the target domain, not just its low-level texture statistics \cite{nash2021generating}.
+
+    \item \textbf{Cross-Architecture Evaluation (Diffusion vs. GANs)}: As generative architectures evolve, the standard Inception-based FID has shown misalignment with human perception. Stein et al. (2023) apply the generalized Fréchet Distance (using modern encoders like DINOv2 instead of Inception) to benchmark Diffusion models against GANs. This application is critical for modern model selection, as it prevents the unfair penalization of Diffusion models, which often have higher perceptual quality but poorer standard FID scores compared to GANs \cite{Stein2023MetricFlaws}.
+\end{itemize}
 
 \subsubsection{Additional References}
 

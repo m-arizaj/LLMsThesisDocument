@@ -1,6 +1,5 @@
 \subsection{Subjective Score}
 
-\subsubsection*{Definition}
 A \textbf{Subjective Score} is a metric used in Human-Centric Evaluation (HCE) to assess foundation models based on human perception, experience, and practical application, rather than on automated, objective quiz performance.
 
 It is determined by human evaluators who assign a rating to a model's performance during a collaborative, open-ended task using a specific five-point discrete scale:
@@ -12,7 +11,6 @@ It is determined by human evaluators who assign a rating to a model's performanc
     \item Very Strong
 \end{enumerate}
 
-\subsubsection*{Formula}
 The final score is calculated as the arithmetic mean of all ratings provided by the human evaluators across the different dimensions:
 
 \begin{equation}
@@ -52,6 +50,15 @@ The HCE framework uses the Subjective Score to rate models across three core dim
         \item \textbf{Expression Naturalness (E.N.)}: Coherence and readability.
         \item \textbf{Response Timeliness (R.T.)}: Speed of delivery.
     \end{itemize}
+\end{itemize}
+
+\subsubsection{Applications}
+
+While traditional benchmarks in Software Engineering (such as SWE-bench) rely on objective metrics like issue resolution rates, the Subjective Score is applied to the \textbf{Computer Science} domain to evaluate the quality of Human-AI collaboration \cite{Guo2025HumanCentricEvaluation}.
+
+\begin{itemize}
+    \item \textbf{Innovation-Driven Problem Solving}: Within Computer Science, the metric is used to evaluate a model's capability to propose novel hypotheses or solutions for research gaps, moving beyond the static code generation tasks found in objective datasets \cite{Guo2025HumanCentricEvaluation}.
+    \item \textbf{Assessment of Technical Interaction}: It addresses limitations in objective SE benchmarks by quantifying the user's subjective experience, specifically measuring how well a coding assistant explains complex concepts (\textit{Expression Naturalness}) and how effectively it adapts its technical solutions based on developer feedback (\textit{Feedback Adaptability}) \cite{Guo2025HumanCentricEvaluation}.
 \end{itemize}
 
 \subsubsection*{Advantages}

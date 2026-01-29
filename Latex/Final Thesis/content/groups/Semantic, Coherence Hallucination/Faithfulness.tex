@@ -1,6 +1,5 @@
 \subsection{Faithfulness (Design Fidelity)}
 
-\subsubsection*{Definition}
 Faithfulness is an evaluation metric used within the \textbf{DevEval} benchmark to measure ``Design Fidelity.'' It is not a single score but a principle of evaluation, specifically assessing the extent to which a Large Language Model (LLM) adheres to specified instructions when generating software design artifacts.
 
 The core idea is to measure how accurately and strictly the model's output (e.g., UML diagrams, architecture design) aligns with the given \textbf{Product Requirement Document (PRD)}, ensuring all functionalities are met ``without making any hallucinations and additions.'' This metric is typically assessed using an ``LLM-as-a-judge'' approach.
@@ -17,16 +16,18 @@ Faithfulness is evaluated differently across the sub-tasks of software design:
 \subsubsection*{Purpose}
 The purpose of the Faithfulness metric is to quantify a model's ability to \textbf{strictly follow detailed, document-level requirements} and translate them into accurate, corresponding design artifacts. This measures a critical component of design fidelity beyond just generating plausible-sounding designs.
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item Software Engineering
-    \item Software Design
-    \item General LLM Evaluation
-\end{itemize}
+\subsection{Applications}
 
-\subsubsection*{Benchmarks}
+The Faithfulness (Design Fidelity) metric is primarily applied during the \textbf{Software Design} phase of the Software Development Lifecycle (SDLC). Its main utility lies in automating and validating the conversion of natural language requirements into technical blueprints, ensuring that generative models act as reliable architects rather than creative writers \cite{Li2024FullSDLC}.
+
+Key applications include:
+
 \begin{itemize}
-    \item \textbf{DevEval} (specifically the ``Software Design'' task)
+    \item \textbf{Automated System Modeling}: The metric is essential for tools that automatically generate \textbf{UML Class and Sequence Diagrams} from Product Requirement Documents (PRDs). It ensures that the generated diagrams strictly adhere to the specified classes, relationships (inheritance, composition), and interaction flows, preventing the inclusion of hallucinated features that were not requested by stakeholders.
+
+    \item \textbf{Architectural Scaffolding}: In the generation of project skeletons, this metric is applied to verify that the proposed \textbf{File Tree Structure} aligns perfectly with the logical design. It ensures that the file hierarchy (directories, module names) is a faithful translation of the architecture derived from the PRD, facilitating a consistent setup for the implementation phase.
+
+    \item \textbf{Requirement Traceability \& Auditing}: Faithfulness serves as an automated quality gate. By using an "LLM-as-a-judge" to penalize additions and hallucinations, it helps establish a clear chain of custody from requirement to design. This application is critical for safety-critical software where every design element must be traceable back to a specific user requirement without unauthorized deviations.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -53,12 +54,3 @@ This metric is referenced and/or used in the following paper(s):
 Li2024FullSDLC,
 }
 \fussy
-
-% añadir esta entrada a tu archivo .bib
-% @article{li2024prompting,
-%   title={Prompting large language models to tackle the full software development lifecycle: A case study},
-%   author={Li, B. and Wu, W. and Tang, Z. and Shi, S.},
-%   journal={arXiv preprint arXiv:2403.08604},
-%   year={2024},
-%   doi={10.48550/arXiv.2403.08604}
-% }

@@ -21,19 +21,21 @@ The underlying mathematical calculation for sFID is the same Fréchet Distance (
 \subsubsection*{Purpose}
 The purpose of sFID is to serve as an alternative to the standard FID for ranking generative models. By using an intermediate layer, it presumably captures different features—specifically, more spatial and less class-abstracted information—than the final pooling layer used by standard FID.
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item Generative Models
-    \item Image Generation
-\end{itemize}
-
 \subsubsection*{Limitations}
 \begin{itemize}
     \item \textbf{Inception-V3 Dependency}: The sFID metric, by definition, relies on the Inception-V3 network architecture.
     \item \textbf{Non-Transferable}: Because it is tied to a specific internal layer (mixed\_6/conv) of Inception-V3, the metric is not typically reported for or compatible with other network architectures.
 \end{itemize}
 
+\subsubsection{Applications}
 
+The Spatial FID (sFID) was developed to address specific blind spots in the standard FID metric, serving as a specialized diagnostic tool in the evaluation pipeline of generative models.
+
+\begin{itemize}
+    \item \textbf{Diagnostic of Spatial Coherence}: In the engineering of high-fidelity image generators, standard FID (based on the pooled vector) can sometimes fail to penalize images that have the correct textures but incoherent global structures. Nash et al. (2021) introduced sFID to mitigate this by evaluating distributions on the intermediate \textit{mixed\_6/conv} layer. This allows engineers to validate that the model is capturing not just the "presence" of features, but their spatial arrangement, providing a stricter test for mode collapse regarding image structure \cite{nash2021generating}.
+
+    \item \textbf{Metric Robustness Analysis}: sFID is applied in comparative studies to determine if the lack of correlation between automated metrics and human perception is due to the loss of spatial information during pooling. Stein et al. (2023) utilize sFID to demonstrate that changing the abstraction level of the Inception features (from \textit{pool3} to \textit{mixed\_6}) does not significantly improve correlation with human error rates on complex datasets like ImageNet. This application helps researchers rule out "layer selection" as the cause of poor metric performance, confirming that the limitation lies within the Inception-V3 architecture itself rather than how its features are aggregated \cite{Stein2023MetricFlaws}.
+\end{itemize}
 \subsubsection{Additional References}
 
 This metric is referenced and/or used in the following paper(s):

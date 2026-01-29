@@ -1,6 +1,5 @@
 \subsection{Surface-Form Constraints}
 
-\subsubsection*{Definition}
 \textbf{Surface-Form Constraints} is a ``much-relaxed form of similarity metric'' used to evaluate generated code.
 
 Instead of measuring functional correctness (i.e., execution and testing) or deep syntactic similarity (like AST matching), this metric simply checks if the generated code adheres to specific low-level textual requirements. It is primarily used in benchmarks to verify that the model's solution includes or excludes specific elements as defined by the problem instructions.
@@ -23,11 +22,21 @@ This metric is not a complex calculation but rather a binary check for adherence
 \subsubsection*{Purpose}
 The purpose is to provide a simple, automated check on the \textbf{structure or composition} of the generated code, rather than its full functional correctness. It helps measure whether a model can follow specific instructions about \textit{how} to solve a problem (e.g., ``solve this using the `Pandas` library'').
 
-\subsubsection*{Domains}
+\subsubsection{Applications in Software Engineering}
+
+While \textbf{Surface-Form Constraints} are computationally simple compared to execution-based metrics, they serve critical roles in \textbf{Automated Software Quality Assurance} and \textbf{Code Synthesis Evaluation}. They are particularly useful for enforcing non-functional requirements such as efficiency and library compliance.
+
+Based on the DS-1000 framework and related reviews, specific applications include:
+
 \begin{itemize}
-    \item Software Engineering
-    \item Code Generation
-    \item Data Science Code Generation
+    \item \textbf{Enforcing Idiomatic and Efficient Implementations}:
+    In scientific computing and data engineering, functional correctness is not enough; performance matters. A common application is rejecting ``brute force'' solutions in favor of vectorized ones. For example, \cite{lai2022ds1000} uses surface constraints to explicitly forbid loops (\texttt{for}, \texttt{while}) in the Abstract Syntax Tree (AST) when a solution requires high-performance libraries like \texttt{pandas} or \texttt{numpy}. This automates the detection of inefficient code that would otherwise pass unit tests.
+
+    \item \textbf{Library and API Compliance Verification}:
+    In modern software development, developers often require solutions within a specific technology stack. Surface-form constraints are applied to ensure that generated code strictly utilizes a requested library (e.g., \texttt{TensorFlow}) rather than a generic alternative or a different framework (e.g., \texttt{PyTorch}). This is essential for building \textbf{Domain-Specific Coding Assistants} that must adhere to existing project dependencies \cite{lai2022ds1000, Paul2024BenchmarksMetricsCodeGen}.
+
+    \item \textbf{Robustness Analysis of Code Generators}:
+    These constraints are used to evaluate the robustness of LLMs against ``memorization'' and shortcuts. By applying surface perturbations (e.g., changing keywords or requirements) and checking if the model updates its surface form accordingly, researchers can audit whether a model genuinely understands the software engineering task or is merely regurgitating training data \cite{Anand2024AnalysisLLMCode, lai2022ds1000}.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -42,10 +51,6 @@ The purpose is to provide a simple, automated check on the \textbf{structure or 
     \item \textbf{Brittle}: It is a surface-level check and does not capture the semantic or logical correctness of the code.
 \end{itemize}
 
-\subsubsection*{Related Concepts}
-\begin{itemize}
-    \item \textbf{Surface Perturbation}: A benchmark design feature (used in DS-1000) where the problem's wording is changed to test robustness. This is distinct from Surface-Form Constraints, which is a metric for evaluating the output code.
-\end{itemize}
 
 \subsubsection{Additional References}
 

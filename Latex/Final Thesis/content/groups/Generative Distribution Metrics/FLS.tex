@@ -43,17 +43,32 @@ To automatically detect memorization in generative models, claiming to isolate i
 \subsubsection*{Comparative Summary}
 Below is a comparison of the main score and its diagnostic variant:
 
-\begin{center}
-\begin{tabular}{|p{2cm}|p{1.5cm}|p{3.5cm}|p{5cm}|}
-\hline
-\textbf{Metric} & \textbf{Based on} & \textbf{Goal} & \textbf{Key Feature(s)} \\
-\hline
-FLS & KDE & Rank models based on density estimation. & Fits a KDE to generated data; evaluates log-likelihood on test data. \\
-\hline
-FLS-POG & FLS & Detect memorization / overfitting. & Compares train vs. test log-likelihood for each generated sample. \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of FLS and FLS-POG Metrics}
+    \label{tab:fls_metrics}
+    \begin{tabular}{|p{2cm}|p{1.5cm}|p{3.5cm}|p{5cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Based on} & \textbf{Goal} & \textbf{Key Feature(s)} \\
+    \hline
+    FLS & KDE & Rank models based on density estimation. & Fits a KDE to generated data; evaluates log-likelihood on test data. \\
+    \hline
+    FLS-POG & FLS & Detect memorization / overfitting. & Compares train vs. test log-likelihood for each generated sample. \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Applications}
+
+FLS was introduced to fill a critical gap in the engineering of generative systems: the inability of standard perceptual metrics (like FID) to distinguish between a model that creates novel data and one that simply memorizes its training set.
+
+\begin{itemize}
+    \item \textbf{Generalization vs. Overfitting Diagnosis}: In the development of generative models, ensuring that the system synthesizes \textit{novel} samples rather than retrieving training data is a key engineering requirement (particularly for privacy and copyright compliance). Jiralerspong et al. (2023) apply FLS as a proxy for the "generalization gap" found in discriminative models. By comparing the likelihood of the training set versus a held-out test set under the generator's distribution, engineers can mathematically identify overfitting checkpoints that would otherwise achieve high fidelity scores on perceptual metrics \cite{jiralerspong2023feature}.
+
+    \item \textbf{Trichotomic Model Tuning}: Traditional evaluation pipelines often require separate metrics for fidelity (Precision), diversity (Recall), and novelty. Jiralerspong et al. (2023) propose FLS as a unified objective for hyperparameter tuning. It serves as a single summary statistic that penalizes models for failing in any of the three pillars: generating unrealistic samples (low fidelity), dropping modes (low diversity), or copying training data (lack of novelty) \cite{jiralerspong2023feature}.
+
+    \item \textbf{Benchmarking Reliability Studies}: In the broader context of metric validation, Stein et al. (2023) apply FLS (specifically the FLS-POG variant) to audit the reliability of memorization detectors. Their application reveals a critical failure mode in automated evaluation: they demonstrate that FLS-POG tends to conflate "mode shrinkage" (generating a limited variety of valid samples) with true memorization. This application serves as a negative control in engineering, warning developers that density-based memorization checks may trigger false positives when the model distribution simply collapses to a subset of the data \cite{Stein2023MetricFlaws}.
+\end{itemize}
 
 \subsubsection{Additional References}
 

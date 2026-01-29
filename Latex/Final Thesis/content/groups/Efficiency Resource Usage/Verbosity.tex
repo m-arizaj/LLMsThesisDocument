@@ -15,6 +15,18 @@ The purpose of measuring verbosity is to assess the practical utility and ``comm
     \item LLM Evaluation
 \end{itemize}
 
+\subsubsection{Applications in Software Engineering}
+
+In the domain of automated code generation, **Verbosity** is not merely a stylistic metric but a critical factor in evaluating the developer experience and the practical efficiency of Large Language Models (LLMs).
+
+\begin{itemize}
+    \item \textbf{Trade-off Analysis in Model Selection}: \\
+    Software engineers use verbosity metrics to navigate the trade-offs between model accuracy and usability. Bistarelli et al. highlight that while top-tier models like OpenAI's o1-preview and o1-mini lead the leaderboards in functional correctness for languages like Java, Go, and Ruby, they simultaneously exhibit significantly higher verbosity compared to competitors \cite{Bistarelli2025UsageLLMCode}. This application of the metric allows engineering teams to decide whether the cost of parsing "wordy" outputs is justified by the marginal gains in code accuracy.
+
+    \item \textbf{Developer Efficiency and Communication Clarity}: \\
+    High verbosity directly impacts the "communication clarity" of a coding assistant. In real-world software development workflows, developers must review and integrate generated code. Excessive verbosity increases the cognitive load and time required for this review process \cite{Bistarelli2025UsageLLMCode}. Therefore, measuring verbosity serves as a proxy for the \textit{usability} of an LLM, guiding the selection of models that provide concise, actionable code snippets rather than lengthy, conversational explanations that clutter the development environment.
+\end{itemize}
+
 \subsubsection*{Key Findings \& Trade-offs}
 Recent comprehensive evaluations (e.g., of over 80 LLMs) have identified a clear trade-off between capability and brevity:
 \begin{itemize}

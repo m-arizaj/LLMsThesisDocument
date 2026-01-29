@@ -1,11 +1,9 @@
 \subsection{Fitness Function Value}
 
-\subsubsection*{Definition}
 A \textbf{Fitness Function Value} is the score assigned to a candidate solution in an Evolutionary Algorithm (EA), such as Genetic Programming (GP) or LLM\_GP. It is a ``problem-dependent fitness measure'' that quantifies the quality or ``Functional Performance'' of a solution (e.g., a piece of generated code).
 
 This value is calculated by an \textit{evaluation operator}, which ``iteratively test[s] each solution and calculate[s] its fitness.'' This fitness score is then used by the \textit{selection operator} to choose which solutions will ``parent'' the next generation.
 
-\subsubsection*{Formula (General Idea)}
 The calculation is described as a two-step process defined within the algorithm's operators:
 
 \begin{enumerate}
@@ -25,10 +23,16 @@ In traditional GP, this value is strictly numeric. In LLM\_GP, the fitness could
 \subsubsection*{Purpose}
 The purpose of the fitness function is to ``assess the quality of the response/output'' from a candidate solution. This score provides the basis for \textbf{selection} in the evolutionary process, allowing the algorithm to differentiate between high- and low-performing solutions.
 
-\subsubsection*{Domains \& Benchmarks}
+
+\subsubsection*{Applications}
+The fitness function value is critical in guiding the evolution of code across several distinct software development applications investigated in LLM\_GP research:
+
 \begin{itemize}
-    \item \textbf{Domains}: Software Engineering, Code Evolution, Genetic Programming (GP), Program Synthesis, Automatic Programming.
-    \item \textbf{Benchmarks}: LLM\_GP (Symbolic Regression), General GP benchmarks.
+    \item \textbf{Program Synthesis and Automatic Programming}: Fitness values differentiate solutions in systems like SEIDR (Synthesize, Execute, Instruct, Debug and Rank), where generated code snippets are executed and ranked to solve benchmarks like PSB2 \cite{Hemberg2024EvolvingCodeLLM}.
+    \item \textbf{Neural Architecture Search (NAS)}: Fitness functions measure the performance of evolved Python code that defines neural network architectures, facilitating the automated design of deep learning models \cite{Hemberg2024EvolvingCodeLLM}.
+    \item \textbf{Reinforcement Learning (RL)}: In agent-based RL (e.g., EUREKA), the fitness function value (reward) is used to assess and evolve the code for reward functions themselves, optimizing agent controllers \cite{Hemberg2024EvolvingCodeLLM}.
+    \item \textbf{Game Design}: Fitness values evaluate text or code-based descriptions of game levels (e.g., MarioGPT) and interactive collaborative design elements, distinguishing between high-quality and poor design variations \cite{Hemberg2024EvolvingCodeLLM}.
+    \item \textbf{Prompt Engineering}: Fitness measures are applied to populations of text prompts (e.g., Promptbreeder) to evolve optimal instructions for LLMs by evaluating their performance on training sets \cite{Hemberg2024EvolvingCodeLLM}.
 \end{itemize}
 
 \subsubsection*{Advantages}

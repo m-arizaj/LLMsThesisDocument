@@ -1,11 +1,9 @@
 \subsection{Density}
 
-\subsubsection*{Introduction}
 Density is an automatic evaluation metric used to diagnose the performance of generative models, particularly in image synthesis. It was introduced by Naeem et al. (2020) as part of a metric pair, \textit{Density and Coverage}, designed to reliably and separately measure a model's fidelity and diversity, respectively.
 
 These metrics work by analyzing the $k$-nearest neighbors ($k$-NN) relationships between the distributions of real and generated samples in a feature space (produced by an encoder). Density is specifically used as a proxy for the \textit{fidelity} of the generated samples—that is, how ``realistic'' they are.
 
-\subsubsection*{Definition}
 Density quantifies how well-populated the generated samples are relative to the real samples in the feature space. Specifically, it counts how many real-sample neighborhood spheres contain the generated sample. A higher Density value suggests better fidelity, indicating that the generated samples fall into regions that are densely populated by real training samples.
 
 The metric is defined mathematically as:
@@ -33,6 +31,16 @@ Its primary application is diagnosing the performance of generative models. The 
 \begin{itemize}
     \item Its calculation is based on $k$-nearest neighbors and can be sensitive to the choice of $k$ and the number of samples used (e.g., $k=5$ and 10,000 samples).
     \item Research suggests that other metrics, like Fréchet Distance (FD) with a robust encoder (e.g., DINOv2), may correlate better with human judgments of fidelity than $k$-NN metrics like Precision (and by extension, Density).
+\end{itemize}
+
+\subsubsection{Applications}
+
+Density was introduced to resolve the instability issues of previous nearest-neighbor metrics (like Precision), providing a more reliable signal for the engineering of high-fidelity generative models.
+
+\begin{itemize}
+    \item \textbf{Robust Fidelity Diagnosis}: Standard Precision metrics are binary (a sample is either "in" or "out" of the manifold) and can fail to detect when a model perfectly matches the training distribution. Naeem et al. (2020) apply Density to solve this "identical distribution check," allowing engineers to verify if the generator has fully converged to the target distribution. Additionally, it serves as a robust filter against outliers; unlike Precision, which can be sensitive to sparse regions, Density quantifies the accumulated evidence of realism, ensuring that generated samples inhabit the most densely populated regions of the real manifold.
+
+    \item \textbf{Perceptual Alignment Verification}: In the context of benchmarking state-of-the-art models, Stein et al. (2023) utilize Density to audit the relationship between feature-space embedding and human perception. By comparing Density scores against human error rates, they apply this metric to demonstrate the "fidelity gap": showing that a high mathematical density in the feature space (manifold packing) does not automatically translate to visual realism for humans, particularly when evaluating modern diffusion models.
 \end{itemize}
 
 \subsubsection{Additional References}

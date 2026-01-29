@@ -1,40 +1,45 @@
 \subsection{Dialogue Similarities}
 
-\subsubsection*{Introduction}
-Dialogue Similarities is a type of \textit{Human Similarity metric} used in the objective evaluation of LLM-based autonomous agents. This metric is designed to quantify the degree to which an agent's behavior, specifically its conversational output, ``closely resembles that of humans.''
+Dialogue Similarities is a type of \textit{Human Similarity metric} used in the objective evaluation of LLM-based autonomous agents. This metric is designed to quantify the degree to which an agent's behavior, specifically its conversational output, ``closely resembles that of humans'' \cite{Wang2024AutonomousAgentsSurvey}.
 
 It is an objective, quantitative metric often grouped with other human similarity metrics—such as \textit{trajectory/location accuracy} and \textit{mimicry of human responses}—to assess an agent's performance in simulating human behavior.
 
-\subsubsection*{Definition}
 Dialogue Similarities is formally defined within the category of Human Similarity metrics. It serves as a quantitative measure that evaluates:
 
 \begin{quote}
-``The degree to which the agent behaviors closely resembles that of humans.''
+``The degree to which the agent behaviors closely resembles that of humans.'' \cite{Wang2024AutonomousAgentsSurvey}
 \end{quote}
 
 It is cited specifically as a ``typical example'' of such metrics, distinguishing itself by focusing on the semantic and stylistic alignment of the agent's dialogue with human baselines rather than just functional correctness.
 
 \subsubsection*{Purpose}
-The primary purpose of measuring dialogue similarities is to assess the agent's \textbf{human simulation performance}. A high score in dialogue similarity indicates that the agent is effective at mimicking human-like conversational behavior, which is crucial for agents designed for social interaction or role-playing.
+The primary purpose of measuring dialogue similarities is to assess the agent's \textbf{human simulation performance}. A high score in dialogue similarity indicates that the agent is effective at mimicking human-like conversational behavior, which is crucial for agents designed for social interaction or role-playing \cite{Wang2024AutonomousAgentsSurvey}.
 
 \subsubsection*{Applications}
 This metric is primarily applied in:
 \begin{itemize}
     \item The \textbf{objective evaluation} of autonomous agents.
-    \item Protocols involving \textbf{Social evaluation} or ``human simulation,'' where the goal is indistinguishability from human actors.
+    \item Protocols involving \textbf{Social evaluation} or ``human simulation,'' where the goal is indistinguishability from human actors \cite{Wang2024AutonomousAgentsSurvey}.
+\end{itemize}
+
+\subsubsection*{Applications to Software Engineering}
+In the domain of **Software Engineering** and **Computer Science**, Dialogue Similarities is increasingly relevant for evaluating **Communicative Agents** and multi-agent systems:
+
+\begin{itemize}
+    \item \textbf{Evaluation of Communicative Frameworks:} It is used to assess agents in frameworks like \textbf{ChatDev} and \textbf{MetaGPT}, where multiple agent roles (e.g., CEO, CTO, Engineer) must ``communicate and collaborate through natural language conversations'' to complete the software development life cycle \cite{Wang2024AutonomousAgentsSurvey}.
+    \item \textbf{Simulation of Developer Dynamics:} The metric quantifies how well agents simulate the collaborative discourse of human developers. This is critical because these agents ``discuss the software development process'' and must maintain consistent, human-like personas to effectively negotiate requirements and debug code \cite{Wang2024AutonomousAgentsSurvey}.
+    \item \textbf{Augmenting Code Evaluation:} While metrics like \textbf{CodeBERTScore} focus on the functional and semantic correctness of the generated code itself (measuring consistency between code and natural language instructions) \cite{Zhou2023CodeBERTScore}, Dialogue Similarities evaluates the \textit{process}—ensuring the intermediate conversational steps (e.g., code reviews, stand-ups) faithfully reflect human engineering practices \cite{Wang2024AutonomousAgentsSurvey}.
 \end{itemize}
 
 \subsubsection*{Limitations}
 \begin{itemize}
-    \item As a form of objective evaluation, Dialogue Similarities provides quantitative insights but may not ``perfectly measure all types of agent capabilities.''
+    \item As a form of objective evaluation, Dialogue Similarities provides quantitative insights but may not ``perfectly measure all types of agent capabilities'' \cite{Wang2024AutonomousAgentsSurvey}.
     \item It focuses on resemblance rather than utility or safety; therefore, such objective metrics are considered essential complements to, but not replacements for, subjective assessment.
 \end{itemize}
-
 
 \subsubsection{Additional References}
 
 This metric is referenced and/or used in the following paper(s):
-
 
 \sloppy
 \cite{

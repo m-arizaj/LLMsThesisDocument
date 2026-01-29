@@ -1,11 +1,9 @@
 \subsection{COMET}
 
-\subsubsection*{Definition}
 \textbf{COMET} (Crosslingual Optimized Metric for Evaluation of Translation) is an automatic evaluation metric for text generation. It is an \textbf{LLM-based metric}, meaning it leverages a pre-trained cross-lingual language model (like XLM-RoBERTa) to evaluate the quality of a generated text (hypothesis) by comparing it to a source text and a reference text.
 
 Unlike traditional metrics that rely on n-gram overlap, COMET is trained to \textbf{predict human judgments} of quality, capturing semantic nuances more effectively.
 
-\subsubsection*{Formula (General Idea)}
 COMET does not use a simple, static statistical formula like BLEU. Instead, it is a neural framework.
 
 The model takes a tuple $(s, h, r)$ consisting of:
@@ -26,26 +24,27 @@ These inputs are passed through a pre-trained encoder (e.g., XLM-R) to obtain ve
 \subsubsection*{Purpose}
 The primary purpose is to provide an evaluation metric that correlates highly with human judgment, moving beyond surface-level matching to leverage the deep semantic understanding of LLMs.
 
-\subsubsection*{Domains}
+
+\subsubsection{Applications in Software Engineering}
+
+While COMET was originally designed for Machine Translation, it has been applied in Software Engineering (SE) research, primarily as a baseline metric for evaluating code generation models.
 \begin{itemize}
-    \item Machine Translation (MT)
-    \item Natural Language Generation (NLG)
-    \item LLM Evaluation
-    \item Software Engineering (as a baseline)
+    \item \textbf{Code Generation Evaluation}: COMET is used to assess the quality of generated code by comparing it to reference code using natural language processing techniques. However, its application in this domain has revealed significant limitations. Research indicates that COMET often treats code merely as text, failing to capture the functional correctness required for executable software.
+    \item \textbf{Performance Benchmarking}: In comparative studies of code evaluation metrics, COMET serves as a representative of LLM-based text metrics. Studies show it exhibits weak correlation with ground truth in code generation tasks (e.g., correlations as low as $r_p \approx 0.12$ on datasets like APPS-Eval) because it lacks awareness of execution logic.
 \end{itemize}
 
-\subsubsection*{Advantages}
-\begin{itemize}
-    \item \textbf{High Correlation with Humans}: Specifically trained to replicate human assessments.
-    \item \textbf{Semantic Understanding}: Captures nuances and meaning better than surface-level overlap metrics.
-    \item \textbf{Cross-lingual}: Effective for evaluating translation due to its cross-lingual pre-training.
-\end{itemize}
+\subsubsection{Interpretation}
 
-\subsubsection*{Limitations}
+Interpreting COMET scores differs from traditional metrics like BLEU or Accuracy because the output depends on the specific architecture (Estimator vs. Ranking model) and the training data (Human Judgments).
+
 \begin{itemize}
-    \item \textbf{Reference Dependency}: Requires high-quality reference texts, which can be expensive or unavailable.
-    \item \textbf{Poor Functional Correlation}: In code generation, it shows ``extremely weak correlation'' with functional correctness (e.g., only $r_p \approx 0.12$ on APPS-Eval).
-    \item \textbf{Computational Cost}: More expensive to run than statistical metrics like BLEU.
+    \item \textbf{Score Range and Meaning}:
+    \begin{itemize}
+        \item \textbf{Estimator Models}: Most standard COMET models are "Estimators" trained to regress directly on human quality scores (such as Direct Assessments or MQM). Unlike metrics bounded strictly between 0 and 1, Estimator scores do not necessarily have a fixed range (unless specifically normalized). A higher score indicates a higher predicted quality and greater semantic similarity to the reference/source.
+        \item \textbf{Ranking Models}: If using the "Translation Ranking" architecture, the output is a similarity score strictly bounded between 0 and 1, representing the probability that a hypothesis is better than a lower-ranked alternative.
+    \end{itemize}
+    \item \textbf{Semantic vs. Lexical}: A high COMET score implies that the generated text is semantically close to the reference and source, even if they do not share exact words. Conversely, a low score suggests a deviation in meaning or quality, even if n-gram overlap exists.
+    \item \textbf{Relative Assessment}: Because the scores are predictions of human judgment (which can be noisy), COMET is best interpreted as a relative ranking tool rather than an absolute measure of correctness. It is particularly effective at differentiating between high-performing systems where lexical metrics fail.
 \end{itemize}
 
 \subsubsection{Additional References}

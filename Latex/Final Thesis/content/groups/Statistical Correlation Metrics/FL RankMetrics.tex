@@ -1,6 +1,5 @@
 \subsection{Fault Localization Rank Metrics}
 
-\subsubsection*{Introduction}
 In Software Engineering (SE), \textbf{Fault Localization (FL)} is the critical process of identifying the specific locations of defects (i.e., the buggy statements or functions) in source code. To evaluate the effectiveness of automated FL techniques, a family of \textbf{rank-based metrics} is used.
 
 These metrics assess the performance of an FL model by analyzing the ``suspiciousness'' list it produces, which ranks code elements from most likely to least likely to be faulty. The goal is to measure how much effort (i.e., how far down the list) a developer must expend to find the \textit{actual} fault.
@@ -15,6 +14,9 @@ This metric is a direct measure of a tool's immediate utility. A high Top-N scor
 \textbf{Limitations} \\
 It is a binary (hit-or-miss) metric. It does not distinguish between a fault ranked at position $N+1$ and a fault ranked at position 1000.
 
+\textbf{Interpretation} \\
+\textit{Higher values indicate better performance.} A high Top-N score signifies that the model is commercially viable, as developers are likely to find the bug within their "patience threshold" (the first few results). Conversely, a low Top-N score suggests the model frequently buries the true fault deep in the list, making it practically useless for quick debugging.
+
 \subsubsection*{2. MFR (Mean First Rank)}
 \textbf{Definition} \\
 MFR calculates the mean (average) of the rank of the \textit{first} faulty statement found across all faults in a dataset.
@@ -26,10 +28,13 @@ MFR calculates the mean (average) of the rank of the \textit{first} faulty state
 \noindent where $F$ is the set of all faults (bugs) being evaluated.
 
 \textbf{Purpose} \\
-MFR provides a single score representing the average effort required to find the first sign of the bug. A lower MFR is better, indicating the fault is, on average, ranked higher on the list.
+MFR provides a single score representing the average effort required to find the first sign of the bug.
 
 \textbf{Limitations} \\
 In cases of multi-location bugs, MFR only considers the rank of the first faulty element, ignoring the others.
+
+\textbf{Interpretation} \\
+\textit{Lower values indicate better performance.} An MFR value reflects the absolute number of code elements a developer must inspect on average. For example, an MFR of 5 means the developer reads 5 lines of code before finding the bug. An increasing MFR indicates a degradation in the model's ability to prioritize faulty code correctly.
 
 \subsubsection*{3. MAR (Mean Average Rank)}
 \textbf{Definition} \\
@@ -38,6 +43,9 @@ MAR calculates the mean of the \textbf{average rank} of \textit{all} faulty elem
 \textbf{Purpose} \\
 Unlike MFR, MAR is designed to provide a more holistic measure of effort for bugs that involve multiple faulty locations. It answers: ``On average, what was the rank of \textit{all} the buggy pieces of code?''
 
+\textbf{Interpretation} \\
+\textit{Lower values indicate better performance.} MAR should be interpreted in comparison to MFR. If $\text{MAR} \approx \text{MFR}$, the bug likely consists of a single faulty statement or tightly clustered faults. If $\text{MAR} \gg \text{MFR}$, it indicates that while the tool finds the \textit{start} of the bug quickly, it struggles to identify the \textit{entirety} of the defect, requiring the developer to search further down the list to fix the bug completely.
+
 \subsubsection*{4. EXAM}
 \textbf{Definition} \\
 EXAM (Expected Maximum Fault Localization) measures the \textbf{expected rank} of the first correct fault location found in the ranked list of code elements. (Note: In many contexts, this is interpreted as the percentage of the code a developer must ``examine'' to find the fault).
@@ -45,25 +53,41 @@ EXAM (Expected Maximum Fault Localization) measures the \textbf{expected rank} o
 \textbf{Purpose} \\
 Similar to MFR, EXAM quantifies the expected effort needed to find the first fault. It is often used as a core metric for comparing the bottom-line effort required by different FL tools.
 
+\textbf{Interpretation} \\
+\textit{Lower values indicate better performance.} Unlike MFR, which gives an absolute rank count, EXAM is often interpreted as a percentage relative to the project size. This allows for fair comparison across projects of different sizes. A high EXAM score implies that the developer must audit a large portion of the codebase, rendering the automated tool ineffective compared to manual search.
 \subsubsection*{Comparative Summary}
 Below is a comparison of these rank-based metrics:
 
-\begin{center}
-\begin{tabular}{|l|l|p{5.5cm}|l|}
-\hline
-\textbf{Metric} & \textbf{Based on} & \textbf{Purpose} & \textbf{Typical Domain} \\
-\hline
-Top-N & Hit/Miss & Measures if the fault is found within the top $N$ results. & FL Evaluation \\
-\hline
-MFR & Rank & Averages the rank of the \textit{first} faulty element found. & FL Evaluation \\
-\hline
-MAR & Rank & Averages the ranks of \textit{all} faulty elements for a bug. & FL Evaluation \\
-\hline
-EXAM & Rank & Measures the expected rank of the \textit{first} fault found. & FL Evaluation \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Fault Localization (FL) Evaluation Metrics}
+    \label{tab:fl_metrics}
+    \begin{tabular}{|l|l|p{5.5cm}|l|}
+    \hline
+    \textbf{Metric} & \textbf{Based on} & \textbf{Purpose} & \textbf{Typical Domain} \\
+    \hline
+    Top-N & Hit/Miss & Measures if the fault is found within the top $N$ results. & FL Evaluation \\
+    \hline
+    MFR & Rank & Averages the rank of the \textit{first} faulty element found. & FL Evaluation \\
+    \hline
+    MAR & Rank & Averages the ranks of \textit{all} faulty elements for a bug. & FL Evaluation \\
+    \hline
+    EXAM & Rank & Measures the expected rank of the \textit{first} fault found. & FL Evaluation \\
+    \hline
+    \end{tabular}
+\end{table}
 
+\subsubsection{Applications in Software Engineering}
+While defined theoretically, these metrics serve practical roles in modern Software Engineering research, particularly in the evaluation of Deep Learning-based Fault Localization (DLFL) techniques. According to recent comprehensive reviews \cite{Chen2024DLBasedSE}, these metrics are applied in the following engineering contexts:
+
+\textbf{Performance Validation of Neural Models}
+Metrics such as \textbf{Top-N} are critical for validating the industrial viability of DLFL models (e.g., DeepFL, GRACE). Researchers apply Top-1 and Top-5 metrics to demonstrate that neural networks can learn to pinpoint buggy statements more accurately than traditional spectrum-based methods, thereby justifying the computational cost of using deep learning \cite{Chen2024DLBasedSE}.
+
+\textbf{Benchmarking and Effort Estimation}
+\textbf{MFR} and \textbf{EXAM} are applied as standard benchmarks to simulate human developer effort. By minimizing these values, researchers aim to reduce the actual time developers spend inspecting code. For instance, in comparative studies of Graph Neural Networks (GNN) for debugging, MFR is used to prove that the model correctly prioritizes structural dependencies in the code \cite{Chen2024DLBasedSE}.
+
+\textbf{Handling Multi-Defect Scenarios}
+In complex software systems where multiple bugs coexist, \textbf{MAR} is applied to ensure that an FL tool does not merely find the "easiest" bug while ignoring others. This application is crucial for assessing the robustness of automated debugging tools in real-world maintenance scenarios involving large codebases \cite{Chen2024DLBasedSE}.
 \subsubsection{Additional References}
 
 This metric is referenced and/or used in the following paper(s):

@@ -1,11 +1,9 @@
 \subsection{Helpfulness}
 
-\subsubsection*{Introduction}
 Helpfulness is a key category of \textbf{human-centered evaluation} for Large Language Models (LLMs). It is a qualitative assessment that measures how well an LLM's response satisfies a user's request, answers their question, or accomplishes the instructed task.
 
 It is the primary metric for evaluating a model's utility and capability, often balanced against ``Harmlessness'' to ensure that responses are not only safe but also functional and useful.
 
-\subsubsection*{Definition}
 Helpfulness is defined as the measure of a model's ability to provide high-quality, relevant, and accurate answers that align with the user's intent. It quantifies the practical utility of the system.
 
 \subsubsection*{Measurement Methodology}
@@ -21,18 +19,18 @@ In these evaluations, raters score based on relevance, accuracy, completeness, a
 \subsubsection*{Purpose}
 The purpose of measuring helpfulness is to \textbf{quantify the utility and performance} of an LLM from a user's perspective. It serves as the main metric for determining if a model is proficient at following instructions, which is the primary goal of assistant-style models.
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item Human-centered Evaluation
-    \item LLM Evaluation / NLP
-    \item Chatbot Performance
-\end{itemize}
+\subsubsection{Applications}
 
-\subsubsection*{Benchmarks}
+In the context of Software Engineering, \textit{helpfulness} translates directly to the model's capability to assist developers in writing, debugging, and understanding code. Unlike general conversation, helpfulness here is strictly bound by functional correctness and technical precision.
+
 \begin{itemize}
-    \item \textbf{HELM} (Holistic Evaluation of Language Models)
-    \item \textbf{Chatbot Arena}
-    \item \textbf{MT-Bench} (often used in conjunction with Chatbot Arena)
+    \item \textbf{Functional Code Synthesis}: The primary application of helpfulness is the generation of executable and functionally correct code. Benchmarks like HumanEval and APPS are used to evaluate whether the model can produce code that passes unit tests based on a natural language description. A ``helpful'' model must produce logic that compiles and solves the problem without hallucinating non-existent libraries \cite{Liang2022HELM}.
+
+    \item \textbf{Multi-turn Debugging and Reasoning}: In real-world engineering, helpfulness requires sustaining a technical context over multiple turns. Models are evaluated on their ability to diagnose errors in provided code, explain the root cause, and iteratively refine the solution based on user feedback. This capability is critical for complex tasks where the first attempt may not be perfect \cite{zheng2023judging}.
+
+    \item \textbf{Technical Instruction Following}: Helpfulness in software engineering often involves strict adherence to constraints (e.g., ``use only the Pandas library'' or ``output in JSON format''). Evaluators assess the model's ability to follow these specific technical requirements, as failing to do so renders the code useless for integration into existing systems \cite{zheng2023judging}.
+
+    \item \textbf{Code Explanation and Documentation}: Beyond generating code, helpfulness is measured by the model's ability to explain complex algorithms or generate documentation for legacy codebases. This aids developers in maintaining and understanding large systems, serving as an interactive knowledge base \cite{Chang2023SurveyLLMs}.
 \end{itemize}
 
 \subsubsection*{Advantages}

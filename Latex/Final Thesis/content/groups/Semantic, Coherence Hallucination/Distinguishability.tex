@@ -1,11 +1,9 @@
 \subsection{Distinguishability ($d$)}
 
-\subsubsection*{Introduction}
 Distinguishability ($d$) is a meta-metric (a metric for evaluating other metrics) introduced by Eghbali and Pradel (2022) to evaluate how well a code similarity metric, such as BLEU or CodeBERTScore, can differentiate between code snippets that are semantically similar and those that are semantically different.
 
 The goal is to quantify whether a metric assigns higher scores to code pairs that come from the same ``semantic cluster'' (i.e., they solve the same problem) compared to code pairs from different clusters.
 
-\subsubsection*{Definition}
 Distinguishability is calculated as the ratio of the average similarity of code pairs \textit{within the same cluster} ($\text{Pairs}_{\text{intra}}$) to the average similarity of code pairs \textit{from different clusters} ($\text{Pairs}_{\text{inter}}$).
 
 Mathematically, it is expressed as:

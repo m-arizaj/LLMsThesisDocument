@@ -1,11 +1,9 @@
 \subsection{Idealized Context Association (ICAT)}
 
-\subsubsection*{Definition}
 The \textbf{Idealized Context Association Test (iCAT) Score} is a metric introduced by Nadeem, Bethke, and Reddy (2021) to measure stereotypical bias in language models. It is designed to be used with the \textbf{StereoSet} dataset.
 
 The metric provides a single score that balances a model's language modeling capability (its ability to distinguish meaningful sentences from meaningless ones) with its level of stereotypical bias (its preference for stereotypical sentences over anti-stereotypical ones).
 
-\subsubsection*{Formula}
 The iCAT score is calculated based on two sub-scores derived from the StereoSet benchmark:
 
 \begin{itemize}
@@ -24,17 +22,16 @@ The purpose of iCAT is to provide a single, consolidated metric that evaluates a
 
 The goal is to reward models that are both coherent (high $lms$) and unbiased ($ss$ near 50). A model that simply chooses ``anti-stereotype'' every time might get a good bias score but would be penalized by iCAT if it fails to distinguish meaningful sentences from nonsensical ones.
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item Fairness / Bias Evaluation
-    \item Natural Language Processing (NLP)
-    \item Stereotype Measurement
-    \item Contextual Bias Balance
-\end{itemize}
+\subsection{Applications}
 
-\subsubsection*{Benchmarks}
+Within the domain of Software Engineering, specifically in \textbf{AI Engineering} and \textbf{Model Evaluation}, the ICAT score serves as a critical quality assurance metric for Pretrained Language Models (PLMs). Based on the provided text, its primary applications include:
+
 \begin{itemize}
-    \item \textbf{StereoSet}: The iCAT metric was introduced specifically for this benchmark, which evaluates model bias across intrasentence and intersentence tasks covering stereotypes related to race, gender, religion, and profession.
+    \item \textbf{Quality Assurance for AI Services}: PLMs are widely deployed as software services (e.g., via Google Cloud or Amazon AWS) to serve millions of users \cite{nadeem2021stereoset}. ICAT allows engineers to quantify and assess the "adverse effects" of these models before they are integrated into downstream applications, ensuring that the software does not propagate harmful real-world biases \cite{nadeem2021stereoset}.
+    
+    \item \textbf{Model Selection (Performance vs. Fairness Trade-off)}: In software design, choosing the correct model requires balancing raw capability with safety. ICAT helps engineers select models that excel at "language modeling" (ranking meaningful contexts higher than meaningless ones) while behaving in an "unbiased manner" \cite{nadeem2021stereoset}. It penalizes models that are highly capable but biased, as well as models that are unbiased but nonsensical (random) \cite{nadeem2021stereoset}.
+    
+    \item \textbf{Bias Regression Tracking}: The metric supports a leaderboard system with a hidden test set to "track the bias of future language models" \cite{nadeem2021stereoset}. This functions as a regression testing mechanism, allowing software maintainers to verify if newer model architectures or training iterations have regressed in terms of fairness compared to previous baselines.
 \end{itemize}
 
 \subsubsection*{Advantages}

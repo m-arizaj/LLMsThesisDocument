@@ -1,24 +1,22 @@
 \subsection{Energy \& Resource Metrics}
 
-\subsubsection*{Introduction}
-This group of metrics evaluates the \textit{Efficiency} and \textit{Sustainability} of Large Language Models (LLMs). As LLMs grow in scale, their ``large parameter scale... necessitates substantial computational resources,'' leading to significant overhead. These metrics are not focused on task correctness, but rather on quantifying the computational, time, and energy costs required for training and inference.
+This is a group of metrics that evaluates the \textit{Efficiency} and \textit{Sustainability} of Large Language Models (LLMs). As LLMs grow in scale, their large parameter scale needs much more computational resources, leading to significant overhead. These metrics are not focused on task correctness, but on quantifying the computational, time, and energy costs that is required for training and inference.
 
 This category includes broad dimensions like \textbf{Resource Consumption}, specific benchmark metrics like \textbf{Energy Consumption} (Mercury), and holistic categories like \textbf{Efficiency} from the HELM benchmark.
 
-\subsubsection*{Definition}
-This domain is categorized into three distinct definitions based on the scope of evaluation:
+This domain is categorized into three different definitions based on the scope of the evaluation:
 
 \begin{itemize}
-    \item \textbf{Resource Consumption (General)}: A comprehensive evaluation dimension assessing the high demands of LLMs. It is broken down into:
+    \item \textbf{Resource Consumption (General)}: An integral evaluation dimension that satisfies the high demands of LLMs. It is composed in the following way:
     \begin{itemize}
         \item \textit{Computational Power}: Demands for computing power and storage.
         \item \textit{Time}: Duration of training and parameter tuning.
         \item \textit{Energy}: Electricity costs for operation and cooling systems.
     \end{itemize}
     
-    \item \textbf{Efficiency (HELM Benchmark)}: One of the seven top-level metrics in the \textit{Holistic Evaluation of Language Models} (HELM) benchmark. It defines efficiency through practical proxies for computational cost.
+\item \textbf{Efficiency (HELM Benchmark)}: HELM treats efficiency as a top-level metric. It uses practical proxies to estimate computational cost, tracking variables like parameter count and the number of inference passes needed to clear a specific SE task \cite{Liang2022HELM}.
     
-    \item \textbf{Energy Consumption (Mercury Benchmark)}: A specific metric designed to assess the efficiency of the \textit{code generated} by LLMs, rather than the model itself.
+    \item \textbf{Code Efficiency (Mercury/EffiBench)}: Unlike the previous metrics which measure the model, this measures the \textit{output}. It assesses the runtime performance of the generated code itself, ensuring that the solution is not only correct but also lean in memory and energy usage \cite{Chen2024SurveyCodeGen}.
 \end{itemize}
 
 \subsubsection*{Purpose}
@@ -28,29 +26,31 @@ This domain is categorized into three distinct definitions based on the scope of
     \item \textbf{Energy Consumption (Mercury)}: To provide a direct, quantitative measure of the sustainability of the software solutions produced by the LLM.
 \end{itemize}
 
-\subsubsection*{Applications}
+\subsubsection*{Applications to Software Engineering}
 \begin{itemize}
-    \item \textbf{Resource Consumption}: Used as a high-level dimension for the comprehensive evaluation of resource overheads in training and inference.
-    \item \textbf{Efficiency (HELM)}: Measured using sub-metrics: \textit{Training Time} (on proxy tasks), \textit{Inference Time}, and \textit{Number of Parameters}.
-    \item \textbf{Energy Consumption (Mercury)}: Measured by running LLM-generated code against preset test cases in a fixed hardware environment and recording execution time, memory usage, and energy consumption.
+    \item \textbf{Predicting Effort}: The metric evaluate how the LLMs can guess the hours needed for a person to make maintenance or development tickets, a key factor for good planning \cite{Bektas2025Thesis}.
+    \item \textbf{Mobile \& Embedded Systems}: Benchmarks like Mercury are critical here. They verify that the generated code doesn't drain battery or hog memory, which is non-negotiable for resource-constrained devices \cite{Chen2024SurveyCodeGen}.
+    \item \textbf{Coding Assistants}: For tools like Copilot, speed is a feature. Metrics here focus on \textit{Inference Time} to guarantee that suggestions appear instantly, maintaining the developer's "flow" state without lag \cite{Liang2022HELM}.
 \end{itemize}
 
 \subsubsection*{Comparative Summary}
 Below is a comparison of the scope and focus of these efficiency metrics:
-
-\begin{center}
-\begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4.5cm}|}
-\hline
-\textbf{Metric} & \textbf{Domain} & \textbf{Scope} & \textbf{Measured Components} \\
-\hline
-Resource Consumption & General LLM Eval & Model (Training \& Inference) & Power, Time, and Energy (General dimension) \\
-\hline
-Efficiency (HELM) & General LLM Eval & Model (Training \& Inference) & Training Time, Inference Time, \# of Parameters \\
-\hline
-Energy Consumption & Code Generation (Mercury) & Generated Code (Runtime) & Energy consumed by the output code during execution \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Efficiency and Resource Metrics}
+    \label{tab:resource_metrics_se}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Target SE Area} & \textbf{Scope} & \textbf{Key Measured Components} \\
+    \hline
+    Resource Consumption & Project Planning & Model Training \& Operation & Training cost, $CO_2$ emissions, computational overhead \cite{Lin2024SWC} \\
+    \hline
+    Efficiency (HELM) & Tool Deployment & Model Inference & Inference latency, parameter count, energy per query \cite{Liang2022HELM} \\
+    \hline
+    Code Efficiency & Green Software / Embedded & Generated Code Artifacts & Runtime memory usage, CPU utilization, energy consumption of output code \cite{Chen2024SurveyCodeGen} \\
+    \hline
+    \end{tabular}
+\end{table}
 
 \subsubsection{Additional References}
 

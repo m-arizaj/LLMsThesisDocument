@@ -1,11 +1,9 @@
 \subsection{Harmlessness}
 
-\subsubsection*{Introduction}
 Harmlessness is a key aspect of \textbf{human-centered evaluation} for Large Language Models (LLMs). It is not a single computational metric but rather a category of assessment that measures a model’s propensity to generate outputs that are unsafe, toxic, offensive, discriminatory, or could incite harm.
 
 This evaluation is considered a cornerstone of ensuring that LLMs are safe and ``not... harmful'' for real-world deployment, serving as a critical filter before models are released to the public.
 
-\subsubsection*{Definition}
 Harmlessness is defined as the measure of a model's alignment with safety standards and human values. Unlike functional metrics, it focuses on the prevention of negative outcomes.
 
 \subsubsection*{Measurement Methodology}
@@ -20,11 +18,18 @@ Harmlessness is primarily measured using \textbf{Human Evaluation}. The standard
 \subsubsection*{Purpose}
 The primary purpose is to \textbf{ensure LLM safety and alignment}. It builds trust and prevents models from causing real-world harm to users or perpetuating societal biases.
 
-\subsubsection*{Domains}
+\subsubsection{Applications}
+
+In the domain of Software Engineering, the concept of harmlessness extends beyond conversational safety to include the integrity, security, and legality of generated code. Ensuring that LLMs are harmless in this field involves preventing the generation of functional but dangerous or legally compromising outputs.
+
 \begin{itemize}
-    \item Human-centered Evaluation
-    \item Ethical Evaluation
-    \item LLM Safety \& Alignment
+    \item \textbf{Prevention of Malicious Code Generation}: Harmlessness metrics in software engineering assess a model's refusal to generate malware, exploit scripts, or cyberattack tools (e.g., ransomware or keyloggers). This is often evaluated through adversarial ``red-teaming'' where prompts mimic malicious actors seeking to weaponize code \cite{Chang2023SurveyLLMs}.
+
+    \item \textbf{Secure Coding Practices}: A harmless model must avoid introducing security vulnerabilities (such as SQL injection, cross-site scripting, or buffer overflows) into the codebase. Unlike general toxicity, ``harm'' here is defined as the potential risk to system integrity and user data privacy \cite{Chang2023SurveyLLMs}.
+
+    \item \textbf{Copyright and Licensing Compliance}: Legal harm is a critical aspect of harmlessness in coding. Models are evaluated on their tendency to memorize and regurgitate copyrighted code (e.g., GPL-licensed code from the Linux kernel) without proper attribution, which poses significant legal risks for developers \cite{Liang2022HELM}.
+
+    \item \textbf{Automated Safety Evaluation in Code}: Due to the complexity of evaluating code safety, recent methodologies employ strong LLMs as judges to assess the alignment of coding responses. Benchmarks like MT-Bench utilize this approach to score multi-turn coding interactions, ensuring that the model not only solves the problem but does so without engaging in harmful behaviors \cite{zheng2023judging}.
 \end{itemize}
 
 \subsubsection*{Advantages}

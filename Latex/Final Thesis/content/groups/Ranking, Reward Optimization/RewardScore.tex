@@ -1,11 +1,9 @@
 \subsection{Reward Score}
 
-\subsubsection*{Definition}
 The \textbf{Reward Score} (also referred to as reward/score) is an objective, quantitative metric used in the evaluation of LLM-based autonomous agents. It is a primary metric in the category of \textbf{Task Success}, which measures how well an agent can successfully complete its goals.
 
 This metric is typically defined by the environment or benchmark itself, where the agent receives a score based on its performance during or after the interaction.
 
-\subsubsection*{Formula (General Idea)}
 The specific formula for the Reward Score is \textbf{task-dependent} and defined by the benchmark being used. It is a quantitative value where higher values indicate greater task completion ability.
 
 For example, in a benchmark like WebShop, the reward score ($R$) could be a function of the attributes matched in a purchase task:
@@ -22,6 +20,16 @@ The purpose of the Reward Score is to provide a ``concrete, measurable insight''
     \item LLM Agents / Autonomous Agents
     \item Objective Evaluation of Agents
     \item Reinforcement Learning from Human Feedback (RLHF)
+\end{itemize}
+
+\subsubsection{Applications}
+
+In the field of \textbf{Software Engineering} and Autonomous Agents, the Reward Score is the fundamental signal used to validate if an agent can function as a developer or operator. Based on \cite{Wang2024AutonomousAgentsSurvey, yao2023react, zhang2024building}, its key applications include:
+
+\begin{itemize}
+    \item \textbf{Benchmarking Reasoning-Action Loops}: In frameworks like ReAct, the Reward Score determines if the interleaving of reasoning traces and actions leads to correct software outcomes. For instance, in web navigation tasks (e.g., WebShop), the reward quantifies the agent's success in finding and purchasing the correct item based on user specifications \cite{yao2023react}.
+    \item \textbf{Evaluating Code Generation Agents}: For agents built to construct software (e.g., using tools like Executable Pools), the Reward Score is often binary or discrete based on unit tests. A score of 1.0 is assigned if the generated code passes all test cases, and 0.0 otherwise. This allows for the rigorous comparison of different agent architectures (e.g., single-agent vs. multi-agent collaboration) in coding environments \cite{zhang2024building, Wang2024AutonomousAgentsSurvey}.
+    \item \textbf{Refining Trajectories via Feedback}: The Reward Score serves as the feedback signal to improve an agent's decision-making process. By analyzing which interaction trajectories yield higher rewards, researchers can fine-tune prompts or fine-tune the model itself to avoid error propagation in complex engineering tasks \cite{mehta2024improving}.
 \end{itemize}
 
 \subsubsection*{Advantages}

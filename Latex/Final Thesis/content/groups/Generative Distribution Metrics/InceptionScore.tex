@@ -27,12 +27,6 @@ The Inception Score is calculated as the exponential of the Kullback-Leibler (KL
 \subsubsection*{Purpose}
 The IS is a ranking metric used to assess the ``overall quality'' of generative models. It attempts to group both image fidelity and sample diversity into a single numerical score, which was historically used to rank models against each other.
 
-\subsubsection*{Domains \& Benchmarks}
-\begin{itemize}
-    \item \textbf{Domains}: Generative Models, Image Generation.
-    \item \textbf{Benchmarks}: Intrinsically tied to the \textbf{Inception-V3} classification model. It is used to evaluate models trained on datasets like CIFAR-10 and ImageNet.
-\end{itemize}
-
 \subsubsection*{Advantages}
 \begin{itemize}
     \item \textbf{Combined Metric}: It was one of the first widely adopted metrics to attempt to quantify both fidelity and diversity in a single score.
@@ -44,6 +38,16 @@ The IS is a ranking metric used to assess the ``overall quality'' of generative 
     \item \textbf{Inception-V3 Dependency}: The metric is exclusively dependent on the Inception-V3 model. This introduces bias towards the 1,000 ImageNet classes and tends to prioritize texture over shape.
     \item \textbf{Poor Human Correlation}: IS does not correlate well with human evaluations of image realism, particularly on complex, high-resolution datasets.
     \item \textbf{Sensitivity to Gaming}: The score can be artificially inflated by models that learn to generate one high-quality image per class, even if they lack true diversity (mode collapse).
+\end{itemize}
+
+\subsubsection{Applications}
+
+Although the referenced papers do not explicitly categorize applications under general "Software Engineering," they describe critical engineering processes for the development and validation of machine learning models. The Inception Score is applied as a quantitative standard to automate decision-making in the following areas:
+
+\begin{itemize}
+    \item \textbf{Automated Model Selection}: In the workflow proposed by Salimans et al. (2016), the Inception Score serves as an objective function to monitor training progress. This allows engineers to identify and save the best-performing model checkpoints ("early stopping") based on a numerical value rather than subjective visual inspection, effectively automating the quality assurance phase of the model training pipeline \cite{salimans2016improved}.
+
+    \item \textbf{Comparative Benchmarking}: Stein et al. (2023) highlight that despite its flaws, IS acts as a standard unit of measure for regression testing. It allows researchers and engineers to compare new architectures against historical baselines. In a software engineering context, this application is analogous to performance benchmarking, ensuring that new iterations of a generative system meet or exceed the metrics of previous versions before deployment \cite{Stein2023MetricFlaws}.
 \end{itemize}
 
 

@@ -1,11 +1,9 @@
 \subsection{Hit-N}
 
-\subsubsection*{Definition}
 \textbf{Hit-N} (also referred to as Hit-N (multi-defects)) is an evaluation metric used in fault localization. It is specifically ``designed for multi-defects.''
 
 The metric measures the number of bugs (out of a set of known bugs) for which a fault localization tool's predicted set of suspicious code elements (e.g., the top-ranked statements) successfully ``contains at least N faulty statements.''
 
-\subsubsection*{Formula (General Idea)}
 The metric is defined qualitatively based on a counting mechanism. It can be expressed as:
 
 \begin{equation}
@@ -23,10 +21,15 @@ The metric is defined qualitatively based on a counting mechanism. It can be exp
 \subsubsection*{Purpose}
 The primary purpose of Hit-N is to evaluate the effectiveness of fault localization techniques in scenarios involving multiple defects. Unlike metrics that might only measure the rank of the \textit{first} fault found (like Mean First Rank - MFR), Hit-N assesses a tool's ability to identify faulty statements across multiple, potentially interacting, bugs within the same project.
 
-\subsubsection*{Domains}
+\subsubsection{Applications}
+In the context of software engineering, particularly within fault localization and deep learning-based approaches, the \textbf{Hit-N} metric is applied in the following scenarios:
+
 \begin{itemize}
-    \item Fault Localization Evaluation
-    \item LLM Evaluation (as applied to code/debugging tasks)
+    \item \textbf{Evaluation of Co-change Fixing Locations}: Hit-N is primarily applied to evaluate the capability of Fault Localization (FL) tools to identify multiple dependent faulty statements that must be fixed simultaneously (referred to as ``co-change fixing locations''). This is crucial for validating tools designed to support Automated Program Repair (APR) in multi-hunk bug scenarios, where identifying a single fault is insufficient \cite{li2022fault}.
+    
+    \item \textbf{Benchmarking Deep Learning-based FL Tools}: It serves as a rigorous benchmark for comparing the performance of advanced deep learning models (e.g., FIXLOCATOR) against traditional or other learning-based baselines (like DeepFL or CNN-FL). By requiring $N$ successful hits, it distinguishes tools that can capture complex fault patterns from those that only find simple, isolated bugs \cite{li2022fault}.
+    
+    \item \textbf{Systematic Review of FL Metrics}: In broader surveys of deep learning-based software engineering, Hit-N is categorized as a specialized metric for assessing model performance on multi-defect datasets, highlighting the progression from single-fault assumptions to more realistic multi-fault evaluations in the field \cite{Chen2024DLBasedSE}.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -52,15 +55,3 @@ Chen2024DLBasedSE,
 li2022fault,
 }
 \fussy
-
-% añadir esta entrada a tu archivo .bib
-% @inproceedings{li2022fault,
-%   title={Fault localization to detect co-change fixing locations},
-%   author={Li, Y. and Wang, S. and Nguyen, T. N.},
-%   booktitle={Proceedings of the 30th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
-%   pages={659--671},
-%   year={2022},
-%   publisher={ACM},
-%   address={New York},
-%   doi={10.1145/3540250.3549137}
-% }

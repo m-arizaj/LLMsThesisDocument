@@ -1,6 +1,5 @@
 \subsection{Robustness}
 
-\subsubsection*{Introduction}
 Robustness is a critical, non-functional dimension for evaluating Large Language Models (LLMs) and complex software systems. It refers to the model's ability to \textbf{maintain stability and functional correctness} when faced with unexpected, anomalous, or challenging inputs, such as data perturbations, noise, adversarial attacks, or disinformation.
 
 Robustness is not measured by a single formula but is a comprehensive evaluation category. Researchers employ specific metrics to quantify it, such as Attack Success Rate (ASR) and Performance Drop Rate (PDR).
@@ -70,22 +69,24 @@ A specific metric within the \textbf{LoCoBench} benchmark (Software Engineering 
 \textbf{Purpose} \\
 To evaluate the quality of generated code in terms of its reliability, error handling, and defensive programming practices in long-context tasks.
 
-\subsubsection*{Comparative Summary}
-\begin{center}
-\begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{3cm}|}
-\hline
-\textbf{Metric / Category} & \textbf{Based on} & \textbf{Evaluation Goal} & \textbf{Typical Domain} \\
-\hline
-Robustness (Category) & General Concept & Assess overall stability & LLM, NLP, SE \\
-\hline
-ASR & Adversarial Attacks & Measure vulnerability rate & Adversarial Eval \\
-\hline
-PDR & Adversarial Prompts & Measure performance drop \% & Adversarial Eval \\
-\hline
-LoCoBench RS & ISO 25010 & Evaluate SE code quality & SE (Long-Context) \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Robustness and Stability Metrics}
+    \label{tab:robustness_metrics}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{3cm}|}
+    \hline
+    \textbf{Metric / Category} & \textbf{Based on} & \textbf{Evaluation Goal} & \textbf{Typical Domain} \\
+    \hline
+    Robustness (Category) & General Concept & Assess overall stability & LLM, NLP, SE \\
+    \hline
+    ASR & Adversarial Attacks & Measure vulnerability rate & Adversarial Eval \\
+    \hline
+    PDR & Adversarial Prompts & Measure performance drop \% & Adversarial Eval \\
+    \hline
+    LoCoBench RS & ISO 25010 & Evaluate SE code quality & SE (Long-Context) \\
+    \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Additional References}

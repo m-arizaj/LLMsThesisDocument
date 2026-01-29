@@ -1,11 +1,9 @@
 \subsection{Rarity Score}
 
-\subsubsection*{Definition}
 The \textbf{Rarity Score (RS)} is a metric used to evaluate the ``uncommonness'' or ``unlikeliness'' of an individual synthesized image. Formally defined by Han et al. (2022), it relies on k-nearest neighbours (k-NN) computed in a representation space, similar to precision and density metrics.
 
 It quantifies rarity by measuring the density of the \textit{real} data manifold in the vicinity of a \textit{generated} sample.
 
-\subsubsection*{Formula}
 The Rarity Score for a single generated image $x$ relative to the set of real samples $\{x_j^r\}_{j=1}^m$ is defined as the minimum k-NN distance among the real samples whose neighborhood contains $x$.
 
 \begin{equation}
@@ -27,10 +25,26 @@ The primary purpose is to provide a quantitative measure of ``unlikeliness'' for
 
 In generative model evaluation, it serves as a diagnostic tool to investigate human evaluator bias. It helps researchers check if evaluators are confusing ``unrealism'' (fakeness) with ``unlikeliness'' (rarity) by correlating human error rates with Rarity Scores.
 
-\subsubsection*{Domains}
+\subsection{Applications}
+
+While not applied to traditional software debugging, the Rarity Score serves as a crucial metric in the \textbf{verification and validation (V\&V)} phase of generative software systems. It is primarily used to audit system behavior and validate testing protocols.
+
+\subsubsection{Model Debugging and Diagnostics}
+In the engineering of generative models, Rarity Score is used to distinguish between different types of failure modes and success cases, acting as a diagnostic test for the model's output distribution.
 \begin{itemize}
-    \item Generative Models
-    \item Image Generation
+    \item \textbf{Diagnosing Mode Collapse}: By analyzing the distribution of Rarity Scores, engineers can detect if a model is "collapsing" to only generating common, safe samples (low rarity), failing to meet diversity requirements \cite{han2022rarity}.
+    \item \textbf{differentiating Artifacts from Novelty}: It helps developers distinguish between samples that are statistical outliers due to generation errors (artifacts) and those that are valid but rare occurrences, facilitating more targeted debugging of the generator's loss functions \cite{han2022rarity}.
+\end{itemize}
+
+\subsubsection{Auditing Human Evaluation Pipelines}
+A critical component of testing generative software is human evaluation. The Rarity Score has been applied to validate the integrity of these "human test oracles."
+\begin{itemize}
+    \item \textbf{Bias Detection in Testing}: Stein et al. (2023) utilized the Rarity Score to audit human evaluators, verifying whether test subjects were incorrectly flagging valid, rare inputs as system failures (fakes). This application ensures that the "ground truth" used for system evaluation is not biased against novelty \cite{Stein2023MetricFlaws}.
+\end{itemize}
+
+\subsubsection{Dataset Engineering and Comparison}
+\begin{itemize}
+    \item \textbf{Training Data Profiling}: The metric is applied to quantify and compare the complexity and "rareness" density of different training datasets (e.g., FFHQ vs. CelebA-HQ). This allows engineers to verify if the training data possesses sufficient coverage of edge cases before model training begins \cite{han2022rarity}.
 \end{itemize}
 
 \subsubsection*{Advantages}

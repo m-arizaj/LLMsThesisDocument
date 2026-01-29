@@ -1,6 +1,5 @@
 \subsection{Factuality}
 
-\subsubsection*{Definition}
 \textbf{Factuality} in the context of Large Language Models (LLMs) refers to the extent to which the information or answers provided by the model align with \textbf{real-world truths and verifiable facts}.
 
 Evaluating factuality is a critical component of LLM assessment. It measures the model's ability to:
@@ -13,22 +12,13 @@ Evaluating factuality is a critical component of LLM assessment. It measures the
 \subsubsection*{Purpose}
 The primary purpose of evaluating factuality is to \textbf{ensure trust} and enable the efficient use of LLMs. Factuality significantly impacts the reliability of downstream applications. Inconsistent or incorrect information can lead to substantial misunderstandings, making this metric crucial.
 
-\subsubsection*{Domains \& Applications}
+\subsubsection*{Applications}
 This metric is applied across general LLM evaluation and specific high-stakes domains:
 \begin{itemize}
     \item \textbf{Question Answering (QA)}: Ensuring answers are grounded in reality.
     \item \textbf{Text Summarization}: Ensuring the summary remains factually consistent with the source.
     \item \textbf{Automated Fact-Checking}: Using models to verify claims.
     \item \textbf{Information Extraction}: Retrieving accurate data points.
-\end{itemize}
-
-\subsubsection*{Benchmarks}
-Several key benchmarks are used to assess factuality:
-\begin{itemize}
-    \item \textbf{HELM (Holistic Evaluation of Language Models)}: Evaluating general capabilities including accuracy.
-    \item \textbf{TruthfulQA}: A dataset specifically designed to cause models to make mistakes and test truthfulness (mimicking human falsehoods).
-    \item \textbf{Natural Questions} \& \textbf{TriviaQA}: Used to assess internal knowledge capabilities.
-    \item \textbf{FActScore}: A metric/benchmark that breaks down generated text into individual ``atomic'' facts which are then evaluated for correctness.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -63,51 +53,3 @@ gekhman2023trueteacher,
 manakul2023selfcheckgpt,
 }
 \fussy
-
-% @article{lin2021truthfulqa,
-%   title={TruthfulQA: Measuring how models mimic human falsehoods},
-%   author={Lin, S. and Hilton, J. and Evans, O.},
-%   journal={arXiv preprint arXiv:2109.07958},
-%   year={2021},
-%   doi={10.48550/arXiv.2109.07958}
-% }
-
-% @article{wang2023evaluating,
-%   title={Evaluating open question answering evaluation},
-%   author={Wang, C. and Cheng, S. and Xu, Z. and others},
-%   journal={arXiv preprint arXiv:2305.12421},
-%   year={2023},
-%   doi={10.48550/arXiv.2305.12421}
-% }
-
-% @article{min2023factscore,
-%   title={FActScore: Fine-grained atomic evaluation of factual precision in long form text generation},
-%   author={Min, S. and Krishna, K. and Lyu, X. and others},
-%   journal={arXiv preprint arXiv:2305.14251},
-%   year={2023},
-%   doi={10.48550/arXiv.2305.14251}
-% }
-
-% @article{honovich2022true,
-%   title={TRUE: Re-evaluating factual consistency evaluation},
-%   author={Honovich, O. and Aharoni, R. and Herzig, J. and others},
-%   journal={arXiv preprint arXiv:2204.04991},
-%   year={2022},
-%   doi={10.48550/arXiv.2204.04991}
-% }
-
-% @article{gekhman2023trueteacher,
-%   title={TrueTeacher: Learning factual consistency evaluation with large language models},
-%   author={Gekhman, Z. and Herzig, J. and Aharoni, R. and others},
-%   journal={arXiv preprint arXiv:2305.11171},
-%   year={2023},
-%   doi={10.48550/arXiv.2305.11171}
-% }
-
-% @article{manakul2023selfcheckgpt,
-%   title={SelfCheckGPT: Zero-resource black-box hallucination detection for generative large language models},
-%   author={Manakul, P. and Liusie, A. and Gales, M.},
-%   journal={arXiv preprint arXiv:2303.08896},
-%   year={2023},
-%   doi={10.48550/arXiv.2303.08896}
-% }

@@ -1,11 +1,9 @@
 \subsection{Cost Metrics}
 
-\subsubsection*{Introduction}
 In the evaluation of Large Language Models (LLMs) for software engineering tasks, ``cost'' is a crucial metric category that goes beyond simple functional correctness. It is not a single metric, but a set of efficiency metrics that quantify the resources consumed during code development, execution, or repair.
 
 These costs are generally divided into \textit{time cost} (how long the process takes) and \textit{resource cost} (financial or computational). Specific metrics like \textbf{Monetary Cost}, \textbf{Development Cost}, and \textbf{Total Cost} are used to measure the financial and efficiency implications of using LLMs in domains like automatic program repair (APR), code evolution, and autonomous agents.
 
-\subsubsection*{Definition}
 Cost metrics are defined variously depending on the specific resource being optimized. We categorize them into three primary definitions found in the literature:
 
 \begin{itemize}
@@ -44,7 +42,9 @@ Cost metrics are applied across various domains of software engineering:
 \subsubsection*{Comparative Summary}
 Below is a comparison of the distinct cost metrics identified:
 
-\begin{center}
+\begin{table}[H] 
+\centering
+\caption{Comparison of cost metrics}
 \begin{tabular}{|l|p{4cm}|p{4cm}|}
 \hline
 \textbf{Metric} & \textbf{Application Domain} & \textbf{Measured Components} \\
@@ -56,7 +56,7 @@ Development Cost & Autonomous Agents (Survey) & Cost associated with development
 Total Cost & Code Evolution (LLM\_GP) & API wait time, API cost, and pre-training cost \\
 \hline
 \end{tabular}
-\end{center}
+\end{table} 
 
 \subsubsection{Additional References}
 

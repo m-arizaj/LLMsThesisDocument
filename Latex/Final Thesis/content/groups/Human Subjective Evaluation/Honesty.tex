@@ -1,11 +1,9 @@
 \subsection{Honesty}
 
-\subsubsection*{Introduction}
 Honesty is a core principle used in the \textbf{Human Evaluation} of Large Language Models (LLMs). It is part of the ``3H rule'' — \textbf{Helpfulness, Honesty, and Harmlessness} — which serves as a foundational concept for developing detailed human assessment criteria.
 
 Human evaluation itself is defined as a method to assess the quality and accuracy of a model's generated results through human participation. This approach is considered more comprehensive than automated evaluation because it reflects real-world application scenarios.
 
-\subsubsection*{Definition}
 Honesty is not a quantitative metric with a single mathematical formula. It is a \textbf{qualitative principle} assessed by human evaluators (such as experts, researchers, or ordinary users).
 
 In evaluation surveys, the principle of ``Honesty'' is elaborated into specific, measurable criteria such as \textbf{Accuracy}, which is defined as scrutinizing:
@@ -17,18 +15,14 @@ In evaluation surveys, the principle of ``Honesty'' is elaborated into specific,
 \subsubsection*{Purpose}
 The purpose of evaluating for Honesty is to assess an LLM's adherence to truthfulness and factual correctness. It is a fundamental component of the ``3H rule'' for human alignment and trustworthiness. This principle helps ensure that models are reliable and avoid generating factually inaccurate information or ``hallucinations.''
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item Human Evaluation
-    \item Human-centered Evaluation
-    \item LLM Evaluation (Trustworthiness, Ethics)
-\end{itemize}
+\subsubsection*{Applications}
 
-\subsubsection*{Benchmarks}
-Honesty, as a human evaluation criterion, is applied within broader evaluation frameworks and benchmarks:
+In the domain of Software Engineering, the principle of Honesty is applied to ensure the reliability and security of generated code and technical analysis. Unlike open-ended chat, "untruthful" outputs here result in functional errors or security risks.
+
 \begin{itemize}
-    \item \textbf{HELM} (Holistic Evaluation of Language Models)
-    \item \textbf{Chatbot Arena}
+    \item \textbf{Code Correctness and Verification}: Honesty is evaluated through the model's ability to distinguish between valid and invalid code. This involves binary discrimination tasks (e.g., does the code pass unit tests?) to ensure the model does not "hallucinate" non-existent libraries or syntax \cite{askell2021general}.
+    \item \textbf{Vulnerability Detection}: LLMs are applied to tasks such as \textit{code vulnerability detection} and \textit{test prioritization}. Evaluations indicate that while models perform well in generation, they may fail to provide accurate (honest) assessments in these safety-critical tasks, often yielding incorrect answers regarding security flaws \cite{Chang2023SurveyLLMs}.
+    \item \textbf{Calibration of Capabilities}: An honest software assistant must be calibrated to its own limitations, refusing to generate code for tasks beyond its capability rather than producing plausible but non-functional solutions. This is critical to avoid "misleading human users" in technical contexts \cite{askell2021general}.
 \end{itemize}
 
 \subsubsection*{Advantages}

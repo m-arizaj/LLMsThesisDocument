@@ -1,11 +1,9 @@
 \subsection{Design Performance}
 
-\subsubsection*{Introduction}
 Design Performance is not a single metric, but rather a category of evaluation metrics used to measure the efficiency and implementation quality of code generated for Hardware Description Languages (HDL), such as Verilog.
 
 Unlike traditional software metrics that focus on functional correctness (like Pass@k) or textual similarity (like BLEU), Design Performance evaluates how well the HDL code translates into a physical circuit. It focuses on non-functional constraints that are critical in hardware design, such as speed, power consumption, and resource utilization. This category of metrics is a core component of the VerilogEval benchmark \cite{liu2023verilogeval}, which assesses the capabilities of LLMs in practical hardware design tasks.
 
-\subsubsection*{Definition}
 Design Performance refers to a set of metrics that evaluate the quality of the synthesized hardware from the model-generated HDL code. These metrics are obtained after the code is processed by synthesis and simulation tools. The key components are:
 
 \begin{itemize}
@@ -20,9 +18,22 @@ An ``excellent design performance'' reflects high efficiency and good resource u
 The main purpose of these metrics is to go beyond simple syntactic or functional correctness. While metrics like the \textit{synthesis success rate} verify basic correctness, Design Performance evaluates the \textbf{efficiency and quality} of a functionally correct solution. It assesses whether the generated code is practical and efficient for real-world hardware applications.
 
 \subsubsection*{Applications}
+
+The concept of Design Performance applies to both hardware and software domains, though the specific metrics differ.
+
+\vspace{0.3cm}
+\noindent \textbf{Hardware Design (HDL)}\begin{itemize}
+    \item Used in benchmarks to evaluate LLMs on tasks such as combinational logic circuits, sequential logic circuits, and state machine design \cite{liu2023verilogeval}.
+    \item Critical for ensuring that generated circuits meet physical constraints (PPA: Power, Performance, Area) required for chip fabrication \cite{liu2023verilogeval}.
+\end{itemize}
+
+Extension to Software Engineering
+Recent surveys indicate that the principles of Design Performance are increasingly applied to general software generation under the category of \textbf{Code Efficiency Evaluation} \cite{Chen2024SurveyCodeGen}. In this context, the hardware metrics map to software constraints as follows:
+
 \begin{itemize}
-    \item It is used prominently in the VerilogEval benchmark for Verilog code generation and verification.
-    \item Evaluation of LLMs on hardware design tasks, including combinational logic circuits, sequential logic circuits, and state machine design.
+    \item \textbf{Timing $\rightarrow$ Execution Time \& Latency}: Analogous to clock frequency in hardware, this measures the runtime performance and computational complexity of the generated software (e.g., evaluated by benchmarks like EffiBench) \cite{Chen2024SurveyCodeGen}.
+    \item \textbf{Power $\rightarrow$ Energy Consumption}: Similar to hardware power analysis, frameworks like Mercury now measure the energy efficiency of generated code, a critical factor for mobile and green computing \cite{Chen2024SurveyCodeGen}.
+    \item \textbf{Area $\rightarrow$ Memory Usage \& Complexity}: Just as hardware design minimizes physical footprint, software evaluation measures peak memory usage and code complexity (e.g., cyclomatic complexity) to ensure resource efficiency \cite{Chen2024SurveyCodeGen}.
 \end{itemize}
 
 \subsubsection*{Limitations}

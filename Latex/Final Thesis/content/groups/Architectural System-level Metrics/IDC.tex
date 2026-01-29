@@ -1,14 +1,11 @@
 \subsection{Incremental Development Capability (IDC)}
 
-\subsubsection*{Introduction}
 The \textbf{Incremental Development Capability (IDC)} is a novel metric introduced by Qiu et al. (2025) as part of the LoCoBench benchmark. It is designed to evaluate a Large Language Model's (LLM) ability to build effectively on previous development work across multiple sessions.
 
 This metric addresses a critical gap in traditional evaluations by measuring how well a model handles incremental tasks, a crucial capability for realistic, long-context software development that is often overlooked by other benchmarks. It falls under the ``Functional Correctness'' dimension of the LoCoBench framework.
 
-\subsubsection*{Definition}
 The IDC score is calculated based on a sequence of incremental development tasks $T$ applied to a codebase across multiple states $S$. Ideally, it measures the capacity to extend functionality without breaking existing code.
 
-\subsubsection*{Formula}
 For a sequence of tasks $T=\{t_1, t_2, ..., t_k\}$ that cause codebase state transitions $S_0 \rightarrow S_1 \rightarrow \dots \rightarrow S_k$, the IDC is defined as:
 
 \begin{equation}
@@ -30,6 +27,19 @@ The primary purpose of the IDC metric is to assess an LLM's performance in reali
     \item Long-Context Software Engineering
     \item Functional Correctness Evaluation
     \item Multi-Session Development
+\end{itemize}
+
+\subsubsection*{Applications}
+Within the context of AI-driven software engineering, the IDC metric is applied primarily to evaluate capabilities that traditional "single-pass" metrics overlook. Based on the LoCoBench framework, its key applications include:
+
+\begin{itemize}
+    \item \textbf{Evaluation of Multi-Session Workflows}: IDC is applied to measure an LLM's ability to sustain development over sequential sessions ($S_0 \rightarrow S_k$), simulating realistic scenarios where codebases evolve incrementally rather than being generated from scratch \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Automated Regression Risk Assessment}: By explicitly accounting for ``breaking changes'' ($\beta$) in its denominator, IDC serves as a formal application for detecting regressions, quantifying how often new feature implementations disrupt existing system functionality \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Integration Quality Analysis}: The metric is used to apply quantitative scoring to ``integration smoothness'' ($\sigma$), distinguishing between code that is merely functionally correct in isolation versus code that integrates seamlessly into the existing architectural context \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Long-Context Memory Benchmarking}: IDC is applied to test a model's capacity to retain and utilize architectural context across extended development timelines, ensuring that incremental updates respect constraints established in previous states \cite{Qiu2025LoCoBench}.
 \end{itemize}
 
 \subsubsection*{Advantages}

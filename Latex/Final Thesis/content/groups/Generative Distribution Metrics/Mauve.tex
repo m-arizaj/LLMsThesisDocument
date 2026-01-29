@@ -19,13 +19,15 @@ Conceptually, MAUVE measures the gap between these distributions, often visualiz
 \subsubsection*{Purpose}
 The general purpose of LLM-based metrics like MAUVE is to evaluate the performance of large language models in natural language generation tasks. They aim to ``better capture the nuances'' between different generative tasks and provide guidance on model performance that aligns closer to human judgment than n-gram metrics.
 
-\subsubsection*{Domains}
-\begin{itemize}
-    \item LLM Evaluation / Natural Language Processing (NLP)
-    \item Natural Language Generation (NLG)
-    \item Evaluation of Generative Models
-\end{itemize}
+\subsubsection*{Applications in Software Engineering}
+Although MAUVE is primarily designed for open-ended natural language generation, its methodology is applicable to software engineering domains where Large Language Models (LLMs) are utilized:
 
+\begin{itemize}
+    \item \textbf{Evaluation of Code Generation}: MAUVE is applicable to the evaluation of generative models tasked with producing "computer programs" and code, assessing how closely the distribution of generated code matches human-written baselines \cite{pillutla2023mauve}.
+    \item \textbf{Hyperparameter Tuning for Coding Models}: The metric is used by developers to tune hyperparameters (such as the $p$ value in nucleus sampling) and to evaluate "decoding algorithms," which is crucial for optimizing models to generate syntactically correct and diverse code \cite{pillutla2023mauve}.
+    \item \textbf{Assessment of Architectural Innovations}: It serves as a benchmark to measure the performance impact of "architectural innovations" in LLMs developed for various tasks, including those used in software engineering contexts \cite{pillutla2023mauve}.
+    \item \textbf{Comprehensive LLM Testing}: In the broader context of software quality engineering, MAUVE is part of the suite of reference-based metrics used to conduct "comprehensive testing" on LLMs that serve as tools for natural language processing and coding tasks \cite{Lin2024SWC}.
+\end{itemize}
 \subsubsection*{Advantages}
 \begin{itemize}
     \item \textbf{Deep Semantic Understanding}: As an LLM-based metric, it exhibits ``greater semantic understanding ability,'' capturing meaning rather than just surface form.

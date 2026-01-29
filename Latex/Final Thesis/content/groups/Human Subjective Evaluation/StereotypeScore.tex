@@ -1,11 +1,9 @@
 \subsection{Stereotype Score (ss)}
 
-\subsubsection*{Definition}
 The \textbf{Stereotype Score (ss)} is an automatic evaluation metric used in the \textbf{StereoSet} benchmark to measure stereotypical bias in large language models.
 
 It is not a standalone metric but rather a key component of the StereoSet evaluation framework. It is designed to quantify a model's preference for text containing a social stereotype versus text that is ``anti-stereotype'' (i.e., neutral or positive).
 
-\subsubsection*{Formula}
 The Stereotype Score is calculated based on a model's performance on the StereoSet dataset, where it chooses between a stereotypical option and an anti-stereotypical option given a context.
 
 \begin{equation}
@@ -25,11 +23,22 @@ This score is used to calculate the benchmark's main metric, the \textbf{Idealiz
 \subsubsection*{Purpose}
 The purpose of the Stereotype Score is to explicitly measure a model's stereotypical bias. By presenting a direct choice between a stereotypical association and a non-stereotypical one, it quantifies the model's tendency to select the harmful stereotype, providing a clear signal of its learned biases.
 
-\subsubsection*{Domains}
+\subsubsection{Applications in Software Engineering}
+
+The Stereotype Score is applied in Software Engineering primarily as a quantitative metric for **AI Safety and Fairness Testing**, ensuring that Large Language Models (LLMs) are suitable for deployment in user-facing software systems.
+
 \begin{itemize}
-    \item Fairness / Bias Evaluation
-    \item Stereotypical Bias Evaluation
-    \item Natural Language Processing (NLP)
+    \item \textbf{Model Selection and Benchmarking}:
+    The metric allows software engineers to compare different pretrained models (e.g., BERT, GPT-2, RoBERTa) based on their bias levels before integrating them into a system. By using the \textbf{StereoSet Leaderboard}, developers can select models that strike the best balance between language capability (Language Modeling Score) and fairness (Stereotype Score), avoiding models that exhibit "strong stereotypical biases" \cite{nadeem2021stereoset}.
+
+    \item \textbf{Risk Assessment for Deployment}:
+    Since LLMs are widely deployed as services (e.g., on Google Cloud or Amazon AWS) to serve millions of users, the Stereotype Score functions as a **release criterion**. It helps quantify the potential "adverse effects" of a model, allowing engineers to assess the risk of the model amplifying harmful biases regarding gender, race, religion, or profession in production environments \cite{nadeem2021stereoset}.
+
+    \item \textbf{Diagnostic Testing for Downstream Tasks}:
+    The score is used to predict and diagnose bias propagation in downstream software applications. If a foundational model has a high Stereotype Score, it is likely to introduce bias into dependent tasks such as **coreference resolution** (e.g., assuming "doctor" is male) or **sentiment analysis** (e.g., associating certain demographics with negative sentiment). The metric serves as an early indicator of these "extrinsic" failures \cite{nadeem2021stereoset}.
+
+    \item \textbf{Continuous Monitoring of Model Evolution}:
+    The framework supports the continuous evaluation of new language models through a hidden test set. This allows the software engineering community to "track the bias of future language models" over time, ensuring that newer iterations of software components do not regress in terms of fairness standards \cite{nadeem2021stereoset}.
 \end{itemize}
 
 \subsubsection*{Advantages}

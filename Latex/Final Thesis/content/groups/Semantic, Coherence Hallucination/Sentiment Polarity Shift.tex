@@ -1,6 +1,5 @@
 \subsection{Sentiment Polarity Shift}
 
-\subsubsection*{Definition}
 \textbf{Sentiment Polarity Shift} is not a single metric, but an evaluation category designed to measure \textbf{Social Bias}. It quantifies how the sentiment polarity (positive, negative, or neutral) of an LLM's response changes when conditioned on different social groups (e.g., by gender, race, or religion).
 
 This approach evaluates whether the model associates certain groups with more negative or positive social connotations. Specific metrics that implement this concept include:
@@ -31,12 +30,21 @@ For example, \textit{Counterfactual Sentiment Bias} uses the Wasserstein-1 dista
 \subsubsection*{Purpose}
 The main objective is to quantify social and cultural biases by identifying disparate sentiment or polarity in model outputs associated with different groups. This helps detect representational harms such as \textbf{stereotyping} (associating a group with negative attributes) or \textbf{misrepresentation}.
 
-\subsubsection*{Domains}
+\subsection{Applications}
+
+Although \textbf{Sentiment Polarity Shift} metrics originated in general NLP fairness research, they have crucial applications in the domain of Software Engineering (SE), particularly concerning the human and social aspects of SE (Recruitment, Professional Representation, and Developer Assistance).
+
+Based on the provided literature, specific applications include:
+
 \begin{itemize}
-    \item Fairness / Bias Evaluation
-    \item Social / Cultural Bias
-    \item Text Generation (Open-Ended)
-    \item Sentiment Analysis
+    \item \textbf{Bias Detection in Automated Technical Career Advice}:
+    LLMs are increasingly used as coding assistants or career coaches. Research indicates that models may exhibit \textit{polarity shift} or disparate content when advising technical professionals based on demographics. For instance, \cite{Gallegos2024BiasFairness} highlights a case where a model conditioned on ``female data engineer'' focused on the need to \textit{develop} technical skills, whereas for a ``male data engineer'', it assumed competence and focused on \textit{networking} or data sources. This manifests as a negative shift in regard (social connotation) towards the technical competency of women in SE.
+
+    \item \textbf{Evaluation of Stereotypes in Engineering Professions}:
+    Metrics like the \textit{Regard Score} are applied to Open-Ended Language Generation to audit how models describe specific professions. The BOLD dataset \cite{dhamala2021bold} explicitly categorizes ``computer'' and ``engineering'' under the \textit{Science \& Technology} domain. Applying these metrics allows engineers to quantify if an LLM systematically generates text with lower sentiment or negative stereotypes when describing software engineers from marginalized groups compared to dominant groups.
+
+    \item \textbf{Fairness in Recruitment and Occupational Descriptions}:
+    Counterfactual evaluation techniques are used to measure sentiment bias in generated text about occupations. \cite{huang2020reducing} and \cite{sheng2019woman} demonstrate frameworks where the ``occupation'' slot in a prompt is perturbed (e.g., from ``The \textit{nurse}...'' to ``The \textit{programmer}...''). In SE, this application is critical for auditing automated resume screening tools or job description generators to ensure they do not associate technical roles (like ``programmer'' or ``developer'') with sentiment distributions that favor specific genders or races.
 \end{itemize}
 
 \subsubsection*{Advantages}

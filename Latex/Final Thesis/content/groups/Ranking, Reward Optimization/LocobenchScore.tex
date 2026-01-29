@@ -1,11 +1,9 @@
 \subsection{LoCoBench Score (LCBS)}
 
-\subsubsection*{Definition}
 The \textbf{LoCoBench Score (LCBS)} is a unified, aggregated metric introduced in the \textbf{LoCoBench} benchmark. It is specifically designed to evaluate the performance of long-context Large Language Models (LLMs) in complex, realistic software engineering scenarios.
 
 The LCBS functions as a ``weighted aggregate function that maps the 17-dimensional metric space to a scalar evaluation score.'' This provides a single, comprehensive measure of a model's capabilities across four key dimensions of software development.
 
-\subsubsection*{Formula}
 The LoCoBench Score is calculated as a weighted linear combination of four dimension scores, scaled to a final value on a 0-5 scale. The calculation follows a multi-step process:
 
 \textbf{1. Metric Normalization} \\
@@ -37,10 +35,17 @@ The final formula is:
 \subsubsection*{Purpose}
 The primary purpose of the LCBS is to provide a single, unified scalar score that summarizes a model's performance across 17 different metrics. This allows for a holistic and comprehensive comparison of models on complex, long-context software engineering tasks.
 
-\subsubsection*{Domains}
+\subsubsection*{Applications}
+Based on the analysis provided in the LoCoBench framework, the LCBS has several critical applications in the field of software engineering and model evaluation:
+
 \begin{itemize}
-    \item Long-Context Evaluation
-    \item Software Engineering
+    \item \textbf{Strategic Model Selection}: The LCBS serves as a primary indicator for organizations to select appropriate models for deployment. However, the paper advises that selection should not rely solely on the aggregate LCBS but also consider specific application domains and architectural patterns, as models with similar overall scores may exhibit different capabilities in specialized areas \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Benchmarking State-of-the-Art Capabilities}: It establishes a rigorous standard for ranking long-context models (such as Gemini 1.5 Pro, GPT-4, and Claude 3), identifying performance hierarchies and revealing that while top-tier models have reached similar competency levels, significant gaps remain in specialized long-context processing \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Guiding Research and Optimization}: By aggregating metrics like \textit{Long-Context Utilization} and \textit{Software Engineering Excellence}, the LCBS helps researchers identify fundamental limitations in current architectures—specifically the trade-offs between consistency and specialization—driving future improvements in model training strategies \cite{Qiu2025LoCoBench}.
+    
+    \item \textbf{Tracking Progress in Complex Scenarios}: The score provides a baseline to track the advancement of LLMs in handling "sophisticated reasoning abilities required for real-world software engineering" that extend far beyond traditional, short-context code generation tasks \cite{Qiu2025LoCoBench}.
 \end{itemize}
 
 \subsubsection*{Advantages}

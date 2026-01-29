@@ -1,6 +1,5 @@
 \subsection{Usefulness Score}
 
-\subsubsection*{Definition}
 The \textbf{Usefulness Score} is a human-centric, subjective evaluation metric designed to assess the quality of generated code snippets based on their helpfulness to a human developer.
 
 It is not an automated metric but rather a rubric for human annotation, where experienced developers grade a generated code snippet on a 0-4 discrete scale. This score is a key metric for measuring human preference alignment.
@@ -19,11 +18,14 @@ The metric is defined by the following 5-point scale, as detailed in the \textbf
 \subsubsection*{Purpose}
 The purpose of the Usefulness Score is to capture a human developer's judgment of a code snippet's quality, often missed by traditional token-matching metrics like BLEU. It directly measures how well a generated snippet satisfies a user's requirements and determines how much effort is saved (or wasted) by using it. It serves as a ground truth for training automated metrics (like ICE-Score).
 
-\subsubsection*{Domains}
+\subsubsection{Applications in Software Engineering}
+
+The Usefulness metric is applied in Software Engineering research to validate automated metrics and evaluate LLM-based coding assistants.
+
 \begin{itemize}
-    \item Software Engineering
-    \item Code Generation
-    \item Human Preference Alignment
+    \item \textbf{Benchmarking Code Generators}: It serves as the "gold standard" for evaluating models on datasets like CoNaLa (Stack Overflow snippets), distinguishing between models that produce syntactically correct but useless code and those that provide practically helpful solutions \cite{yin2018learning, Evtikhiev2023OutOfBLEU}.
+    \item \textbf{Calibration of Automated Metrics}: The metric is used to measure the correlation of automated metrics (e.g., BLEU, CodeBLEU, RUBY) with human preference. Studies have shown that traditional NLP metrics often have weak correlation with the Usefulness Score, necessitating new metrics like ICE-Score \cite{Zhuo2023ICEScore}.
+    \item \textbf{LLM-as-a-Judge}: In modern applications, Large Language Models are instructed to simulate this human evaluation (e.g., the ICE-Score framework), predicting the Usefulness Score of a snippet to provide scalable, reference-free evaluation for code intelligence tasks \cite{Zhuo2023ICEScore}.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -37,8 +39,6 @@ The purpose of the Usefulness Score is to capture a human developer's judgment o
     \item \textbf{Cost and Scalability}: Relies on manual grading from ``experienced software developers,'' making it expensive and difficult to scale compared to automated metrics.
     \item \textbf{Subjectivity}: As a human-based score, it is subject to variability. (e.g., even human-written reference code in CoNaLa only achieved an average score of 3.4/4).
 \end{itemize}
-
-% añadir estas entradas al archivo .bib
 
 
 \subsubsection{Additional References}

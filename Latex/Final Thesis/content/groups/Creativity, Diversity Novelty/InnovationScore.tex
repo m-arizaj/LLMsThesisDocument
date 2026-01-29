@@ -1,11 +1,9 @@
 \subsection{Innovation Score (IS)}
 
-\subsubsection*{Definition}
 The \textbf{Innovation Score (IS)} is a metric used within the LoCoBench benchmark to evaluate the quality of a model's solution. It is adapted from research on creative problem-solving assessment in software engineering (Glass, 2002).
 
 The metric is designed to move beyond mere functional correctness and assess the \textbf{creativity and modernity} of the generated solution. It specifically evaluates the model's use of new approaches, modern practices, and creative solutions.
 
-\subsubsection*{Formula (General Idea)}
 The LoCoBench paper (Qiu et al., 2025) does not specify a mathematical formula for the Innovation Score. It is presented as a qualitative assessment contributing to the overall LoCoBench Score (LCBS). Its calculation is based on evaluating:
 \begin{itemize}
     \item The use of \textbf{new approaches}.
@@ -23,9 +21,19 @@ The purpose of the Innovation Score is to quantify the ``creativity'' of an LLM'
     \item Creative Problem-Solving Assessment
 \end{itemize}
 
-\subsubsection*{Benchmarks}
+\subsection{Applications}
+
+The Innovation Score (IS) finds critical application in evaluating the sophisticated capabilities of software engineers and AI models, moving assessment criteria from "working code" to "excellent engineering."
+
 \begin{itemize}
-    \item \textbf{LoCoBench}: The IS is a component metric of this benchmark, contributing specifically to the ``Software Engineering Excellence'' dimension.
+    \item \textbf{Differentiation of Creative Reasoning vs. Rote Memorization:}
+    In the context of evaluating Large Language Models, the IS applies to distinguishing between models that simply retrieve memorized, standard boilerplates and those capable of synthesizing \textit{creative solutions} for complex, novel scenarios. This application is grounded in the understanding that software design is an inherently heuristic and creative process, rather than a purely deterministic or mechanical activity \cite{glass2002facts}.
+
+    \item \textbf{Evaluation of Modern Practice Adoption:}
+    The score is applied to measure the modernity of a solution. It serves to identify and reward the usage of current programming paradigms and language features (e.g., using modern Stream APIs in Java vs. traditional loops), thereby discouraging the propagation of legacy or deprecated patterns often found in older training data \cite{Qiu2025LoCoBench}.
+
+    \item \textbf{Quality Assessment in Complex System Design:}
+    Within the LoCoBench ``Software Engineering Excellence'' dimension, the IS is applied to penalize brute-force solutions that may be functionally correct but architecturally stagnant. It helps assess whether a solution exhibits the ``intellectual'' quality required for expert-level tasks, aligning with the principle that high-quality software engineering involves finding elegant solutions to complex problems rather than just satisfying requirements \cite{Qiu2025LoCoBench}.
 \end{itemize}
 
 \subsubsection*{Advantages}
@@ -54,9 +62,3 @@ Qiu2025LoCoBench,
 glass2002facts,
 }
 \fussy
-% @book{glass2002facts,
-%   title={Facts and fallacies of software engineering},
-%   author={Glass, R. L.},
-%   year={2002},
-%   publisher={Addison-Wesley}
-% }

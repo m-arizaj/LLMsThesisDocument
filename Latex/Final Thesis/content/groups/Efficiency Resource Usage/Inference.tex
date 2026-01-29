@@ -1,6 +1,5 @@
 \subsection{Inference (Efficiency and Verification)}
 
-\subsubsection*{Introduction}
 In the evaluation of Large Language Models (LLMs) and the systems they generate, ``Inference'' describes metrics in two distinct categories:
 
 \begin{itemize}
@@ -49,18 +48,35 @@ For example, in system migration (e.g., JS to TS), a tool tests the resulting ap
 To automatically validate functional correctness and reliability. It verifies that the generated system behaves as intended or identifies behavioral differences using ``difference automata.''
 
 \subsubsection*{Comparative Summary}
-\begin{center}
-\begin{tabular}{|p{3cm}|p{2.5cm}|p{5cm}|p{2.5cm}|}
-\hline
-\textbf{Metric Category} & \textbf{Measures} & \textbf{Description} & \textbf{Typical Domain} \\
-\hline
-Inference Efficiency & Efficiency & Computational cost, time (s), or tokens/sec during text generation. & LLM Evaluation, Agents \\
-\hline
-Behavioral Model Inference & Verification & Success rate (\%) of automatically deriving a correct behavioral automaton from a system. & Software Engineering, LDE \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparative Summary of Inference and Behavioral Metrics}
+    \label{tab:inference_metrics}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{5cm}|p{2.5cm}|}
+    \hline
+    \textbf{Metric Category} & \textbf{Measures} & \textbf{Description} & \textbf{Typical Domain} \\
+    \hline
+    Inference Efficiency & Efficiency & Computational cost, time (s), or tokens/sec during text generation. & LLM Evaluation, Agents \\
+    \hline
+    Behavioral Model Inference & Verification & Success rate (\%) of automatically deriving a correct behavioral automaton from a system. & Software Engineering, LDE \\
+    \hline
+    \end{tabular}
+\end{table}
 
+\subsubsection{Applications in Software Engineering}
+
+The dual interpretation of ``Inference''as both a performance metric (Efficiency) and a verification method (Behavioral Learning) enables critical applications in modern software engineering, particularly for LLM-based systems.
+
+\begin{itemize}
+    \item \textbf{Automated Validation of System Migration (Behavioral Inference)}: \\
+    In the context of Language-Driven Engineering (LDE), Behavioral Model Inference is applied to validate the migration of legacy systems. Busch et al. demonstrate this by migrating a web-based point-and-click adventure game from JavaScript to TypeScript using LLMs \cite{Busch2025LLMCodeMigration}. By employing \textit{active automata learning}, engineers can infer behavioral models (Mealy machines) of both the original and the migrated system. This process allows for the generation of \textbf{difference automata}, which strictly characterize behavioral discrepancies between the two versions, ensuring that the LLM-generated code preserves the intended functionality without manual testing \cite{Busch2025LLMCodeMigration}.
+
+    \item \textbf{Resource-Constrained Autonomous Agents (Inference Efficiency)}: \\
+    For LLM-based autonomous agents, Inference Efficiency is a defining constraint for architectural viability. Agents acting in dynamic environments often rely on complex planning modules (e.g., Chain of Thought or Tree of Thoughts) and extensive memory retrieval operations, which require multiple inference calls per action \cite{Wang2024AutonomousAgentsSurvey}. High inference latency or cost can render an agent impractical for real-time tasks. Consequently, efficiency metrics are used to balance the trade-off between an agent's reasoning depth (capability) and its response time (usability) \cite{Wang2024AutonomousAgentsSurvey}.
+
+    \item \textbf{Benchmarking for User-Facing Deployments (Inference Efficiency)}: \\
+    In the deployment of foundational models, Inference Efficiency dictates the feasibility of user-facing applications, such as chatbots or mobile assistants. Liang et al. utilize efficiency metrics (specifically \textit{Idealized Inference Runtime}) to normalize comparisons across disparate hardware configurations \cite{Liang2022HELM}. This application allows software engineers to select models that maximize accuracy while remaining within the strict latency budgets required for interactive user experiences \cite{Liang2022HELM}.
+\end{itemize}
 
 \subsubsection{Additional References}
 

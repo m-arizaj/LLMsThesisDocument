@@ -1,6 +1,5 @@
 \subsection{Similarity Metrics}
 
-\subsubsection*{Introduction}
 In code generation and software engineering, ``Similarity'' is not a single metric but a broad category of evaluation techniques. Its purpose is to quantify how ``close'' a generated output is to a reference, especially when a simple \textbf{Exact Match} is too strict and fails to capture partially correct or semantically equivalent solutions.
 
 Different tasks require different notions of similarity:
@@ -61,19 +60,22 @@ To evaluate the correctness of visualization tasks where the code itself is a me
 \end{itemize}
 
 \subsubsection*{Comparative Summary}
-\begin{center}
-\begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{3cm}|}
-\hline
-\textbf{Metric} & \textbf{Based on} & \textbf{Measures} & \textbf{Typical Domain} \\
-\hline
-Levenshtein Edit Similarity & Character Edits & Syntactic closeness / Edit effort & Code Completion \\
-\hline
-Sentence Cosine Similarity & Vector Embeddings & Semantic meaning & Code/Docstring Robustness \\
-\hline
-Visualization Similarity & Image Comparison & Visual output quality & Data Science Visualization \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Similarity Metrics in Code Generation}
+    \label{tab:similarity_metrics}
+    \begin{tabular}{|p{3cm}|p{2.5cm}|p{3.5cm}|p{3cm}|}
+    \hline
+    \textbf{Metric} & \textbf{Based on} & \textbf{Measures} & \textbf{Typical Domain} \\
+    \hline
+    Levenshtein Edit Similarity & Character Edits & Syntactic closeness / Edit effort & Code Completion \\
+    \hline
+    Sentence Cosine Similarity & Vector Embeddings & Semantic meaning & Code/Docstring Robustness \\
+    \hline
+    Visualization Similarity & Image Comparison & Visual output quality & Data Science Visualization \\
+    \hline
+    \end{tabular}
+\end{table}
 
 
 \subsubsection{Additional References}
